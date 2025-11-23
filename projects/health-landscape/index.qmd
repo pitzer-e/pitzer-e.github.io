@@ -4,6 +4,7 @@ author: "Ethan Pitzer"
 date: "2025-11-22"
 categories: [tableau, healthcare, geospatial]
 image: "thumbnail.png"
+page-layout: full
 description: "An interactive dashboard visualizing health center service delivery sites across Oregon."
 ---
 
