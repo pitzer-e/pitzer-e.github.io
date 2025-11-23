@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "E. Pitzer | Data Analyst"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: projects.qmd
+        text: Projects & Notes
+    right:
+      - icon: github
+        href: https://github.com/pitzer-e
+      - icon: linkedin
+        href: https://www.linkedin.com/
+      - icon: journal-code # Using a generic icon for Kaggle if the specific brand icon isn't loaded yet
+        href: https://www.kaggle.com/
+        text: Kaggle 
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

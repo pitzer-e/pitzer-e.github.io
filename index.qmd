@@ -1,0 +1,24 @@
+---
+title: "Ethan Pitzer"
+image: profile.jpeg
+about:
+  template: jolla  # Options: jolla, trestles, solana
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/pitzer-e/
+    - icon: github
+      text: Github
+      href: https://github.com/pitzer-e
+    - icon: envelope
+      text: Email
+      href: mailto:your-email@example.com
+---
+
+## Data Analyst | Oregon Primary Care Association
+
+I am a Data Analyst based in Medford, Oregon, specializing in transforming complex datasets into actionable insights for non-profit healthcare. 
+
+With a background as a Salesforce Support Engineer and an MBA, I bridge the gap between technical data architecture and strategic business goals. My work focuses on visualizing community health data to support primary care initiatives across Oregon.
+
+This site serves as a digital garden for my projects in Python, SQL, Tableau, and R.
