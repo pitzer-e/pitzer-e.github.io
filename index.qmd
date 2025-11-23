@@ -33,7 +33,7 @@ I hold an **MBA** from Quantic School of Business and Technology and a **B.S. in
 
 ::: {.callout-note appearance="simple"}
 ## Current Focus
-I am currently managing the collection and analysis of Uniform Data System (UDS) data to enhance program evaluation and member tracking for Oregon's primary care network.
+I am currently managing the ingestion and analysis of Electronic Health Record (EHR) and CCLF claims data within the **Arcadia Data Analytics Platform** to uncover actionable healthcare patterns.
 
-I am focusing on building my expertise using R programming, data analysis and visualizations, and probabalistic studies in pursuit of the **University of Michigan Master of Applied Data Science (MADS)** program.
+Simultaneously, I am expanding my technical toolkit—with a focus on R programming, probabilistic modeling, and advanced visualization—in pursuit of the **University of Michigan Master of Applied Data Science (MADS)** program.
 :::
