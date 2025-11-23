@@ -3,7 +3,8 @@
     "listing": "/projects.html",
     "items": [
       "/projects/penguins/index.html",
-      "/projects/welcome/index.html"
+      "/projects/welcome/index.html",
+      "/projects/health-landscape/index.html"
     ]
   }
 ]

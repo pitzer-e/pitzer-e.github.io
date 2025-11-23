@@ -15,7 +15,7 @@ about:
       href: mailto:ethan.pitzer@gmail.com
 ---
 
-## Data Analyst | Oregon Primary Care Association
+## Data Analyst | OPCA
 
 I am a Data Analyst based in Oregon, currently driving strategic objectives for the **Oregon Primary Care Association (OPCA)**. My work focuses on leveraging analytics software—including Arcadia, Tableau, and SQL—to provide actionable intelligence that supports community health centers across the state.
 
