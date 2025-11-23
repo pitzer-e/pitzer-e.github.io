@@ -24,9 +24,9 @@ I hold an **MBA** from Quantic School of Business and Technology and a **B.S. in
 
 | **Core Data Stack** | **Visualization** | **Certifications** |
 | :--- | :--- | :--- |
-| Python (Pandas/Seaborn) | matplotlib | Google Data Analytics |
+| Python (Pandas/Seaborn) | Matplotlib | Google Data Analytics Professional |
 | R | Arcadia | Arcadia Certified Professional |
-| SQL | Tableau | Tableau Analyst |
+| SQL | Tableau | Tableau Business Intelligence Analyst |
 | Excel | Splunk | ISC² CC Certified |
 
 ::: {.callout-note appearance="simple"}
