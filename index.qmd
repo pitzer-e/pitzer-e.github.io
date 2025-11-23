@@ -24,13 +24,14 @@ I hold an **MBA** from Quantic School of Business and Technology and a **B.S. in
 
 | **Core Data Stack** | **Visualization** | **Certifications** |
 | :--- | :--- | :--- |
-| Python (Pandas/Seaborn) | Tableau | Google Data Analytics |
-| SQL | Arcadia | Google Cybersecurity |
+| Python (Pandas/Seaborn) | matplotlib | Google Data Analytics |
+| R | Arcadia | Arcadia Certified Professional |
+| SQL | Tableau | Tableau Analyst |
 | Excel | Splunk | ISC² CC Certified |
 
 ::: {.callout-note appearance="simple"}
 ## Current Focus
-I am currently managing the ingestion and analysis of Electronic Health Record (EHR) and CCLF claims data within the **Arcadia Data Analytics Platform** to uncover actionable healthcare patterns.
+I am currently managing the ingestion and analysis of Electronic Health Record (EHR) and CCLF claims data within the **Arcadia Data Analytics Platform** to uncover actionable healthcare patterns across Oregon FQHCs.
 
 Simultaneously, I am expanding my technical toolkit—with a focus on R programming, probabilistic modeling, and advanced visualization—in pursuit of the **University of Michigan Master of Applied Data Science (MADS)** program.
 :::
