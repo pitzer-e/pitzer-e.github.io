@@ -2,7 +2,7 @@
 title: "Ethan Pitzer"
 image: profile.jpeg
 about:
-  template: jolla  # Options: jolla, trestles, solana
+  template: jolla
   links:
     - icon: linkedin
       text: LinkedIn
@@ -12,13 +12,28 @@ about:
       href: https://github.com/pitzer-e
     - icon: envelope
       text: Email
-      href: mailto:your-email@example.com
+      href: mailto:ethan.pitzer@gmail.com
 ---
 
 ## Data Analyst | Oregon Primary Care Association
 
-I am a Data Analyst based in Medford, Oregon, specializing in transforming complex datasets into actionable insights for non-profit healthcare. 
+I am a Data Analyst based in Oregon, currently driving strategic objectives for the **Oregon Primary Care Association (OPCA)**. My work focuses on leveraging analytics software—including Arcadia, Tableau, and SQL—to provide actionable intelligence that supports community health centers across the state.
 
-With a background as a Salesforce Support Engineer and an MBA, I bridge the gap between technical data architecture and strategic business goals. My work focuses on visualizing community health data to support primary care initiatives across Oregon.
+My background sits at the intersection of technical engineering and business strategy. Before pivoting to data analytics, I spent several years as a **Technical Support Engineer at Salesforce**, where I specialized in troubleshooting complex custom code and integrations for commercial and government clients.
 
-This site serves as a digital garden for my projects in Python, SQL, Tableau, and R.
+I hold an **MBA** from Quantic School of Business and Technology and a **B.S. in Computer Science** from Eastern Oregon University.
+
+### Technical Toolkit
+
+| **Core Data Stack** | **Visualization** | **Certifications** |
+| :--- | :--- | :--- |
+| Python (Pandas/Seaborn) | Tableau | Google Data Analytics |
+| SQL | Arcadia | Google Cybersecurity |
+| Excel | Splunk | ISC² CC Certified |
+
+::: {.callout-note appearance="simple"}
+## Current Focus
+I am currently managing the collection and analysis of Uniform Data System (UDS) data to enhance program evaluation and member tracking for Oregon's primary care network.
+
+I am focusing on building my expertise using R programming, data analysis and visualizations, and probabalistic studies in pursuit of the **University of Michigan Master of Applied Data Science (MADS)** program.
+:::
