@@ -60,3 +60,12 @@ plt.savefig("penguin_plot.png")
 # Show the plot
 plt.show()
 ```
+
+::: {.callout-note appearance="simple"}
+## Data Citation
+**Data Source:**
+Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package version 0.1.0. [https://allisonhorst.github.io/palmerpenguins/](https://allisonhorst.github.io/palmerpenguins/)
+
+**Original Research:**
+Gorman KB, Williams TD, Fraser WR (2014) Ecological Sexual Dimorphism and Environmental Variability within a Community of Antarctic Penguins (Genus Pygoscelis). PLoS ONE 9(3): e90081. doi:10.1371/journal.pone.0090081
+:::
