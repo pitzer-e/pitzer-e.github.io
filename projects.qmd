@@ -3,10 +3,10 @@ title: "Projects & Learning Log"
 listing:
   contents: projects
   sort: "date desc"
-  type: default # Options: default, table, grid
+  type: grid            # "grid" looks much better than "default" for portfolios
+  grid-columns: 3       # Layouts nicely
+  image-height: 250px   # Forces all images to be uniform
   categories: true
-  sort-ui: true
-  filter-ui: true
 page-layout: full
 title-block-banner: true
 ---

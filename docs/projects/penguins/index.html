@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ethan Pitzer">
+<meta name="dcterms.date" content="2025-11-22">
+<meta name="description" content="An exploratory analysis of penguin species using Python and Seaborn.">
 
-<title>Ethan Pitzer – E. Pitzer | Data Analyst</title>
+<title>Palmer Penguins Analysis – E. Pitzer | Data Analyst</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +26,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c1fac2584b48ed01fb6e278e36375074.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c1fac2584b48ed01fb6e278e36375074.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -78,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">E. Pitzer | Data Analyst</span>
     </a>
   </div>
@@ -89,11 +93,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
+    <a class="nav-link" href="../../projects.html"> 
 <span class="menu-text">Projects &amp; Notes</span></a>
   </li>  
 </ul>
@@ -127,51 +131,106 @@ ul.task-list li input[type="checkbox"] {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
+   
   <ul>
-  <li><a href="#data-analyst-oregon-primary-care-association" id="toc-data-analyst-oregon-primary-care-association" class="nav-link active" data-scroll-target="#data-analyst-oregon-primary-care-association">Data Analyst | Oregon Primary Care Association</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#palmer-penguin-dataset-from-allison-horsts-github-repository" id="toc-palmer-penguin-dataset-from-allison-horsts-github-repository" class="nav-link" data-scroll-target="#palmer-penguin-dataset-from-allison-horsts-github-repository">Palmer Penguin Dataset from Allison Horst’s GitHub Repository</a></li>
+  <li><a href="#display-the-first-5-rows" id="toc-display-the-first-5-rows" class="nav-link" data-scroll-target="#display-the-first-5-rows">Display the first 5 rows</a></li>
+  <li><a href="#set-a-nice-theme" id="toc-set-a-nice-theme" class="nav-link" data-scroll-target="#set-a-nice-theme">Set a nice theme</a></li>
+  <li><a href="#create-the-plot" id="toc-create-the-plot" class="nav-link" data-scroll-target="#create-the-plot">Create the plot</a></li>
+  <li><a href="#save-this-image-so-we-can-use-it-as-our-blog-thumbnail" id="toc-save-this-image-so-we-can-use-it-as-our-blog-thumbnail" class="nav-link" data-scroll-target="#save-this-image-so-we-can-use-it-as-our-blog-thumbnail">Save this image so we can use it as our blog thumbnail!</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<div class="quarto-about-jolla">
-  <img src="profile.jpeg" class="about-image
-  round " style="height: 15em; width: 15em;">
- <header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Ethan Pitzer</h1>
-</div>
-<div class="quarto-title-meta">
-  </div>
-</header><main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
-<section id="data-analyst-oregon-primary-care-association" class="level2">
-<h2 data-anchor-id="data-analyst-oregon-primary-care-association">Data Analyst | Oregon Primary Care Association</h2>
-<p>I am a Data Analyst based in Medford, Oregon, specializing in transforming complex datasets into actionable insights for non-profit healthcare.</p>
-<p>With a background as a Salesforce Support Engineer and an MBA, I bridge the gap between technical data architecture and strategic business goals. My work focuses on visualizing community health data to support primary care initiatives across Oregon.</p>
-<p>This site serves as a digital garden for my projects in Python, SQL, Tableau, and R.</p>
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Palmer Penguins Analysis</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">visualization</div>
+    <div class="quarto-category">analysis</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    An exploratory analysis of penguin species using Python and Seaborn.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ethan Pitzer </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 22, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This project explores the famous <strong>Palmer Penguins</strong> dataset. We will look at the relationship between flipper length and body mass across three different species: Adelie, Chinstrap, and Gentoo.</p>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>First, we import the necessary libraries and load the data directly from the source.</p>
+<p>import pandas as pd import seaborn as sns import matplotlib.pyplot as plt</p>
+</section>
+<section id="palmer-penguin-dataset-from-allison-horsts-github-repository" class="level1">
+<h1>Palmer Penguin Dataset from Allison Horst’s GitHub Repository</h1>
+<p>url = “https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/inst/extdata/penguins.csv” penguins = pd.read_csv(url)</p>
+</section>
+<section id="display-the-first-5-rows" class="level1">
+<h1>Display the first 5 rows</h1>
+<p>penguins.head()</p>
+<p>#| label: fig-penguin #| fig-cap: “Scatter plot of Flipper Length vs Body Mass”</p>
+</section>
+<section id="set-a-nice-theme" class="level1">
+<h1>Set a nice theme</h1>
+<p>sns.set_theme(style=“whitegrid”)</p>
+</section>
+<section id="create-the-plot" class="level1">
+<h1>Create the plot</h1>
+<p>plt.figure(figsize=(10, 6)) plot = sns.scatterplot( data=penguins, x=“flipper_length_mm”, y=“body_mass_g”, hue=“species”, # size=“bill_depth_mm”, &lt;– I DELETED THIS LINE palette=“viridis”, alpha=0.7 )</p>
+<p>plt.title(“Penguin Size Characteristics”) plt.xlabel(“Flipper Length (mm)”) plt.ylabel(“Body Mass (g)”)</p>
+</section>
+<section id="save-this-image-so-we-can-use-it-as-our-blog-thumbnail" class="level1">
+<h1>Save this image so we can use it as our blog thumbnail!</h1>
+<p>plt.savefig(“penguin_plot.png”) plt.show()</p>
 
 
 </section>
-</main> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://www.linkedin.com/in/pitzer-e/" class="about-link" rel="" target="">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/pitzer-e" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
-  <a href="mailto:your-email@example.com" class="about-link" rel="" target="">
-    <i class="bi bi-envelope"></i>
-     <span class="about-link-text">Email</span>
-  </a>
-</div>
-</div>
- <!-- /main -->
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

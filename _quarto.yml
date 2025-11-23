@@ -14,9 +14,9 @@ website:
       - icon: github
         href: https://github.com/pitzer-e
       - icon: linkedin
-        href: https://www.linkedin.com/
+        href: https://www.linkedin.com/in/pitzer-e/
       - icon: journal-code # Using a generic icon for Kaggle if the specific brand icon isn't loaded yet
-        href: https://www.kaggle.com/
+        href: https://www.kaggle.com/epitzer
         text: Kaggle 
 
 format:

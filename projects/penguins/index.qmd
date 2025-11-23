@@ -1,0 +1,54 @@
+---
+title: "Palmer Penguins Analysis"
+author: "Ethan Pitzer"
+date: "2025-11-22"
+categories: [python, visualization, analysis]
+image: "penguin_plot.png"
+description: "An exploratory analysis of penguin species using Python and Seaborn."
+---
+
+## Introduction
+
+This project explores the famous **Palmer Penguins** dataset. We will look at the relationship between flipper length and body mass across three different species: Adelie, Chinstrap, and Gentoo.
+
+## Setup
+
+First, we import the necessary libraries and load the data directly from the source.
+
+```{python}
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Palmer Penguin Dataset from Allison Horst's GitHub Repository
+url = "https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/inst/extdata/penguins.csv"
+penguins = pd.read_csv(url)
+
+# Display the first 5 rows
+penguins.head()
+
+#| label: fig-penguin
+#| fig-cap: "Scatter plot of Flipper Length vs Body Mass"
+
+# Set a nice theme
+sns.set_theme(style="whitegrid")
+
+# Create the plot
+plt.figure(figsize=(10, 6))
+plot = sns.scatterplot(
+    data=penguins,
+    x="flipper_length_mm",
+    y="body_mass_g",
+    hue="species",
+    # size="bill_depth_mm",  <-- I DELETED THIS LINE
+    palette="viridis",
+    alpha=0.7
+)
+
+plt.title("Penguin Size Characteristics")
+plt.xlabel("Flipper Length (mm)")
+plt.ylabel("Body Mass (g)")
+
+# Save this image so we can use it as our blog thumbnail!
+plt.savefig("penguin_plot.png")
+plt.show()
