@@ -20,13 +20,19 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Palmer Penguin Dataset from Allison Horst's GitHub Repository
+# Load the dataset directly from GitHub URL
 url = "https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/inst/extdata/penguins.csv"
 penguins = pd.read_csv(url)
 
 # Display the first 5 rows
 penguins.head()
+```
 
+## Visualization: Flipper Length vs. Body Mass
+
+We want to see if larger flippers correlate with higher body mass.
+
+```{python}
 #| label: fig-penguin
 #| fig-cap: "Scatter plot of Flipper Length vs Body Mass"
 
@@ -40,7 +46,6 @@ plot = sns.scatterplot(
     x="flipper_length_mm",
     y="body_mass_g",
     hue="species",
-    # size="bill_depth_mm",  <-- I DELETED THIS LINE
     palette="viridis",
     alpha=0.7
 )
@@ -49,6 +54,9 @@ plt.title("Penguin Size Characteristics")
 plt.xlabel("Flipper Length (mm)")
 plt.ylabel("Body Mass (g)")
 
-# Save this image so we can use it as our blog thumbnail!
+# Save the thumbnail for the gallery
 plt.savefig("penguin_plot.png")
+
+# Show the plot
 plt.show()
+```

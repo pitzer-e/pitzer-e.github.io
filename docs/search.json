@@ -39,7 +39,7 @@
     "href": "projects/penguins/index.html#setup",
     "title": "Palmer Penguins Analysis",
     "section": "Setup",
-    "text": "Setup\nFirst, we import the necessary libraries and load the data directly from the source.\nimport pandas as pd import seaborn as sns import matplotlib.pyplot as plt"
+    "text": "Setup\nFirst, we import the necessary libraries and load the data directly from the source.\n\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Load the dataset directly from GitHub URL\nurl = \"https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/inst/extdata/penguins.csv\"\npenguins = pd.read_csv(url)\n\n# Display the first 5 rows\npenguins.head()\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\n0\nAdelie\nTorgersen\n39.1\n18.7\n181.0\n3750.0\nmale\n2007\n\n\n1\nAdelie\nTorgersen\n39.5\n17.4\n186.0\n3800.0\nfemale\n2007\n\n\n2\nAdelie\nTorgersen\n40.3\n18.0\n195.0\n3250.0\nfemale\n2007\n\n\n3\nAdelie\nTorgersen\nNaN\nNaN\nNaN\nNaN\nNaN\n2007\n\n\n4\nAdelie\nTorgersen\n36.7\n19.3\n193.0\n3450.0\nfemale\n2007"
   },
   {
     "objectID": "projects.html",
@@ -47,5 +47,12 @@
     "title": "Projects & Learning Log",
     "section": "",
     "text": "Here is a catalogue of my data analysis projects, utilizing Python, R, and SQL.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPalmer Penguins Analysis\n\n\n\npython\n\nvisualization\n\nanalysis\n\n\n\nAn exploratory analysis of penguin species using Python and Seaborn.\n\n\n\nEthan Pitzer\n\n\nNov 22, 2025\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nnews\n\n\n\n\n\n\n\nEthan Pitzer\n\n\nNov 22, 2025\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "projects/penguins/index.html#visualization-flipper-length-vs.-body-mass",
+    "href": "projects/penguins/index.html#visualization-flipper-length-vs.-body-mass",
+    "title": "Palmer Penguins Analysis",
+    "section": "Visualization: Flipper Length vs. Body Mass",
+    "text": "Visualization: Flipper Length vs. Body Mass\nWe want to see if larger flippers correlate with higher body mass.\n\n# Set a nice theme\nsns.set_theme(style=\"whitegrid\")\n\n# Create the plot\nplt.figure(figsize=(10, 6))\nplot = sns.scatterplot(\n    data=penguins,\n    x=\"flipper_length_mm\",\n    y=\"body_mass_g\",\n    hue=\"species\",\n    palette=\"viridis\",\n    alpha=0.7\n)\n\nplt.title(\"Penguin Size Characteristics\")\nplt.xlabel(\"Flipper Length (mm)\")\nplt.ylabel(\"Body Mass (g)\")\n\n# Save the thumbnail for the gallery\nplt.savefig(\"penguin_plot.png\")\n\n# Show the plot\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Scatter plot of Flipper Length vs Body Mass"
   }
 ]
