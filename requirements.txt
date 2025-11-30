@@ -1,0 +1,9 @@
+pandas
+numpy
+requests
+openpyxl
+seaborn
+matplotlib
+plotly
+quarto
+ipykernel

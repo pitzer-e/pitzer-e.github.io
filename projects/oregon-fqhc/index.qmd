@@ -1,0 +1,77 @@
+---
+title: "Oregon FQHC Landscape"
+subtitle: "Automated analysis of Health Center Service Delivery Sites"
+author: "E. Pitzer"
+date: last-modified
+categories: [Data Engineering, Healthcare, Python]
+format:
+  html:
+    code-fold: true
+    toc: true
+jupyter: python3
+---
+
+## Project Status
+**Phase 1: Data Pipeline Active**
+
+Data is sourced directly from the [HRSA Data Warehouse](https://data.hrsa.gov/).
+
+```{python}
+#| label: setup
+#| warning: false
+#| echo: false
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the processed data
+# Path is relative to this .qmd file
+df = pd.read_csv("data/processed/oregon_sites.csv")
+
+# Quick metric for the dashboard
+total_sites = len(df)
+# We use 'Site City' (Standard HRSA column) - if this fails, check column names!
+unique_cities = df['Site City'].nunique()
+```
+
+### At a Glance
+
+We are currently tracking **`{python} total_sites`** service delivery sites across **`{python} unique_cities`** cities in Oregon.
+
+### Sites by County (Top 10)
+
+Where are the health center sites concentrated?
+
+```{python}
+#| label: fig-county-dist
+#| fig-cap: "Distribution of FQHC Sites by County"
+#| warning: false
+
+# Configure the visual style
+sns.set_theme(style="whitegrid")
+plt.figure(figsize=(10, 6))
+
+# Count sites per county - USING CORRECTED COLUMN NAME
+county_counts = df['County Equivalent Name'].value_counts().head(10).reset_index()
+county_counts.columns = ['County', 'Sites']
+
+# Plot
+ax = sns.barplot(data=county_counts, x='Sites', y='County', palette="viridis", hue='County')
+ax.set_title("Top 10 Counties by Number of Sites")
+plt.show()
+```
+
+### Data Preview
+
+Below is a sample of the raw data feeding this report.
+
+```{python}
+#| label: tbl-preview
+#| tbl-cap: "Recent Site Data Entry"
+
+# Display a clean table of just a few relevant columns
+# USING CORRECTED COLUMN NAME
+display_cols = ['Site Name', 'Site City', 'County Equivalent Name', 'Health Center Type']
+df[display_cols].sample(5)
+```
