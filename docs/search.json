@@ -1,38 +1,10 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Ethan Pitzer",
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects & Learning Log",
     "section": "",
-    "text": "I am a Data Analyst based in Oregon, currently driving strategic objectives for the Oregon Primary Care Association (OPCA). My work focuses on leveraging analytics software—including Arcadia, Tableau, and SQL—to provide actionable intelligence that supports community health centers across the state.\nMy background sits at the intersection of technical engineering and business strategy. Before pivoting to data analytics, I spent several years as a Technical Support Engineer at Salesforce, where I specialized in troubleshooting complex custom code and integrations for commercial and government clients.\nI hold an MBA from Quantic School of Business and Technology and a B.S. in Computer Science from Eastern Oregon University.\n\n\n\n\n\n\n\n\n\n\nCore Data Stack\nVisualization\nCertifications\n\n\n\n\nPython (Pandas/Seaborn)\nMatplotlib\nGoogle Data Analytics Professional\n\n\nR\nArcadia\nArcadia Certified Professional\n\n\nSQL\nTableau\nTableau Business Intelligence Analyst\n\n\nExcel\nSplunk\nISC² CC Certified\n\n\n\n\n\n\n\n\n\nNoteCurrent Focus\n\n\n\nI am currently managing the ingestion and analysis of Electronic Health Record (EHR) and CCLF claims data within the Arcadia Data Analytics Platform to uncover actionable healthcare patterns across Oregon FQHCs.\nSimultaneously, I am expanding my technical toolkit—with a focus on R programming, probabilistic modeling, and advanced visualization—in pursuit of the University of Michigan Master of Applied Data Science (MADS) program."
-  },
-  {
-    "objectID": "index.html#data-analyst-opca",
-    "href": "index.html#data-analyst-opca",
-    "title": "Ethan Pitzer",
-    "section": "",
-    "text": "I am a Data Analyst based in Oregon, currently driving strategic objectives for the Oregon Primary Care Association (OPCA). My work focuses on leveraging analytics software—including Arcadia, Tableau, and SQL—to provide actionable intelligence that supports community health centers across the state.\nMy background sits at the intersection of technical engineering and business strategy. Before pivoting to data analytics, I spent several years as a Technical Support Engineer at Salesforce, where I specialized in troubleshooting complex custom code and integrations for commercial and government clients.\nI hold an MBA from Quantic School of Business and Technology and a B.S. in Computer Science from Eastern Oregon University.\n\n\n\n\n\n\n\n\n\n\nCore Data Stack\nVisualization\nCertifications\n\n\n\n\nPython (Pandas/Seaborn)\nMatplotlib\nGoogle Data Analytics Professional\n\n\nR\nArcadia\nArcadia Certified Professional\n\n\nSQL\nTableau\nTableau Business Intelligence Analyst\n\n\nExcel\nSplunk\nISC² CC Certified\n\n\n\n\n\n\n\n\n\nNoteCurrent Focus\n\n\n\nI am currently managing the ingestion and analysis of Electronic Health Record (EHR) and CCLF claims data within the Arcadia Data Analytics Platform to uncover actionable healthcare patterns across Oregon FQHCs.\nSimultaneously, I am expanding my technical toolkit—with a focus on R programming, probabilistic modeling, and advanced visualization—in pursuit of the University of Michigan Master of Applied Data Science (MADS) program."
-  },
-  {
-    "objectID": "projects/health-landscape/index.html",
-    "href": "projects/health-landscape/index.html",
-    "title": "Oregon Health Center Landscape",
-    "section": "",
-    "text": "This visualization maps the service delivery landscape for the Oregon Primary Care Association (OPCA). The goal was to provide stakeholders with an interactive tool to identify health center locations, understand service coverage, and analyze the distribution of access points across the state.\nThe data is sourced from the HRSA Health Center Service Delivery dataset."
-  },
-  {
-    "objectID": "projects/health-landscape/index.html#project-overview",
-    "href": "projects/health-landscape/index.html#project-overview",
-    "title": "Oregon Health Center Landscape",
-    "section": "",
-    "text": "This visualization maps the service delivery landscape for the Oregon Primary Care Association (OPCA). The goal was to provide stakeholders with an interactive tool to identify health center locations, understand service coverage, and analyze the distribution of access points across the state.\nThe data is sourced from the HRSA Health Center Service Delivery dataset."
-  },
-  {
-    "objectID": "projects/health-landscape/index.html#the-dashboard",
-    "href": "projects/health-landscape/index.html#the-dashboard",
-    "title": "Oregon Health Center Landscape",
-    "section": "The Dashboard",
-    "text": "The Dashboard\n\n\n\n\n\n\nTipInteraction\n\n\n\nFeel free to zoom in on specific counties or click on individual clinic dots to see site-specific details."
+    "text": "Here is a catalogue of my data analysis projects, utilizing Python, R, and SQL.\n\n\n\n\n\n\n\n\n\n\n\n\nOregon FQHC Landscape\n\n\n\nData Engineering\n\nHealthcare\n\nPython\n\n\n\n\n\n\n\nEthan Pitzer\n\n\nNov 30, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nOregon Health Center Landscape\n\n\n\ntableau\n\nhealthcare\n\ngeospatial\n\n\n\nAn interactive dashboard visualizing health center service delivery sites across Oregon.\n\n\n\nEthan Pitzer\n\n\nNov 22, 2025\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nnews\n\n\n\n\n\n\n\nEthan Pitzer\n\n\nNov 22, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nPalmer Penguins Analysis\n\n\n\npython\n\nvisualization\n\nanalysis\n\n\n\nAn exploratory analysis of penguin species using Python and Seaborn.\n\n\n\nEthan Pitzer\n\n\nNov 22, 2025\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "projects/penguins/index.html",
@@ -77,6 +49,27 @@
     "text": "Phase 1: Data Pipeline Active\nData is sourced directly from the HRSA Data Warehouse.\n\n\nWe are currently tracking 329 service delivery sites across 83 cities in Oregon.\n\n\n\nWhere are the health center sites concentrated?\n\n\nCode\n# Configure the visual style\nsns.set_theme(style=\"whitegrid\")\nplt.figure(figsize=(10, 6))\n\n# Count sites per county - USING CORRECTED COLUMN NAME\ncounty_counts = df['County Equivalent Name'].value_counts().head(10).reset_index()\ncounty_counts.columns = ['County', 'Sites']\n\n# Plot\nax = sns.barplot(data=county_counts, x='Sites', y='County', palette=\"viridis\", hue='County')\nax.set_title(\"Top 10 Counties by Number of Sites\")\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1: Distribution of FQHC Sites by County\n\n\n\n\n\n\n\n\nBelow is a sample of the raw data feeding this report.\n\n\nCode\n# Display a clean table of just a few relevant columns\n# USING CORRECTED COLUMN NAME\ndisplay_cols = ['Site Name', 'Site City', 'County Equivalent Name', 'Health Center Type']\ndf[display_cols].sample(5)\n\n\n\n\nTable 1: Recent Site Data Entry\n\n\n\n\n\n\n\n\n\n\nSite Name\nSite City\nCounty Equivalent Name\nHealth Center Type\n\n\n\n\n191\nProspect Charter School\nProspect\nJackson\nFederally Qualified Health Center (FQHC)\n\n\n270\nCommunity Health Center of Clatskanie\nClatskanie\nColumbia\nFederally Qualified Health Center (FQHC)\n\n\n281\nNARA Residential Treatment Center\nPortland\nMultnomah\nFederally Qualified Health Center (FQHC)\n\n\n323\nSpringfield Schools Health Center\nSpringfield\nLane\nFederally Qualified Health Center (FQHC)\n\n\n60\nWallace Student Health Center\nGresham\nMultnomah\nFederally Qualified Health Center (FQHC)"
   },
   {
+    "objectID": "projects/health-landscape/index.html",
+    "href": "projects/health-landscape/index.html",
+    "title": "Oregon Health Center Landscape",
+    "section": "",
+    "text": "This visualization maps the service delivery landscape for the Oregon Primary Care Association (OPCA). The goal was to provide stakeholders with an interactive tool to identify health center locations, understand service coverage, and analyze the distribution of access points across the state.\nThe data is sourced from the HRSA Health Center Service Delivery dataset."
+  },
+  {
+    "objectID": "projects/health-landscape/index.html#project-overview",
+    "href": "projects/health-landscape/index.html#project-overview",
+    "title": "Oregon Health Center Landscape",
+    "section": "",
+    "text": "This visualization maps the service delivery landscape for the Oregon Primary Care Association (OPCA). The goal was to provide stakeholders with an interactive tool to identify health center locations, understand service coverage, and analyze the distribution of access points across the state.\nThe data is sourced from the HRSA Health Center Service Delivery dataset."
+  },
+  {
+    "objectID": "projects/health-landscape/index.html#the-dashboard",
+    "href": "projects/health-landscape/index.html#the-dashboard",
+    "title": "Oregon Health Center Landscape",
+    "section": "The Dashboard",
+    "text": "The Dashboard\n\n\n\n\n\n\nTipInteraction\n\n\n\nFeel free to zoom in on specific counties or click on individual clinic dots to see site-specific details."
+  },
+  {
     "objectID": "projects/welcome/index.html",
     "href": "projects/welcome/index.html",
     "title": "Welcome To My Blog",
@@ -84,10 +77,17 @@
     "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
   },
   {
-    "objectID": "projects.html",
-    "href": "projects.html",
-    "title": "Projects & Learning Log",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Ethan Pitzer",
     "section": "",
-    "text": "Here is a catalogue of my data analysis projects, utilizing Python, R, and SQL.\n\n\n\n\n\n\n\n\n\n\n\n\nOregon FQHC Landscape\n\n\n\nData Engineering\n\nHealthcare\n\nPython\n\n\n\n\n\n\n\nE. Pitzer\n\n\nNov 30, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nPalmer Penguins Analysis\n\n\n\npython\n\nvisualization\n\nanalysis\n\n\n\nAn exploratory analysis of penguin species using Python and Seaborn.\n\n\n\nEthan Pitzer\n\n\nNov 22, 2025\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nnews\n\n\n\n\n\n\n\nEthan Pitzer\n\n\nNov 22, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nOregon Health Center Landscape\n\n\n\ntableau\n\nhealthcare\n\ngeospatial\n\n\n\nAn interactive dashboard visualizing health center service delivery sites across Oregon.\n\n\n\nEthan Pitzer\n\n\nNov 22, 2025\n\n\n\n\n\n\nNo matching items"
+    "text": "I am a Data Analyst based in Oregon, currently driving strategic objectives for the Oregon Primary Care Association (OPCA). My work focuses on leveraging analytics software—including Arcadia, Tableau, and SQL—to provide actionable intelligence that supports community health centers across the state.\nMy background sits at the intersection of technical engineering and business strategy. Before pivoting to data analytics, I spent several years as a Technical Support Engineer at Salesforce, where I specialized in troubleshooting complex custom code and integrations for commercial and government clients.\nI hold an MBA from Quantic School of Business and Technology and a B.S. in Computer Science from Eastern Oregon University.\n\n\n\n\n\n\n\n\n\n\nCore Data Stack\nVisualization\nCertifications\n\n\n\n\nPython (Pandas/Seaborn)\nMatplotlib\nGoogle Data Analytics Professional\n\n\nR\nArcadia\nArcadia Certified Professional\n\n\nSQL\nTableau\nTableau Business Intelligence Analyst\n\n\nExcel\nSplunk\nISC² CC Certified\n\n\n\n\n\n\n\n\n\nNoteCurrent Focus\n\n\n\nI am currently managing the ingestion and analysis of Electronic Health Record (EHR) and CCLF claims data within the Arcadia Data Analytics Platform to uncover actionable healthcare patterns across Oregon FQHCs.\nSimultaneously, I am expanding my technical toolkit—with a focus on R programming, probabilistic modeling, and advanced visualization—in pursuit of the University of Michigan Master of Applied Data Science (MADS) program."
+  },
+  {
+    "objectID": "index.html#data-analyst-opca",
+    "href": "index.html#data-analyst-opca",
+    "title": "Ethan Pitzer",
+    "section": "",
+    "text": "I am a Data Analyst based in Oregon, currently driving strategic objectives for the Oregon Primary Care Association (OPCA). My work focuses on leveraging analytics software—including Arcadia, Tableau, and SQL—to provide actionable intelligence that supports community health centers across the state.\nMy background sits at the intersection of technical engineering and business strategy. Before pivoting to data analytics, I spent several years as a Technical Support Engineer at Salesforce, where I specialized in troubleshooting complex custom code and integrations for commercial and government clients.\nI hold an MBA from Quantic School of Business and Technology and a B.S. in Computer Science from Eastern Oregon University.\n\n\n\n\n\n\n\n\n\n\nCore Data Stack\nVisualization\nCertifications\n\n\n\n\nPython (Pandas/Seaborn)\nMatplotlib\nGoogle Data Analytics Professional\n\n\nR\nArcadia\nArcadia Certified Professional\n\n\nSQL\nTableau\nTableau Business Intelligence Analyst\n\n\nExcel\nSplunk\nISC² CC Certified\n\n\n\n\n\n\n\n\n\nNoteCurrent Focus\n\n\n\nI am currently managing the ingestion and analysis of Electronic Health Record (EHR) and CCLF claims data within the Arcadia Data Analytics Platform to uncover actionable healthcare patterns across Oregon FQHCs.\nSimultaneously, I am expanding my technical toolkit—with a focus on R programming, probabilistic modeling, and advanced visualization—in pursuit of the University of Michigan Master of Applied Data Science (MADS) program."
   }
 ]
