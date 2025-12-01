@@ -1,9 +1,14 @@
 [
   {
+    "listing": "/dashboards.html",
+    "items": [
+      "/dashboards/health-landscape/index.html"
+    ]
+  },
+  {
     "listing": "/projects.html",
     "items": [
       "/projects/oregon-fqhc/index.html",
-      "/projects/health-landscape/index.html",
       "/projects/penguins/index.html",
       "/projects/welcome/index.html"
     ]

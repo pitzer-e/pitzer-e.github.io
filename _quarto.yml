@@ -9,7 +9,9 @@ website:
       - href: index.qmd
         text: Home
       - href: projects.qmd
-        text: Projects
+        text: Case Studies  # <--- Changed from "Projects" or "Engineering"
+      - href: dashboards.qmd
+        text: Dashboards    # <--- Explicit and clear
     right:
       - icon: github
         href: https://github.com/pitzer-e

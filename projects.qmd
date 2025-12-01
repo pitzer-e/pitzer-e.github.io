@@ -1,5 +1,6 @@
 ---
-title: "Projects"
+title: "Case Studies" # <--- Matches the Navbar
+subtitle: "Deep dives into data engineering, automation, and analytics code including data visualizations."
 listing:
   contents: projects/**/index.qmd  # <--- The filter (Look for index files only)
   sort: "date desc"

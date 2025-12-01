@@ -1,0 +1,11 @@
+---
+title: "Dashboard Gallery"
+subtitle: "Tableau and similar dashboard tool visualizations"
+listing:
+  contents: dashboards/**/index.qmd
+  type: grid
+  sort: "date desc"
+  categories: true
+page-layout: full
+title-block-banner: true
+---
