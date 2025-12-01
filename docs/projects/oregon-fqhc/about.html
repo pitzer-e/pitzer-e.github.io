@@ -198,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'clusterBkg': '#ffffff', 'mainBkg': '#ffffff'}}}%%
+<pre class="mermaid mermaid-js">%%{init: {'theme': 'base'}}%%
 flowchart LR
     A[HRSA Data Warehouse] --&gt;|HTTPS Request| B(Ingest Script)
     B --&gt;|Raw .xlsx| C{Clean &amp; Transform}
@@ -206,12 +206,13 @@ flowchart LR
     D --&gt;|Quarto| E[Static HTML Site]
     E --&gt;|Deploy| F[GitHub Pages]
     
-    subgraph "GitHub Actions Runner (Weekly)"
-    B
-    C
-    D
-    E
-    end
+    style B fill:#e3f2fd
+    style C fill:#e3f2fd
+    style D fill:#e3f2fd
+    style E fill:#e3f2fd
+    
+    classDef runner fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    class B,C,D,E runner
 </pre>
 </div>
 <p></p><figcaption> Automated Data Pipeline Architecture</figcaption> </figure><p></p>

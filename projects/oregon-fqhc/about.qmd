@@ -20,7 +20,7 @@ The goal was to build a self-healing, automated data product that tracks Health 
 The system is architected as a serverless ETL pipeline running on **GitHub Actions**.
 ```{mermaid}
 %%| fig-cap: "Automated Data Pipeline Architecture"
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'clusterBkg': '#ffffff', 'mainBkg': '#ffffff'}}}%%
+%%{init: {'theme': 'base'}}%%
 flowchart LR
     A[HRSA Data Warehouse] -->|HTTPS Request| B(Ingest Script)
     B -->|Raw .xlsx| C{Clean & Transform}
@@ -28,10 +28,11 @@ flowchart LR
     D -->|Quarto| E[Static HTML Site]
     E -->|Deploy| F[GitHub Pages]
     
-    subgraph "GitHub Actions Runner (Weekly)"
-    B
-    C
-    D
-    E
-    end
+    style B fill:#e3f2fd
+    style C fill:#e3f2fd
+    style D fill:#e3f2fd
+    style E fill:#e3f2fd
+    
+    classDef runner fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    class B,C,D,E runner
 ```

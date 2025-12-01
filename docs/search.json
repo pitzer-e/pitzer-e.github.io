@@ -46,7 +46,7 @@
     "href": "projects/oregon-fqhc/about.html#the-pipeline",
     "title": "Technical Architecture",
     "section": "The Pipeline",
-    "text": "The Pipeline\nThe system is architected as a serverless ETL pipeline running on GitHub Actions.\n\n\n\n\n\n%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'clusterBkg': '#ffffff', 'mainBkg': '#ffffff'}}}%%\nflowchart LR\n    A[HRSA Data Warehouse] --&gt;|HTTPS Request| B(Ingest Script)\n    B --&gt;|Raw .xlsx| C{Clean & Transform}\n    C --&gt;|Pandas| D[Oregon Subset .csv]\n    D --&gt;|Quarto| E[Static HTML Site]\n    E --&gt;|Deploy| F[GitHub Pages]\n    \n    subgraph \"GitHub Actions Runner (Weekly)\"\n    B\n    C\n    D\n    E\n    end\n\n\n Automated Data Pipeline Architecture"
+    "text": "The Pipeline\nThe system is architected as a serverless ETL pipeline running on GitHub Actions.\n\n\n\n\n\n%%{init: {'theme': 'base'}}%%\nflowchart LR\n    A[HRSA Data Warehouse] --&gt;|HTTPS Request| B(Ingest Script)\n    B --&gt;|Raw .xlsx| C{Clean & Transform}\n    C --&gt;|Pandas| D[Oregon Subset .csv]\n    D --&gt;|Quarto| E[Static HTML Site]\n    E --&gt;|Deploy| F[GitHub Pages]\n    \n    style B fill:#e3f2fd\n    style C fill:#e3f2fd\n    style D fill:#e3f2fd\n    style E fill:#e3f2fd\n    \n    classDef runner fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n    class B,C,D,E runner\n\n\n Automated Data Pipeline Architecture"
   },
   {
     "objectID": "projects/oregon-fqhc/index.html",
