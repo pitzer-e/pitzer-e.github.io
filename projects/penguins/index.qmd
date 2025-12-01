@@ -1,6 +1,6 @@
 ---
 title: "Palmer Penguins Analysis"
-author: "Ethan Pitzer"
+author: "E. Pitzer"
 date: "2025-11-22"
 categories: [python, visualization, analysis]
 image: "penguin_plot.png"

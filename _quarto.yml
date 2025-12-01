@@ -9,7 +9,7 @@ website:
       - href: index.qmd
         text: Home
       - href: projects.qmd
-        text: Projects & Notes
+        text: Projects
     right:
       - icon: github
         href: https://github.com/pitzer-e

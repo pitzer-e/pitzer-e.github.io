@@ -1,6 +1,6 @@
 ---
 title: "Oregon Health Center Landscape"
-author: "Ethan Pitzer"
+author: "E. Pitzer"
 date: "2025-11-22"
 categories: [tableau, healthcare, geospatial]
 image: "thumbnail.png"

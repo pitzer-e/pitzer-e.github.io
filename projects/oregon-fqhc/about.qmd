@@ -1,0 +1,37 @@
+---
+title: "Technical Architecture"
+subtitle: "Under the hood of the Oregon FQHC Landscape"
+author: "E. Pitzer"
+date: last-modified
+categories: [Architecture, Python, CI/CD]
+format:
+  html:
+    toc: true
+---
+
+## Overview
+
+This project represents a strategic shift from manual, GUI-based reporting (Tableau) to **Code-First Analytics Engineering**. 
+
+The goal was to build a self-healing, automated data product that tracks Health Center Service Delivery Sites in Oregon without requiring manual intervention.
+
+## The Pipeline
+
+The system is architected as a serverless ETL pipeline running on **GitHub Actions**.
+```{mermaid}
+%%| fig-cap: "Automated Data Pipeline Architecture"
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'clusterBkg': '#ffffff', 'mainBkg': '#ffffff'}}}%%
+flowchart LR
+    A[HRSA Data Warehouse] -->|HTTPS Request| B(Ingest Script)
+    B -->|Raw .xlsx| C{Clean & Transform}
+    C -->|Pandas| D[Oregon Subset .csv]
+    D -->|Quarto| E[Static HTML Site]
+    E -->|Deploy| F[GitHub Pages]
+    
+    subgraph "GitHub Actions Runner (Weekly)"
+    B
+    C
+    D
+    E
+    end
+```
