@@ -1,12 +1,40 @@
 ---
-title: "Welcome To My Blog"
+title: "Welcome To My Site"
 author: "E. Pitzer"
 date: "2025-11-22"
 categories: [news]
 ---
 
-This is the first post in a Quarto blog. Welcome!
+## About This Portfolio
 
-![](thumbnail.png)
+This site showcases my approach to **code-first analytics engineering**—building automated, reproducible data products that replace manual reporting workflows with self-healing pipelines.
 
-Since this post doesn't specify an explicit `image`, the first image in the post will be used in the listing page of posts.
+### What You'll Find Here
+
+**[Case Studies](../../projects.html)** — Technical deep dives featuring:
+- Python-based ETL pipeline architectures
+- CI/CD automation with GitHub Actions
+- Infrastructure-as-code implementations
+- Data validation and quality frameworks
+
+**[Dashboards](../../dashboards.html)** — Business intelligence solutions including:
+- Interactive Tableau visualizations
+- Healthcare analytics dashboards
+- Operational reporting tools
+
+### My Development Philosophy
+
+I embrace **AI-augmented programming** as a way to enhance, not replace, human expertise. AI assistants provide real-time feedback, accelerate iteration cycles, and enable active learning through concept review and self-testing.
+
+**But responsible use requires:**
+- **Human oversight** — Understanding and verifying all deployed code
+- **Transparency** — Being clear about AI tool usage
+- **Continuous learning** — Using AI to deepen technical understanding, not bypass it
+
+The goal is augmented intelligence: combining human judgment and domain expertise with AI's ability to generate solutions and explain complex concepts.
+
+---
+
+*Questions or collaboration opportunities? Reach out via [GitHub](https://github.com/pitzer-e) or [LinkedIn](https://www.linkedin.com/in/pitzer-e/).*
+
+![](thumbnail.jpg)

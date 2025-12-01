@@ -23,9 +23,16 @@
   {
     "objectID": "projects/welcome/index.html",
     "href": "projects/welcome/index.html",
-    "title": "Welcome To My Blog",
+    "title": "Welcome To My Site",
     "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+    "text": "This site showcases my approach to code-first analytics engineering—building automated, reproducible data products that replace manual reporting workflows with self-healing pipelines.\n\n\nCase Studies — Technical deep dives featuring: - Python-based ETL pipeline architectures - CI/CD automation with GitHub Actions - Infrastructure-as-code implementations - Data validation and quality frameworks\nDashboards — Business intelligence solutions including: - Interactive Tableau visualizations - Healthcare analytics dashboards - Operational reporting tools\n\n\n\nI embrace AI-augmented programming as a way to enhance, not replace, human expertise. AI assistants provide real-time feedback, accelerate iteration cycles, and enable active learning through concept review and self-testing.\nBut responsible use requires: - Human oversight — Understanding and verifying all deployed code - Transparency — Being clear about AI tool usage - Continuous learning — Using AI to deepen technical understanding, not bypass it\nThe goal is augmented intelligence: combining human judgment and domain expertise with AI’s ability to generate solutions and explain complex concepts.\n\nQuestions or collaboration opportunities? Reach out via GitHub or LinkedIn."
+  },
+  {
+    "objectID": "projects/welcome/index.html#about-this-portfolio",
+    "href": "projects/welcome/index.html#about-this-portfolio",
+    "title": "Welcome To My Site",
+    "section": "",
+    "text": "This site showcases my approach to code-first analytics engineering—building automated, reproducible data products that replace manual reporting workflows with self-healing pipelines.\n\n\nCase Studies — Technical deep dives featuring: - Python-based ETL pipeline architectures - CI/CD automation with GitHub Actions - Infrastructure-as-code implementations - Data validation and quality frameworks\nDashboards — Business intelligence solutions including: - Interactive Tableau visualizations - Healthcare analytics dashboards - Operational reporting tools\n\n\n\nI embrace AI-augmented programming as a way to enhance, not replace, human expertise. AI assistants provide real-time feedback, accelerate iteration cycles, and enable active learning through concept review and self-testing.\nBut responsible use requires: - Human oversight — Understanding and verifying all deployed code - Transparency — Being clear about AI tool usage - Continuous learning — Using AI to deepen technical understanding, not bypass it\nThe goal is augmented intelligence: combining human judgment and domain expertise with AI’s ability to generate solutions and explain complex concepts.\n\nQuestions or collaboration opportunities? Reach out via GitHub or LinkedIn."
   },
   {
     "objectID": "projects/oregon-fqhc/about.html",
@@ -95,7 +102,7 @@
     "href": "projects.html",
     "title": "Case Studies",
     "section": "",
-    "text": "Here is a catalogue of my data analysis projects, utilizing Python, R, and SQL.\n\n\n\n\n\n\n\n\n\n\n\n\nOregon FQHC Landscape\n\n\n\nData Engineering\n\nHealthcare\n\nPython\n\n\n\n\n\n\n\nE. Pitzer\n\n\nNov 30, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nPalmer Penguins Analysis\n\n\n\npython\n\nvisualization\n\nanalysis\n\n\n\nAn exploratory analysis of penguin species using Python, Pandas and Seaborn.\n\n\n\nE. Pitzer\n\n\nNov 23, 2025\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nnews\n\n\n\n\n\n\n\nE. Pitzer\n\n\nNov 22, 2025\n\n\n\n\n\n\nNo matching items"
+    "text": "Here is a catalogue of my data analysis projects, utilizing Python, R, and SQL.\n\n\n\n\n\n\n\n\n\n\n\n\nOregon FQHC Landscape\n\n\n\nData Engineering\n\nHealthcare\n\nPython\n\n\n\n\n\n\n\nE. Pitzer\n\n\nNov 30, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nPalmer Penguins Analysis\n\n\n\npython\n\nvisualization\n\nanalysis\n\n\n\nAn exploratory analysis of penguin species using Python, Pandas and Seaborn.\n\n\n\nE. Pitzer\n\n\nNov 23, 2025\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Site\n\n\n\nnews\n\n\n\n\n\n\n\nE. Pitzer\n\n\nNov 22, 2025\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "dashboards/health-landscape/index.html",
