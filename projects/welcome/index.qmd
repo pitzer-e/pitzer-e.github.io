@@ -1,6 +1,6 @@
 ---
 title: "Welcome To My Blog"
-author: "Ethan Pitzer"
+author: "E. Pitzer"
 date: "2025-11-22"
 categories: [news]
 ---
