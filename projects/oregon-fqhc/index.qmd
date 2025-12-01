@@ -32,7 +32,7 @@ df = pd.read_csv("data/processed/oregon_sites.csv")
 # Quick metric for the dashboard
 total_sites = len(df)
 # We use 'Site City' (Standard HRSA column) - if this fails, check column names!
-unique_cities = df['Site City'].nunique()
+unique_cities = df['city'].nunique()
 ```
 
 ### At a Glance
@@ -53,13 +53,42 @@ sns.set_theme(style="whitegrid")
 plt.figure(figsize=(10, 6))
 
 # Count sites per county - USING CORRECTED COLUMN NAME
-county_counts = df['County Equivalent Name'].value_counts().head(10).reset_index()
+county_counts = df['county'].value_counts().head(10).reset_index()
 county_counts.columns = ['County', 'Sites']
 
 # Plot
 ax = sns.barplot(data=county_counts, x='Sites', y='County', palette="viridis", hue='County')
 ax.set_title("Top 10 Counties by Number of Sites")
 plt.show()
+```
+
+### Interactive Map
+
+Hover over points to see site details.
+
+```{python}
+#| label: fig-map
+#| fig-cap: "Map of Health Center Service Delivery Sites"
+#| warning: false
+
+import plotly.express as px
+
+# Create interactive map using OpenStreetMap (no token required)
+fig = px.scatter_mapbox(
+    df, 
+    lat="latitude", 
+    lon="longitude", 
+    hover_name="site_name",
+    hover_data=["city", "county", "type"],
+    color="type",
+    zoom=5.5, 
+    center={"lat": 44.0, "lon": -120.5},
+    height=600
+)
+
+fig.update_layout(mapbox_style="open-street-map")
+fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig.show()
 ```
 
 ### Data Preview
@@ -72,6 +101,6 @@ Below is a sample of the raw data feeding this report.
 
 # Display a clean table of just a few relevant columns
 # USING CORRECTED COLUMN NAME
-display_cols = ['Site Name', 'Site City', 'County Equivalent Name', 'Health Center Type']
+display_cols = ['site_name', 'city', 'county', 'type']
 df[display_cols].sample(5)
 ```
