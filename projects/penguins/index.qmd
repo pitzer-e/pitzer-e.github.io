@@ -1,10 +1,10 @@
 ---
 title: "Palmer Penguins Analysis"
 author: "E. Pitzer"
-date: "2025-11-22"
+date: "2025-11-23"
 categories: [python, visualization, analysis]
 image: "penguin_plot.png"
-description: "An exploratory analysis of penguin species using Python and Seaborn."
+description: "An exploratory analysis of penguin species using Python, Pandas and Seaborn."
 ---
 
 ## Introduction
