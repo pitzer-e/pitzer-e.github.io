@@ -31,10 +31,11 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      - name: Run Data Pipeline (Ingest & Clean)
+      - name: Run Data Pipeline (Ingest, Clean, Join)
         run: |
           python projects/oregon-fqhc/scripts/1_ingest_data.py
           python projects/oregon-fqhc/scripts/2_clean_data.py
+          python projects/oregon-fqhc/scripts/3_join_data.py
 
       - name: Render Quarto Site
         run: |

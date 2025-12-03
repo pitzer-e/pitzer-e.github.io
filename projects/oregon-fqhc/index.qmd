@@ -13,9 +13,9 @@ jupyter: python3
 ---
 
 ## Project Status
-**Phase 2: Geospatial & Search** | [View Technical Architecture &rarr;](about.qmd)
+**Phase 3: Patient Demographics Integration** | [View Technical Architecture &rarr;](about.qmd)
 
-Data is sourced directly from the [HRSA Data Warehouse](https://data.hrsa.gov/).
+Data sourced from [HRSA Data Warehouse](https://data.hrsa.gov/) (Site Locations) and **2024 UDS Table 4** (Patient Demographics).
 
 ```{python}
 #| label: setup
@@ -23,84 +23,79 @@ Data is sourced directly from the [HRSA Data Warehouse](https://data.hrsa.gov/).
 #| echo: false
 
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 import plotly.express as px
 from itables import show
 
-# Load the processed data
-df = pd.read_csv("data/processed/oregon_sites.csv")
+# Load the NEW Joined Data
+df = pd.read_csv("data/processed/oregon_sites_joined.csv")
 
-# Quick metric for the dashboard
+# Fill NaNs for visualization
+df['total_patients'] = df['total_patients'].fillna(0)
+df['pct_medicaid'] = df['pct_medicaid'].fillna(0)
+
+# Create formatted columns for the tooltip
+df['Patients (fmt)'] = df['total_patients'].apply(lambda x: f"{x:,.0f}")
+df['Medicaid %'] = df['pct_medicaid'].apply(lambda x: f"{x:.1%}")
+
+# Quick metrics
 total_sites = len(df)
-unique_cities = df['city'].nunique()
+total_patients_served = df['total_patients'].sum()
+# --- NEW METRIC ---
 unique_orgs = df['organization'].nunique()
 ```
 
 ### At a Glance
 
-We are currently tracking **`{python} total_sites`** service delivery sites across **`{python} unique_cities`** cities in Oregon.
+We are currently tracking **`{python} total_sites`** service delivery sites operated by **`{python} unique_orgs`** organizations.
 
-### Sites by County (Top 10)
-
-Where are the health center sites concentrated?
-
-```{python}
-#| label: fig-county-dist
-#| fig-cap: "Distribution of FQHC Sites by County"
-#| warning: false
-
-# Configure the visual style
-sns.set_theme(style="whitegrid")
-plt.figure(figsize=(10, 6))
-
-# Count sites per county - USING CORRECTED COLUMN NAME
-county_counts = df['county'].value_counts().head(10).reset_index()
-county_counts.columns = ['County', 'Sites']
-
-# Plot
-ax = sns.barplot(data=county_counts, x='Sites', y='County', palette="viridis", hue='County')
-ax.set_title("Top 10 Counties by Number of Sites")
-plt.show()
-```
+Collectively, these centers serve approximately **`{python} f"{total_patients_served:,.0f}"`** patients across Oregon.
 
 ### Interactive Map
 
-Hover over points to see site details.
+- Size: Total Patients Served
+- Color: Percent of Patients on Medicaid
+- Hover for details.
 
 ```{python}
 #| label: fig-map
-#| fig-cap: "Map of Health Center Service Delivery Sites"
+#| fig-cap: "Map of Health Center Sites (Sized by Patient Volume)"
 #| warning: false
-
-# Define a custom color sequence if you want specific branding, 
-# otherwise Plotly handles it automatically.
 
 fig = px.scatter_mapbox(
     df, 
     lat="latitude", 
     lon="longitude", 
     hover_name="site_name",
-    hover_data=["organization", "city", "county"],
-    color="organization", 
+    hover_data={
+        "latitude": False,
+        "longitude": False,
+        "total_patients": False, # <--- Hide the raw size column
+        "pct_medicaid": False,   # <--- Hide the raw color column
+        "organization": True,
+        "city": True,
+        "Patients (fmt)": True,  # Keep the pretty version
+        "Medicaid %": True       # Keep the pretty version
+    },
+    size="total_patients",
+    color="pct_medicaid",
+    color_continuous_scale="Viridis", 
+    size_max=25,
     zoom=5.5, 
     center={"lat": 44.0, "lon": -120.5},
     height=600,
-    title="Oregon FQHC Sites by Organization"
+    title="Oregon FQHCs: Patient Volume & Medicaid Density"
 )
 
 fig.update_layout(
-    mapbox_style="open-street-map",
+    mapbox_style="carto-positron",
     margin={"r":0,"t":40,"l":0,"b":0},
-    legend=dict(
-        orientation="h",       # Horizontal
-        yanchor="top",         # Anchor the top of the legend...
-        y=-0.05,               # ...just below the map
-        xanchor="center",      # Center it
-        x=0.5,
-        title=None,            # REMOVE the title (fixes the "zation" cutoff)
-        font=dict(size=9),     # Smaller font to fit more items
-        itemsizing='constant'
+    coloraxis_colorbar=dict(
+        title="% Medicaid",
+        thickness=15,
+        len=0.5,
+        yanchor="bottom", y=0.1,
+        xanchor="left", x=0.02,
+        bgcolor="rgba(255,255,255,0.8)"
     )
 )
 fig.show()
@@ -108,16 +103,30 @@ fig.show()
 
 ### Search & Explore Data
 
-Use the search bar below to find specific clinics, cities, or organizations.
+Sort by Uninsured or Medicaid to find high-need areas.
 ```{python}
 #| label: tbl-interactive
 #| warning: false
 
-# Display interactive table with search
-show(df[['organization', 'site_name', 'city', 'county', 'type']], 
+# Select columns for the table
+display_cols = ['organization', 'site_name', 'city', 'total_patients', 'pct_medicaid', 'pct_uninsured']
+
+# Create a clean copy for display
+df_display = df[display_cols].copy()
+
+# Rename for readability
+df_display.columns = ['Organization', 'Site', 'City', 'Total Patients', '% Medicaid', '% Uninsured']
+
+# Format percentages for the table display (0.5 -> 50%)
+# Note: This turns them into strings, which might affect numeric sorting in some table libraries, 
+# but it looks better.
+df_display['% Medicaid'] = df_display['% Medicaid'].apply(lambda x: f"{x:.1%}")
+df_display['% Uninsured'] = df_display['% Uninsured'].apply(lambda x: f"{x:.1%}")
+
+show(df_display, 
      classes="display nowrap compact", 
      paging=True, 
-     searching=True) # <--- Enables the Search Bar
+     searching=True)
 ```
 
 ### Data Preview
