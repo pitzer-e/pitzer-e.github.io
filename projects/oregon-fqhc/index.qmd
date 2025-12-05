@@ -106,6 +106,41 @@ fig.update_layout(
 fig.show()
 ```
 
+### Analysis: Scale vs. Safety Net
+
+Is there a relationship between the size of a clinic and its payer mix?
+
+The data reveals a **weak positive correlation (0.27)** between clinic size and Medicaid volume. Larger clinics tend to serve a slightly higher percentage of Medicaid patients, though there is significant variance among smaller sites.
+
+* **10th Percentile:** 43% Medicaid
+* **Median Site:** 62% Medicaid
+* **90th Percentile:** 76% Medicaid
+
+```{python}
+#| label: fig-correlation
+#| fig-cap: "Correlation: Patient Volume vs. Medicaid %"
+#| warning: false
+
+# Filter out tiny sites for cleaner visualization
+df_trend = df[df['total_patients'] > 100]
+
+fig_corr = px.scatter(
+    df_trend, 
+    x="total_patients", 
+    y="pct_medicaid",
+    hover_name="site_name",
+    hover_data={"total_patients": False, "pct_medicaid": False, "Patients (fmt)": True, "Medicaid %": True},
+    trendline="ols", # <--- Ordinary Least Squares Regression Line
+    labels={"total_patients": "Total Patients", "pct_medicaid": "Medicaid %"},
+    title="Do Larger Clinics Serve More Medicaid Patients?",
+    height=500
+)
+
+# Format the Y-axis as percentage
+fig_corr.update_layout(yaxis_tickformat='.0%')
+fig_corr.show()
+```
+
 ### Search & Explore Data
 
 Sort by Uninsured or Medicaid to find high-need areas.

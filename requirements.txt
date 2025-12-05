@@ -9,3 +9,4 @@ quarto
 ipykernel
 itables
 pytest
+statsmodels
