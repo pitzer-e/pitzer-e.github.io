@@ -3,6 +3,7 @@ title: "Oregon FQHC Landscape"
 subtitle: "Automated analysis of Health Center Service Delivery Sites"
 author: "E. Pitzer"
 date: last-modified
+image: thumbnail.png
 categories: [Data Engineering, Healthcare, Python]
 format:
   html:
