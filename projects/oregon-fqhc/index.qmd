@@ -13,15 +13,10 @@ jupyter: python3
 ---
 
 ## Project Status
-**Phase 4: Automated QA & Testing**
+**Phase 4: Automated QA & Testing** | [View Technical Architecture &rarr;](about.qmd)
 
-- [View Technical Architecture &rarr;](about.qmd)
+Data sourced from [HRSA Data Warehouse](https://data.hrsa.gov/) and validated via `pytest` before every deployment.
 
-Data sourced from:
-- [HRSA Data Warehouse](https://data.hrsa.gov/) (Site Locations)
-- 2024 UDS Table 4 (Patient Demographics)
-
-Data validated via `pytest` before every deployment
 ```{python}
 #| label: setup
 #| warning: false
@@ -37,6 +32,8 @@ df = pd.read_csv("data/processed/oregon_sites_joined.csv")
 # Fill NaNs for visualization
 df['total_patients'] = df['total_patients'].fillna(0)
 df['pct_medicaid'] = df['pct_medicaid'].fillna(0)
+df['uninsured'] = df['uninsured'].fillna(0)
+df['medicaid'] = df['medicaid'].fillna(0)
 
 # Create formatted columns for the tooltip
 df['Patients (fmt)'] = df['total_patients'].apply(lambda x: f"{x:,.0f}")
@@ -44,8 +41,7 @@ df['Medicaid %'] = df['pct_medicaid'].apply(lambda x: f"{x:.1%}")
 
 # Quick metrics
 total_sites = len(df)
-total_patients_served = df['total_patients'].sum()
-# --- NEW METRIC ---
+total_patients_served = df.drop_duplicates(subset='bhcmis_id')['total_patients'].sum() # Dedup for accurate total
 unique_orgs = df['organization'].nunique()
 ```
 
@@ -53,17 +49,71 @@ unique_orgs = df['organization'].nunique()
 
 We are currently tracking **`{python} total_sites`** service delivery sites operated by **`{python} unique_orgs`** organizations.
 
-Collectively, these centers serve approximately **`{python} f"{total_patients_served:,.0f}"`** patients across Oregon.
+Collectively, these organizations serve **`{python} f"{total_patients_served:,.0f}"`** patients (Note: Includes total patient volume for multi-state organizations operating in Oregon).
+
+### Statewide Payer Mix
+
+Breakdown of the total patient population served by Oregon FQHCs (2024 UDS).
+
+```{python}
+#| label: fig-payor-mix
+#| fig-cap: "Aggregate Payer Mix (Statewide)"
+#| warning: false
+
+# Calculate Statewide Totals (using deduped organization data to avoid double counting)
+df_orgs = df.drop_duplicates(subset='bhcmis_id')
+
+total_pop = df_orgs['total_patients'].sum()
+total_medicaid = df_orgs['medicaid'].sum()
+total_uninsured = df_orgs['uninsured'].sum()
+total_other = total_pop - (total_medicaid + total_uninsured)
+
+# Create a mini dataframe for the pie chart
+mix_data = pd.DataFrame({
+    'Category': ['Medicaid', 'Uninsured', 'Other (Private/Medicare)'],
+    'Patients': [total_medicaid, total_uninsured, total_other]
+})
+
+fig_pie = px.pie(
+    mix_data, 
+    values='Patients', 
+    names='Category',
+    color='Category',
+    color_discrete_map={
+        'Medicaid': '#2c7bb6',    # Blue
+        'Uninsured': '#d7191c',   # Red
+        'Other (Private/Medicare)': '#abd9e9' # Light Blue
+    },
+    hole=0.4, 
+    height=400,
+    title=f"Total Patients (Org Level): {total_pop:,.0f}*"
+)
+
+# Add an annotation explaining the asterisk
+fig_pie.add_annotation(
+    text="*Includes non-OR patients for multi-state orgs",
+    x=0.5, y=-0.15, showarrow=False, font=dict(size=12, color="gray")
+)
+
+fig_pie.update_traces(textinfo='percent+label')
+
+# --- THE FIX: ADD BOTTOM MARGIN ---
+fig_pie.update_layout(
+    margin=dict(t=50, b=80, l=0, r=0) # b=80 gives space for the footnote
+)
+
+fig_pie.show()
+```
 
 ### Interactive Map
 
 - Size: Total Patients Served
 - Color: Percent of Patients on Medicaid
-- Hover for details.
+- *Hover for details*
 
 ```{python}
 #| label: fig-map
-#| fig-cap: "Map of Health Center Sites (Sized by Patient Volume)"
+#| fig-cap: "Map of Health Center Sites"
 #| warning: false
 
 fig = px.scatter_mapbox(
@@ -74,12 +124,14 @@ fig = px.scatter_mapbox(
     hover_data={
         "latitude": False,
         "longitude": False,
-        "total_patients": False, # <--- Hide the raw size column
-        "pct_medicaid": False,   # <--- Hide the raw color column
+        "total_patients": False, 
+        "pct_medicaid": False,
+        "uninsured": False,
+        "medicaid": False,
         "organization": True,
         "city": True,
-        "Patients (fmt)": True,  # Keep the pretty version
-        "Medicaid %": True       # Keep the pretty version
+        "Patients (fmt)": True,
+        "Medicaid %": True
     },
     size="total_patients",
     color="pct_medicaid",
@@ -106,11 +158,13 @@ fig.update_layout(
 fig.show()
 ```
 
-### Analysis: Scale vs. Safety Net
+### Analysis: Scale vs. Safety Net (Organization Level)
 
-Is there a relationship between the size of a clinic and its payer mix?
+Is there a relationship between the size of a Health Center Organization and its payer mix?
 
-The data reveals a **weak positive correlation (0.27)** between clinic size and Medicaid volume. Larger clinics tend to serve a slightly higher percentage of Medicaid patients, though there is significant variance among smaller sites.
+The data reveals a weak positive correlation between organization size and Medicaid volume. Larger organizations tend to serve a slightly higher percentage of Medicaid patients.
+
+Overall however, the data shows you don't have to be a giant mega-clinic to be a safety net provider. Small clinics in Oregon are doing just as much heavy lifting relative to their size.
 
 * **10th Percentile:** 43% Medicaid
 * **Median Site:** 62% Medicaid
@@ -118,25 +172,31 @@ The data reveals a **weak positive correlation (0.27)** between clinic size and 
 
 ```{python}
 #| label: fig-correlation
-#| fig-cap: "Correlation: Patient Volume vs. Medicaid %"
+#| fig-cap: "Correlation: Org Patient Volume vs. Medicaid %"
 #| warning: false
 
-# Filter out tiny sites for cleaner visualization
-df_trend = df[df['total_patients'] > 100]
+# Filter to unique organizations for valid regression
+df_trend = df.drop_duplicates(subset='bhcmis_id')
+df_trend = df_trend[df_trend['total_patients'] > 100]
 
 fig_corr = px.scatter(
     df_trend, 
     x="total_patients", 
     y="pct_medicaid",
-    hover_name="site_name",
-    hover_data={"total_patients": False, "pct_medicaid": False, "Patients (fmt)": True, "Medicaid %": True},
-    trendline="ols", # <--- Ordinary Least Squares Regression Line
-    labels={"total_patients": "Total Patients", "pct_medicaid": "Medicaid %"},
-    title="Do Larger Clinics Serve More Medicaid Patients?",
+    hover_name="organization", # Changed to Org Name
+    # Update tooltips to be explicit about "Organization" scope
+    hover_data={
+        "total_patients": False, 
+        "pct_medicaid": False, 
+        "Patients (fmt)": True, 
+        "Medicaid %": True
+    },
+    trendline="ols",
+    labels={"total_patients": "Total Org Patients", "pct_medicaid": "Org Medicaid %"}, # Explicit Axis Labels
+    title="Organization Size vs. Medicaid %",
     height=500
 )
 
-# Format the Y-axis as percentage
 fig_corr.update_layout(yaxis_tickformat='.0%')
 fig_corr.show()
 ```
@@ -148,25 +208,14 @@ Sort by Uninsured or Medicaid to find high-need areas.
 #| label: tbl-interactive
 #| warning: false
 
-# Select columns for the table
 display_cols = ['organization', 'site_name', 'city', 'total_patients', 'pct_medicaid', 'pct_uninsured']
-
-# Create a clean copy for display
 df_display = df[display_cols].copy()
+df_display.columns = ['Organization', 'Site', 'City', 'Org Total Patients', '% Medicaid', '% Uninsured']
 
-# Rename for readability
-df_display.columns = ['Organization', 'Site', 'City', 'Total Patients', '% Medicaid', '% Uninsured']
-
-# Format percentages for the table display (0.5 -> 50%)
-# Note: This turns them into strings, which might affect numeric sorting in some table libraries, 
-# but it looks better.
 df_display['% Medicaid'] = df_display['% Medicaid'].apply(lambda x: f"{x:.1%}")
 df_display['% Uninsured'] = df_display['% Uninsured'].apply(lambda x: f"{x:.1%}")
 
-show(df_display, 
-     classes="display nowrap compact", 
-     paging=True, 
-     searching=True)
+show(df_display, classes="display nowrap compact", paging=True, searching=True)
 ```
 
 ### Data Preview
