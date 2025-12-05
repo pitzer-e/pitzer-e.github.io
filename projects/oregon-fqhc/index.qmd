@@ -13,9 +13,14 @@ jupyter: python3
 ---
 
 ## Project Status
-**Phase 3: Patient Demographics Integration** | [View Technical Architecture &rarr;](about.qmd)
+## Project Status
+**Phase 4: Automated QA & Testing** | [View Technical Architecture &rarr;](about.qmd)
 
-Data sourced from [HRSA Data Warehouse](https://data.hrsa.gov/) (Site Locations) and **2024 UDS Table 4** (Patient Demographics).
+Data sourced from:
+- [HRSA Data Warehouse](https://data.hrsa.gov/) (Site Locations)
+- 2024 UDS Table 4 (Patient Demographics)
+
+Data validated via `pytest` before every deployment.
 
 ```{python}
 #| label: setup

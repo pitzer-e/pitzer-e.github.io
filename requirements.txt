@@ -8,3 +8,4 @@ plotly
 quarto
 ipykernel
 itables
+pytest

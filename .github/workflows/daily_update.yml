@@ -37,6 +37,12 @@ jobs:
           python projects/oregon-fqhc/scripts/2_clean_data.py
           python projects/oregon-fqhc/scripts/3_join_data.py
 
+      # --- NEW STEP: QUALITY GATE ---
+      - name: Run Quality Assurance Tests
+        run: |
+          pytest projects/oregon-fqhc/tests/
+      # ------------------------------
+
       - name: Render Quarto Site
         run: |
           quarto render
