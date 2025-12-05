@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="E. Pitzer">
-<meta name="dcterms.date" content="2025-11-30">
+<meta name="dcterms.date" content="2025-12-04">
 
 <title>Technical Architecture – E. Pitzer | Data Analyst</title>
 <style>
@@ -141,6 +141,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#advanced-analytics-qa" id="toc-advanced-analytics-qa" class="nav-link" data-scroll-target="#advanced-analytics-qa">Advanced Analytics &amp; QA</a></li>
   <li><a href="#the-pipeline" id="toc-the-pipeline" class="nav-link" data-scroll-target="#the-pipeline">The Pipeline</a></li>
   </ul>
 </nav>
@@ -173,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 30, 2025</p>
+      <p class="date">December 4, 2025</p>
     </div>
   </div>
   
@@ -187,8 +188,14 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This project represents a strategic shift from manual, GUI-based reporting (Tableau) to <strong>Code-First Analytics Engineering</strong>.</p>
+<p>This project represents a strategic shift from manual, GUI-based reporting (Tableau) to Code-First Analytics Engineering.</p>
 <p>The goal was to build a self-healing, automated data product that tracks Health Center Service Delivery Sites in Oregon without requiring manual intervention.</p>
+</section>
+<section id="advanced-analytics-qa" class="level2">
+<h2 class="anchored" data-anchor-id="advanced-analytics-qa">Advanced Analytics &amp; QA</h2>
+<p><strong>Data Enrichment</strong>: Successfully ingested 2024 UDS Grantee Data via direct FOIA endpoint, implementing a robust pandas cleaning layer to handle mixed numeric/text columns in government Excel files.</p>
+<p><strong>Relational Joining</strong>: Engineered a deterministic join between HRSA geospatial data and UDS patient demographics using BHCMISID keys, achieving a 97% match rate (318/328 sites).</p>
+<p><strong>Automated Quality Assurance</strong>: Integrated pytest into the CI/CD pipeline. The system now enforces data integrity checks (e.g., Uninsured &lt; Total Patients, Lat/Lon within Oregon bounds) before every deployment, preventing “silent failures” in production.</p>
 </section>
 <section id="the-pipeline" class="level2">
 <h2 class="anchored" data-anchor-id="the-pipeline">The Pipeline</h2>

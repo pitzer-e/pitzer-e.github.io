@@ -13,15 +13,15 @@ jupyter: python3
 ---
 
 ## Project Status
-## Project Status
-**Phase 4: Automated QA & Testing** | [View Technical Architecture &rarr;](about.qmd)
+**Phase 4: Automated QA & Testing**
+
+- [View Technical Architecture &rarr;](about.qmd)
 
 Data sourced from:
 - [HRSA Data Warehouse](https://data.hrsa.gov/) (Site Locations)
 - 2024 UDS Table 4 (Patient Demographics)
 
-Data validated via `pytest` before every deployment.
-
+Data validated via `pytest` before every deployment
 ```{python}
 #| label: setup
 #| warning: false

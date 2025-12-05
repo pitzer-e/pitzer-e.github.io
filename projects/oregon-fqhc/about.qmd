@@ -11,9 +11,17 @@ format:
 
 ## Overview
 
-This project represents a strategic shift from manual, GUI-based reporting (Tableau) to **Code-First Analytics Engineering**. 
+This project represents a strategic shift from manual, GUI-based reporting (Tableau) to Code-First Analytics Engineering. 
 
 The goal was to build a self-healing, automated data product that tracks Health Center Service Delivery Sites in Oregon without requiring manual intervention.
+
+## Advanced Analytics & QA
+
+**Data Enrichment**: Successfully ingested 2024 UDS Grantee Data via direct FOIA endpoint, implementing a robust pandas cleaning layer to handle mixed numeric/text columns in government Excel files.
+
+**Relational Joining**: Engineered a deterministic join between HRSA geospatial data and UDS patient demographics using BHCMISID keys, achieving a 97% match rate (318/328 sites).
+
+**Automated Quality Assurance**: Integrated pytest into the CI/CD pipeline. The system now enforces data integrity checks (e.g., Uninsured < Total Patients, Lat/Lon within Oregon bounds) before every deployment, preventing "silent failures" in production.
 
 ## The Pipeline
 
