@@ -1,5 +1,4 @@
 import pandas as pd
-import plotly.express as px
 from pathlib import Path
 
 # --- CONFIGURATION ---
@@ -21,14 +20,16 @@ def analyze_data():
     
     # 2. Calculate Correlation
     # Do larger clinics serve a higher % of Medicaid patients?
-    corr = df_analysis['total_patients'].corr(df_analysis['pct_medicaid'])
+    # We verify the columns exist to satisfy strict linters
+    if 'total_patients' in df_analysis.columns and 'pct_medicaid' in df_analysis.columns:
+        corr = df_analysis['total_patients'].corr(df_analysis['pct_medicaid'])
+        print(f"   📈 Correlation (Size vs Medicaid %): {corr:.2f}")
     
-    print(f"   📈 Correlation (Size vs Medicaid %): {corr:.2f}")
-    
-    # 3. Quick Terminal Histogram
-    # Just to see the spread of Medicaid %
-    print("\n   Medicaid % Distribution (Deciles):")
-    print(df_analysis['pct_medicaid'].quantile([0.1, 0.5, 0.9]))
+        # 3. Quick Terminal Histogram
+        print("\n   Medicaid % Distribution (Deciles):")
+        print(df_analysis['pct_medicaid'].quantile([0.1, 0.5, 0.9]))
+    else:
+        print("Columns missing for analysis.")
 
 if __name__ == "__main__":
     analyze_data()
