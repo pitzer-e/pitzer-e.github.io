@@ -22,8 +22,6 @@ This site is architected to separate deep-dive engineering work from visual anal
 
 ## Featured Case Study: Oregon FQHC Landscape
 
-**[View the Live Project](https://pitzer-e.github.io/projects/oregon-fqhc/)**
-
 A serverless, automated data product tracking Health Center Service Delivery Sites in Oregon. It replaces legacy manual workflows with a **Code-First approach**.
 
 ### The Architecture
@@ -34,7 +32,7 @@ This project demonstrates a production-grade ETL pipeline running entirely on Gi
 3.  **Validate:** `pytest` acts as a quality gate, failing the build if data integrity checks (e.g., coordinate bounds, negative counts) are violated.
 4.  **Publish:** Quarto renders the static site with interactive Plotly maps and statistical regression analysis.
 
-[**View the Full Case Study & Forecast**](https://pitzer-e.github.io/projects/oregon-fqhc/)
+[**View the Full Case Study**](https://pitzer-e.github.io/projects/oregon-fqhc/)
 
 ## Featured Project: Clinic Service Forecaster
 
