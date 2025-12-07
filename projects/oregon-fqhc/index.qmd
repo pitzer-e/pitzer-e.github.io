@@ -1,6 +1,6 @@
 ---
 title: "Oregon FQHC Landscape"
-subtitle: "Automated analysis of Health Center Service Delivery Sites"
+description: "Automated analysis of Health Center Service Delivery Sites"
 author: "E. Pitzer"
 date: last-modified
 image: thumbnail.png
@@ -9,14 +9,16 @@ format:
   html:
     code-fold: true
     toc: true
-    page-layout: full
 jupyter: python3
 ---
 
-## Project Status
-**Phase 4: Automated QA & Testing** | [View Technical Architecture &rarr;](about.qmd)
+## Introduction
 
-Data sourced from [HRSA Data Warehouse](https://data.hrsa.gov/) and validated via `pytest` before every deployment.
+:::{.callout-note}
+## Project Context
+This analysis uses Data sourced from [HRSA Data Warehouse](https://data.hrsa.gov/) and validated via `pytest` before every deployment.  We perform an aggregate analysis on statistics (patient count, health center numbers) pulled from the sample data (Oregon).  To learn more about how the CI/CD pipeline was built and the project is structured, view the **[Technical Architecture](about.qmd)** page.
+:::
+
 
 ```{python}
 #| label: setup

@@ -1,0 +1,38 @@
+---
+title: "About the Project"
+author: E. Pitzer
+about:
+  template: solana
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/pitzer-e
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/ethanpitzer
+---
+
+## The Scenario
+
+As a Data Scientist in the healthcare sector, accessing real patient data for public portfolios is restricted by **HIPAA** regulations. 
+
+To demonstrate my forecasting capabilities without compromising patient privacy, I engineered a **synthetic dataset** that mimics the statistical properties of a real Oregon-based community health center.
+
+## Methodology
+
+This project simulates a **6-year historical dataset** (2020-2025) incorporating:
+
+1.  **Trend:** A realistic 3% annual patient volume growth.
+2.  **Seasonality:** Weighted factors for high-traffic months (August/December) and low-traffic months (February).
+3.  **Weekly Cycles:** Daily variance accounting for clinic operating hours (Closed Sundays, half-day Saturdays).
+4.  **External Shocks:** A programmed "structural break" in Q1 2020 to simulate the impact of COVID-19 lockdowns on elective care.
+
+## Tech Stack
+
+This project uses a "Code-First" approach to analytics:
+
+* **Python:** Data generation and logic.
+* **Statsmodels:** SARIMA forecasting and Seasonal Decomposition.
+* **Pandas:** Time-series manipulation and resampling.
+* **Quarto:** Reproducible reporting and HTML publishing.
+* **GitHub Actions:** To automate monthly data updates.

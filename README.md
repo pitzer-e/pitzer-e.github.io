@@ -4,13 +4,13 @@
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-> **Welcome to my engineering lab.** This repository hosts my technical case studies, automated data pipelines, and interactive dashboards.
+> **Welcome to my data science lab!** This repository hosts my data science case studies, automated data pipelines, and interactive dashboards.
 
-**[🌐 Visit the Live Portfolio](https://pitzer-e.github.io/)**
+**[Visit the Live Portfolio](https://pitzer-e.github.io/)**
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 This site is architected to separate deep-dive engineering work from visual analytics:
 
@@ -20,7 +20,7 @@ This site is architected to separate deep-dive engineering work from visual anal
 
 ---
 
-## 🌲 Featured Case Study: Oregon FQHC Landscape
+## Featured Case Study: Oregon FQHC Landscape
 
 **[View the Live Project](https://pitzer-e.github.io/projects/oregon-fqhc/)**
 
@@ -34,25 +34,25 @@ This project demonstrates a production-grade ETL pipeline running entirely on Gi
 3.  **Validate:** `pytest` acts as a quality gate, failing the build if data integrity checks (e.g., coordinate bounds, negative counts) are violated.
 4.  **Publish:** Quarto renders the static site with interactive Plotly maps and statistical regression analysis.
 
-### Quick Start (Run the Pipeline Locally)
+[**View the Full Case Study & Forecast**](https://pitzer-e.github.io/projects/oregon-fqhc/)
 
-Want to see the engineering in action?
+## Featured Project: Clinic Service Forecaster
 
-```bash
-# 1. Clone & Install
-git clone [https://github.com/pitzer-e/pitzer-e.github.io.git](https://github.com/pitzer-e/pitzer-e.github.io.git)
-pip install -r requirements.txt
+**Goal:** Predict future patient visit volumes to optimize staffing and budgeting for a community health center.
 
-# 2. Run the ETL Pipeline
-python projects/oregon-fqhc/scripts/1_ingest_data.py
-python projects/oregon-fqhc/scripts/2_clean_data.py
-python projects/oregon-fqhc/scripts/3_join_data.py
+* **The Challenge:** Real patient data is HIPAA-restricted. I needed a way to demonstrate advanced forecasting capabilities without compromising privacy.
+* **The Solution:**
+    * **Synthetic Data Engineering:** Wrote Python scripts to generate 5 years of daily clinic data, incorporating realistic seasonality, weekly cycles, and "structural breaks" (e.g., COVID-19 lockdowns).
+    * **Time Series Modeling:** Decomposed the data using **Statsmodels** to isolate trends and applied a **SARIMA** (Seasonal AutoRegressive Integrated Moving Average) model for 52-week forward predictions.
+    * **Business Impact:** Translated model outputs into actionable strategies for dynamic staffing and resilience planning.
+* **Tech Stack:** Python, Pandas, Statsmodels, Scikit-Learn, Seaborn, Quarto.
 
-# 3. Run Quality Assurance Tests
-pytest projects/oregon-fqhc/tests/
-```
+[**View the Full Case Study & Forecast**](https://pitzer-e.github.io/projects/clinic-forecasting/)
 
-### 🛠 Global Tech Stack
+### Global Tech Stack
 - Languages: Python, R, SQL
 - Data Engineering: Pandas, Requests, Pytest, GitHub Actions
-- Visualization: Plotly, Seaborn, Tableau, Quarto
+- Visualization: Plotly, Seaborn, Tableau
+- Modeling: Statsmodels, Scikit-Learn
+- Analysis: Time Series Decomposition, Forecasting
+- Reporting: Quarto
