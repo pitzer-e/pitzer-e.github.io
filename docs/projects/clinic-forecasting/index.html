@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="E. Pitzer">
-<meta name="dcterms.date" content="2025-12-07">
+<meta name="dcterms.date" content="2025-12-09">
 <meta name="description" content="Time-series forecasting of dental visit volumes using Python, Statsmodels, and synthetic data generation.">
 
 <title>Clinic Service Volume Forecasting – E. Pitzer | Data Analyst</title>
@@ -260,7 +260,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 7, 2025</p>
+      <p class="date">December 9, 2025</p>
     </div>
   </div>
   
@@ -293,7 +293,7 @@ window.Quarto = {
 <section id="data-ingestion-preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="data-ingestion-preprocessing">1. Data Ingestion &amp; preprocessing</h2>
 <p>First, we load the synthetic transaction data. We ensure dates are parsed correctly and set as the index, which is a requirement for most time-series libraries.</p>
-<div id="67afb3c9" class="cell" data-execution_count="1">
+<div id="ee5dae27" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -366,7 +366,7 @@ window.Quarto = {
 <section id="visualizing-the-daily-volatility" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-the-daily-volatility">Visualizing the Daily Volatility</h3>
 <p>One immediate challenge with clinic data is the “sawtooth” pattern caused by weekends (clinics are often closed or have reduced hours on weekends).</p>
-<div id="0476aee5" class="cell" data-execution_count="2">
+<div id="36ea37db" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
@@ -389,7 +389,7 @@ window.Quarto = {
 <section id="resampling-for-trend-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="resampling-for-trend-analysis">Resampling for Trend Analysis</h3>
 <p>To understand the long-term trends and seasonality better, it is often helpful to aggregate daily data into Weekly Sums. This smooths out the weekend dips and highlights the actual business trajectory.</p>
-<div id="6d21e430" class="cell" data-execution_count="3">
+<div id="d490c7f9" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resample to Weekly Sums ('W')</span></span>
@@ -428,7 +428,7 @@ window.Quarto = {
 <li>Seasonal: The recurring annual pattern.</li>
 <li>Residual: The random noise left over.</li>
 </ol>
-<div id="7d3bd69c" class="cell" data-execution_count="4">
+<div id="5cae8640" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.tsa.seasonal <span class="im">import</span> seasonal_decompose</span>
@@ -457,7 +457,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="data-preparation-traintest-split">Data Preparation: Train/Test Split</h3>
 <p>A crucial step in Data Science is validating the model against unseen data. We will split our data into: - <strong>Training Set:</strong> 2020–2024 (The model learns from this). - <strong>Test Set:</strong> 2025 (We hide this from the model and use it to score accuracy).</p>
 <p><strong>Why Weekly?</strong> Forecasting daily data is often too noisy for strategic planning. Aggregating to a <strong>Weekly</strong> level provides a clearer signal for staffing and resource allocation.</p>
-<div id="b01b038b" class="cell" data-execution_count="5">
+<div id="b07abee7" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Aggregate to Weekly Data</span></span>
@@ -496,7 +496,7 @@ Test Weeks: 53</code></pre>
 <p>We define a SARIMA model with parameters <span class="math inline">\((1, 1, 1) \times (1, 1, 0, 52)\)</span>.</p>
 <p>The 52 indicates an annual seasonal cycle (52 weeks/year).This allows the model to look back at the same week last year to inform the forecast.</p>
 <p>(Note: In a production environment, we would use grid search (AutoARIMA) to optimize these parameters, but for this case study, we manually specify them based on our decomposition analysis.)</p>
-<div id="a90e3230" class="cell" data-execution_count="6">
+<div id="9350cdc0" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.tsa.statespace.sarimax <span class="im">import</span> SARIMAX</span>
@@ -530,7 +530,7 @@ sigma2       157.8458     19.588      8.058      0.000     119.454     196.238
 <section id="validating-the-forecast" class="level3">
 <h3 class="anchored" data-anchor-id="validating-the-forecast">Validating the Forecast</h3>
 <p>Now we ask the model to predict 2025 and compare it to what actually happened (the synthetic test set).</p>
-<div id="07bb5eee" class="cell" data-execution_count="7">
+<div id="d948836e" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate predictions for the Test period</span></span>
