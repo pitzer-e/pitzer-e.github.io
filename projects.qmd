@@ -1,6 +1,6 @@
 ---
 title: "Case Studies" # <--- Matches the Navbar
-subtitle: "Deep dives into data engineering, automation, and analytics code including data visualizations."
+subtitle: "Data analysis projects that provide data visualization, data engineering and embedded code blocks for replication."
 listing:
   contents: projects/**/index.qmd  # <--- The filter (Look for index files only)
   sort: "date desc"
