@@ -7,15 +7,14 @@ categories: [news]
 
 ## About This Portfolio
 
-This site showcases my approach to **code-first analytics engineering**—building automated, reproducible data products that replace manual reporting workflows with self-healing pipelines.
+This site showcases my approach to data analysis as I study data science using Python, opensource Python libraries and apply these learnings to projects and 'Case Studies'.  A number of these projects are automated, reproducible data products that replace manual reporting workflows (static one time data runs / one-time data source dashboards).
 
 ### What You'll Find Here
 
 **[Case Studies](../../projects.html)** — Technical deep dives featuring:
 - Python-based ETL pipeline architectures
 - CI/CD automation with GitHub Actions
-- Infrastructure-as-code implementations
-- Data validation and quality frameworks
+- Data validation and quality frameworks using opensource Python Libraries (Numpy, Pandas, SciPy and scikit-learn as examples).
 
 **[Dashboards](../../dashboards.html)** — Business intelligence solutions including:
 - Interactive Tableau visualizations
@@ -24,12 +23,12 @@ This site showcases my approach to **code-first analytics engineering**—buildi
 
 ### My Development Philosophy
 
-I embrace **AI-augmented programming** as a way to enhance, not replace, human expertise. AI assistants provide real-time feedback, accelerate iteration cycles, and enable active learning through concept review and self-testing.
+I embrace AI-augmented programming as a way to enhance, not replace, human developed and produced work. AI assistants provide real-time feedback, accelerate iteration cycles, and enable active learning through concept review and self-testing.
 
-**But responsible use requires:**
-- **Human oversight** — Understanding and verifying all deployed code
-- **Transparency** — Being clear about AI tool usage
-- **Continuous learning** — Using AI to deepen technical understanding, not bypass it
+**I believe responsible use requires:**
+- **Human oversight**: Understanding and verifying all deployed code
+- **Transparency**: Being clear about AI tool usage
+- **Continuous learning**: Using AI to deepen technical understanding, not bypass it
 
 The goal is augmented intelligence: combining human judgment and domain expertise with AI's ability to generate solutions and explain complex concepts.
 

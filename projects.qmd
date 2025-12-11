@@ -11,4 +11,4 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
-Here is a catalogue of my data analysis projects, utilizing Python, R, and SQL.
+This space contains a catalogue of my data analysis projects, primarily utilizing Python and related packages.  Certain projects utilize data engineering to aggregate, clean and update datasets via a CI/CD pipeline (also built with Python) to create dynamic and up-to-date models and visualizations.
