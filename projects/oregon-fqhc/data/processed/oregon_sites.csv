@@ -16,20 +16,18 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,La Clinica School-Based Health Center at Jackson Elementary School,Medford,Jackson,Federally Qualified Health Center (FQHC),42.33168673,-122.8868263
 103100,"UMPQUA COMMUNITY HEALTH CENTER, INC.",Sutherlin Clinic,Sutherlin,Douglas,Federally Qualified Health Center (FQHC),43.38089422,-123.3276331
 105600,MOSAIC COMMUNITY HEALTH,Mosaic Pharmacy - Bend,Bend,Deschutes,Federally Qualified Health Center (FQHC),44.07056937,-121.26115752
-10E01202,WINDING WATERS MEDICAL CLINIC,Winding Waters Open Space,Enterprise,Wallowa,Federally Qualified Health Center (FQHC),45.43139952,-117.27893176
+10E01418,CASCADIA HEALTH,Cascadia Woodland Park Health Center,Portland,Multnomah,Federally Qualified Health Center (FQHC) Look-Alike,45.53632414,-122.55590633
 107880,"THE NATIVE AMERICAN REHABILITATION ASSOCIATION OF THE NORTHWEST, INCORPORATED",NARA Totem Lodge Community Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.50482352,-122.6510157
 105600,MOSAIC COMMUNITY HEALTH,Lynch School-Based Health Center,Redmond,Deschutes,Federally Qualified Health Center (FQHC),44.26660256,-121.18234802
 101230,VIRGINIA GARCIA MEMORIAL HEALTH CENTER,Virginia Garcia Memorial Health Center  -  Center for Addition Triage and Treatment,Hillsboro,Washington,Federally Qualified Health Center (FQHC),45.52842486,-122.93069534
 107920,LANE COUNTY OREGON,Delta Oaks Clinic,Eugene,Lane,Federally Qualified Health Center (FQHC),44.09341366,-123.09572747
 106290,OUTSIDE IN,Milwaukie High School Health and Wellness Center,Portland,Clackamas,Federally Qualified Health Center (FQHC),45.44060347,-122.63759527
-101120,Multnomah County,Centennial High School Student Health Center,Gresham,Multnomah,Federally Qualified Health Center (FQHC),45.49632461,-122.47558322
 10E00506,NEIGHBORHOOD HEALTH CENTER,NHC Hillsboro Reproductive Health Clinic,Hillsboro,Washington,Federally Qualified Health Center (FQHC),45.52267442,-122.99266887
 101120,Multnomah County,Parkrose High School Student Health Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.55178682,-122.53964561
 105600,MOSAIC COMMUNITY HEALTH,Sisters School-Based Health Center,Sisters,Deschutes,Federally Qualified Health Center (FQHC),44.29566936,-121.57341786
 101120,Multnomah County,Jefferson High School Student Health Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.56042261,-122.67293287
 107880,"THE NATIVE AMERICAN REHABILITATION ASSOCIATION OF THE NORTHWEST, INCORPORATED",NARA Outpatient Treatment and Recovery Services Program,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.51706391,-122.69093401
 100150,"SISKIYOU COMMUNITY HEALTH CENTER, INC.",SISKIYOU COMMUNITY HEALTH CENTER - CAVE JUNCTION,Cave Junction,Josephine,Federally Qualified Health Center (FQHC),42.17496777,-123.64527479
-10E00467,ADAPT,FQHC - Madrone,Roseburg,Douglas,Federally Qualified Health Center (FQHC),43.21352233,-123.35155497
 101230,VIRGINIA GARCIA MEMORIAL HEALTH CENTER,VIRGINIA GARCIA MEMORIAL HEALTH CENTER- NEWBERG,Newberg,Yamhill,Federally Qualified Health Center (FQHC),45.30122747,-122.95663397
 101120,Multnomah County,Cleveland High School Student Health Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.49845218,-122.63959922
 10E00506,NEIGHBORHOOD HEALTH CENTER,NHC Oregon City Medical Clinic,Oregon City,Clackamas,Federally Qualified Health Center (FQHC),45.345397,-122.59672595
@@ -68,7 +66,6 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 10E00506,NEIGHBORHOOD HEALTH CENTER,NHC Administration,Portland,Washington,Federally Qualified Health Center (FQHC),45.42590023,-122.75245802
 103100,"UMPQUA COMMUNITY HEALTH CENTER, INC.",Myrtle Creek Dental Clinic,Myrtle Creek,Douglas,Federally Qualified Health Center (FQHC),43.02744965,-123.2845808
 101030,YAKIMA VALLEY FARM WORKERS CLINIC,Pacific Pedatrics,Woodburn,Marion,Federally Qualified Health Center (FQHC),45.15146637,-122.83632257
-102080,ONE COMMUNITY HEALTH,Mobile Health Unit 2,Hood River,Hood River,Federally Qualified Health Center (FQHC),45.69657422,-121.5194172
 1010860,"WATERFALL CLINIC, INCORPORATED",Waterfall Behavior Health Center,Coos Bay,Coos,Federally Qualified Health Center (FQHC),43.37700098,-124.21517685
 10E00506,NEIGHBORHOOD HEALTH CENTER,Canby Medical & Dental Clinic,Canby,Clackamas,Federally Qualified Health Center (FQHC),45.26372805,-122.69559955
 107660,CENTRAL CITY CONCERN,CENTRAL CITY CONCERN,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52499608,-122.67648311
@@ -96,18 +93,18 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 107880,"THE NATIVE AMERICAN REHABILITATION ASSOCIATION OF THE NORTHWEST, INCORPORATED",NARA NW Outpatient Treatment & Recovery Services Program,Gresham,Multnomah,Federally Qualified Health Center (FQHC),45.50455999,-122.43487475
 102910,"KLAMATH HEALTH PARTNERSHIP, INC.",Klamath Health Partnership Admin,Klamath Falls,Klamath,Federally Qualified Health Center (FQHC),42.2160476,-121.76650481
 102970,ROGUE COMMUNITY HEALTH,Administration,Medford,Jackson,Federally Qualified Health Center (FQHC),42.33803577,-122.89480277
-102910,"KLAMATH HEALTH PARTNERSHIP, INC.",CHILOQUIN OPEN DOOR FAMILY PRAC.,Chiloquin,Klamath,Federally Qualified Health Center (FQHC),42.57783708,-121.8664729
-107660,CENTRAL CITY CONCERN,Evergreen Crossing,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.53245019,-122.57841208
 101230,VIRGINIA GARCIA MEMORIAL HEALTH CENTER,VIRGINIA GARCIA MOBILE VAN,Cornelius,Washington,Federally Qualified Health Center (FQHC),45.5209016,-123.05763549
 101230,VIRGINIA GARCIA MEMORIAL HEALTH CENTER,VIRGINIA GARCIA MEMORIAL HEALTH CENTER- NEWBERG DENTAL,Newberg,Yamhill,Federally Qualified Health Center (FQHC),45.30122747,-122.95663397
 103100,"UMPQUA COMMUNITY HEALTH CENTER, INC.",Aviva Outpatient Behavioral Health,Roseburg,Douglas,Federally Qualified Health Center (FQHC),43.2358228,-123.38206174
+10E01202,WINDING WATERS MEDICAL CLINIC,Winding Waters Open Space,Enterprise,Wallowa,Federally Qualified Health Center (FQHC),45.43139952,-117.27893176
 10E01385,CASCADE AIDS PROJECT,Prism Health,Portland,Multnomah,Federally Qualified Health Center (FQHC) Look-Alike,45.51643128,-122.64278308
 102910,"KLAMATH HEALTH PARTNERSHIP, INC.",Pine Street Open Door,Klamath Falls,Klamath,Federally Qualified Health Center (FQHC),42.22404553,-121.78482337
 100760,"NORTHWEST HUMAN SERVICES, INC.",West Salem Clinic Mental Health,Salem,Polk,Federally Qualified Health Center (FQHC),44.94003517,-123.05978888
+101120,Multnomah County,Centennial High School Student Health Center,Gresham,Multnomah,Federally Qualified Health Center (FQHC),45.49632461,-122.47558322
 102910,"KLAMATH HEALTH PARTNERSHIP, INC.",Klamath Health Partnership Administration Building,Klamath Falls,Klamath,Federally Qualified Health Center (FQHC),42.2233746,-121.78554916
-101230,VIRGINIA GARCIA MEMORIAL HEALTH CENTER,Tigard School Based Health Center,Tigard,Washington,Federally Qualified Health Center (FQHC),45.40426252,-122.76878496
 106290,OUTSIDE IN,Outside In East Side,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52206371,-122.49696688
 101120,Multnomah County,Mid County Health Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.50400021,-122.53225704
+10E00467,ADAPT,FQHC - Madrone,Roseburg,Douglas,Federally Qualified Health Center (FQHC),43.21352233,-123.35155497
 107660,CENTRAL CITY CONCERN,The Biltmore Building,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52524439,-122.67581717
 10E01385,CASCADE AIDS PROJECT,Cascade AIDS Project,Portland,Multnomah,Federally Qualified Health Center (FQHC) Look-Alike,45.5244772,-122.67577341
 101120,Multnomah County,North Portland Health Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.5924774,-122.7571663
@@ -144,10 +141,9 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,La Clinica School-Based Health Center at Talent Elementary School,Talent,Jackson,Federally Qualified Health Center (FQHC),42.2412971,-122.79243675
 102970,ROGUE COMMUNITY HEALTH,Eagle Point Health Center,Eagle Point,Jackson,Federally Qualified Health Center (FQHC),42.47269557,-122.81187063
 107880,"THE NATIVE AMERICAN REHABILITATION ASSOCIATION OF THE NORTHWEST, INCORPORATED",NARA Adult Mental Health and Housing Services,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.51754888,-122.69145487
-10E00506,NEIGHBORHOOD HEALTH CENTER,NHC Mobile Medical,Portland,Washington,Federally Qualified Health Center (FQHC),45.42617549,-122.75263974
-10E01385,CASCADE AIDS PROJECT,Prism Health,Portland,Multnomah,Federally Qualified Health Center (FQHC) Look-Alike,45.54469041,-122.66697585
 1010810,BENTON COUNTY,CHILDREN'S FARM HOME,Corvallis,Benton,Federally Qualified Health Center (FQHC),44.60848262,-123.21757653
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,La Clinica School-Based Health Center at Talent Middle School,Talent,Jackson,Federally Qualified Health Center (FQHC),42.23992048,-122.79322341
+102080,ONE COMMUNITY HEALTH,Mobile Health Unit 2,Hood River,Hood River,Federally Qualified Health Center (FQHC),45.69657422,-121.5194172
 1010810,BENTON COUNTY,Children and Families,Corvallis,Benton,Federally Qualified Health Center (FQHC),44.55176006,-123.29795831
 101030,YAKIMA VALLEY FARM WORKERS CLINIC,Lancaster Family Health Center at Beverly,Salem,Marion,Federally Qualified Health Center (FQHC),44.96112722,-122.98488702
 10E00467,ADAPT,FQHC Mobile Medical Clinic,Roseburg,Douglas,Federally Qualified Health Center (FQHC),43.21296828,-123.31354371
@@ -174,14 +170,15 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 105600,MOSAIC COMMUNITY HEALTH,Prineville Health Center,Prineville,Crook,Federally Qualified Health Center (FQHC),44.30353955,-120.84835633
 102970,ROGUE COMMUNITY HEALTH,Rogue Main St Dental,Medford,Jackson,Federally Qualified Health Center (FQHC),42.32786052,-122.86196197
 10E01418,CASCADIA HEALTH,Cascadia Plaza Health Center 200,Portland,Multnomah,Federally Qualified Health Center (FQHC) Look-Alike,45.50524655,-122.61835562
+1014200,COUNTY OF LINCOLN,Western Title Building,Newport,Lincoln,Federally Qualified Health Center (FQHC),44.63398565,-124.05513712
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,Women's Health Center--La Clinica,Medford,Jackson,Federally Qualified Health Center (FQHC),42.31282694,-122.86517232
 101120,Multnomah County,Billi Odegaard Dental Clinic,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52342602,-122.67749296
 101030,YAKIMA VALLEY FARM WORKERS CLINIC,Rosewood Family Health Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.49701666,-122.57231785
 107660,CENTRAL CITY CONCERN,Health Services Leadership Office,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52295437,-122.67800652
+101630,VALLEY FAMILY HEALTH CARE INC,Ontario Medical and Dental Clinic Building,Ontario,Malheur,Federally Qualified Health Center (FQHC),44.02482375,-116.99709352
 102360,COUNTY OF TILLAMOOK,Mobile Clinic,Tillamook,Tillamook,Federally Qualified Health Center (FQHC),45.48648132,-123.84696798
 107660,CENTRAL CITY CONCERN,Mobile Service Unit 01,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.51583621,-122.66242196
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,Phoenix Health Center--La Clinica,Medford,Jackson,Federally Qualified Health Center (FQHC),42.28691517,-122.83227528
-10E01418,CASCADIA HEALTH,Cascadia Woodland Park Health Center,Portland,Multnomah,Federally Qualified Health Center (FQHC) Look-Alike,45.53632414,-122.55590633
 10E00506,NEIGHBORHOOD HEALTH CENTER,NHC Dental at Milwaukie High School Health and Wellness Center,Portland,Clackamas,Federally Qualified Health Center (FQHC),45.44060347,-122.63759527
 1010810,BENTON COUNTY,LINCOLN HEALTH CENTER,Corvallis,Benton,Federally Qualified Health Center (FQHC),44.54368292,-123.26526277
 1014200,COUNTY OF LINCOLN,TOLEDO SCHOOL BASED HEALTH CENTER,Toledo,Lincoln,Federally Qualified Health Center (FQHC),44.633378,-123.92339414
@@ -255,6 +252,8 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 10E01202,WINDING WATERS MEDICAL CLINIC,Winding Waters Joseph,Joseph,Wallowa,Federally Qualified Health Center (FQHC),45.35551601,-117.22995973
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,La Clinica School-Based Health Center at Phoenix Elementary School,Phoenix,Jackson,Federally Qualified Health Center (FQHC),42.27332865,-122.81958223
 103100,"UMPQUA COMMUNITY HEALTH CENTER, INC.",UCHC Denture Lab,Roseburg,Douglas,Federally Qualified Health Center (FQHC),43.22691858,-123.35572304
+102910,"KLAMATH HEALTH PARTNERSHIP, INC.",CHILOQUIN OPEN DOOR FAMILY PRAC.,Chiloquin,Klamath,Federally Qualified Health Center (FQHC),42.57783708,-121.8664729
+107660,CENTRAL CITY CONCERN,Evergreen Crossing,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.53245019,-122.57841208
 101230,VIRGINIA GARCIA MEMORIAL HEALTH CENTER,Virginia Garcia Beaverton School Based Health Center,Beaverton,Washington,Federally Qualified Health Center (FQHC),45.48615187,-122.81078475
 107920,LANE COUNTY OREGON,West 11th Clinic,Eugene,Lane,Federally Qualified Health Center (FQHC),44.04800135,-123.14181964
 105600,MOSAIC COMMUNITY HEALTH,Redmond Health Center,Redmond,Deschutes,Federally Qualified Health Center (FQHC),44.26492002,-121.17953949
@@ -263,15 +262,14 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 102970,ROGUE COMMUNITY HEALTH,Table Rock Health Center,White City,Jackson,Federally Qualified Health Center (FQHC),42.43077864,-122.84047203
 107660,CENTRAL CITY CONCERN,Cedar Commons,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.50411688,-122.54586355
 101230,VIRGINIA GARCIA MEMORIAL HEALTH CENTER,VIRGINIA GARCIA MEMORIAL HEALTH CENTER- CORNELIUS,Cornelius,Washington,Federally Qualified Health Center (FQHC),45.5209016,-123.05763549
-1014200,COUNTY OF LINCOLN,Western Title Building,Newport,Lincoln,Federally Qualified Health Center (FQHC),44.63398565,-124.05513712
 102970,ROGUE COMMUNITY HEALTH,Rogue Dental Clinic,Medford,Jackson,Federally Qualified Health Center (FQHC),42.3388214,-122.86746394
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,La Clinica Community Pharmacy--Market Street,Medford,Jackson,Federally Qualified Health Center (FQHC),42.33753009,-122.87038738
 101030,YAKIMA VALLEY FARM WORKERS CLINIC,Community Health Center of Clatskanie,Clatskanie,Columbia,Federally Qualified Health Center (FQHC),46.10460519,-123.20919312
 101030,YAKIMA VALLEY FARM WORKERS CLINIC,SALUD MEDICAL CENTER,Woodburn,Marion,Federally Qualified Health Center (FQHC),45.15158426,-122.84133184
 105600,MOSAIC COMMUNITY HEALTH,East Bend Health Center,Bend,Deschutes,Federally Qualified Health Center (FQHC),44.06493853,-121.27191712
-101630,VALLEY FAMILY HEALTH CARE INC,Ontario Medical and Dental Clinic Building,Ontario,Malheur,Federally Qualified Health Center (FQHC),44.02482375,-116.99709352
 106290,OUTSIDE IN,Outside In 1226,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.51701584,-122.68599707
 101230,VIRGINIA GARCIA MEMORIAL HEALTH CENTER,Virginia Garcia Beaverton Dental Clinic,Beaverton,Washington,Federally Qualified Health Center (FQHC),45.49101299,-122.80673487
+101230,VIRGINIA GARCIA MEMORIAL HEALTH CENTER,Tigard School Based Health Center,Tigard,Washington,Federally Qualified Health Center (FQHC),45.40426252,-122.76878496
 1014200,COUNTY OF LINCOLN,Community Shelter and Resource Center Lincoln City,Lincoln City,Lincoln,Federally Qualified Health Center (FQHC),44.98009103,-124.00965674
 101630,VALLEY FAMILY HEALTH CARE INC,Fortner Neighborhood Clinic,Ontario,Malheur,Federally Qualified Health Center (FQHC),44.03596238,-116.96547305
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,Center for Learning and Innovation--La Clinica,Medford,Jackson,Federally Qualified Health Center (FQHC),42.3604644,-122.87841481
@@ -309,6 +307,8 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 10E01202,WINDING WATERS MEDICAL CLINIC,Winding Waters Hearts for Health,Enterprise,Wallowa,Federally Qualified Health Center (FQHC),45.43167046,-117.28548531
 102360,COUNTY OF TILLAMOOK,TILLAMOOK COUNTY HEALTH DEPARTMENT,Tillamook,Tillamook,Federally Qualified Health Center (FQHC),45.45244937,-123.84313699
 1018560,LA PINE COMMUNITY HEALTH CENTER,LaPine Community Health Center,La Pine,Deschutes,Federally Qualified Health Center (FQHC),43.67524751,-121.50415401
+10E00506,NEIGHBORHOOD HEALTH CENTER,NHC Mobile Medical,Portland,Washington,Federally Qualified Health Center (FQHC),45.42617549,-122.75263974
+10E01385,CASCADE AIDS PROJECT,Prism Health,Portland,Multnomah,Federally Qualified Health Center (FQHC) Look-Alike,45.54469041,-122.66697585
 102970,ROGUE COMMUNITY HEALTH,White City Health Center,White City,Jackson,Federally Qualified Health Center (FQHC),42.43791658,-122.83526041
 100150,"SISKIYOU COMMUNITY HEALTH CENTER, INC.",LORNA BYRNE SCHOOL BASED HEALTH CENTER,Cave Junction,Josephine,Federally Qualified Health Center (FQHC),42.1672306,-123.64384006
 107660,CENTRAL CITY CONCERN,16 x BRC Primary Care Clinic,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52286096,-122.64924234
