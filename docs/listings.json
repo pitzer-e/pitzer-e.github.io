@@ -8,8 +8,8 @@
   {
     "listing": "/projects.html",
     "items": [
-      "/projects/oregon-fqhc/index.html",
       "/projects/clinic-forecasting/index.html",
+      "/projects/oregon-fqhc/index.html",
       "/projects/penguins/index.html",
       "/projects/welcome/index.html"
     ]
