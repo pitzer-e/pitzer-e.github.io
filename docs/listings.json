@@ -1,17 +1,17 @@
 [
   {
-    "listing": "/dashboards.html",
+    "listing": "/projects.html",
     "items": [
-      "/dashboards/health-landscape/index.html"
+      "/projects/oregon-fqhc/index.html",
+      "/projects/clinic-forecasting/index.html",
+      "/projects/penguins/index.html",
+      "/projects/welcome/index.html"
     ]
   },
   {
-    "listing": "/projects.html",
+    "listing": "/dashboards.html",
     "items": [
-      "/projects/clinic-forecasting/index.html",
-      "/projects/oregon-fqhc/index.html",
-      "/projects/penguins/index.html",
-      "/projects/welcome/index.html"
+      "/dashboards/health-landscape/index.html"
     ]
   }
 ]
