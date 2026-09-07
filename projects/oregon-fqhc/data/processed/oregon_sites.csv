@@ -76,7 +76,7 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 10E00507,OREGON HEALTH & SCIENCE UNIVERSITY,"OHSU Health Family Medicine, East Portland",Portland,Multnomah,Federally Qualified Health Center (FQHC),45.51439368,-122.55934702
 10E00507,OREGON HEALTH & SCIENCE UNIVERSITY,OHSU Richmond Immediate Care,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.5049992,-122.61834623
 105600,MOSAIC COMMUNITY HEALTH,Madras High School-Based Health Center,Madras,Jefferson,Federally Qualified Health Center (FQHC),44.63005001,-121.12289995
-105600,MOSAIC COMMUNITY HEALTH,Harriman Health Clinic,Bend,Deschutes,Federally Qualified Health Center (FQHC),44.06113261,-121.30966736
+105600,MOSAIC COMMUNITY HEALTH,Harriman Health Clinic,Bend,Deschutes,Federally Qualified Health Center (FQHC),44.06113185,-121.30966594
 107200,COLUMBIA RIVER HEALTH,Columbia River Pharmacy,Boardman,Morrow,Federally Qualified Health Center (FQHC),45.83179896,-119.70132926
 107880,"THE NATIVE AMERICAN REHABILITATION ASSOCIATION OF THE NORTHWEST, INCORPORATED",NARA NW Outpatient Treatment & Recovery Services Program,Gresham,Multnomah,Federally Qualified Health Center (FQHC),45.50488383,-122.43456713
 105600,MOSAIC COMMUNITY HEALTH,Madras Health Center,Madras,Jefferson,Federally Qualified Health Center (FQHC),44.6380194,-121.11895149
@@ -107,7 +107,7 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 100150,"SISKIYOU COMMUNITY HEALTH CENTER, INC.",Siskiyou Community Health Center,Grants Pass,Josephine,Federally Qualified Health Center (FQHC),42.43745901,-123.31749603
 107660,CENTRAL CITY CONCERN,Hooper Detoxification and Stabilization Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.53403395,-122.66698239
 107660,CENTRAL CITY CONCERN,Hooper Detoxification and Stabilization Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.53435586,-122.66708431
-1010860,"WATERFALL CLINIC, INCORPORATED",Starfish Youth Therapy Center,Coos Bay,Coos,Federally Qualified Health Center (FQHC),43.36404543,-124.21739777
+1010860,"WATERFALL CLINIC, INCORPORATED",Starfish Youth Therapy Center,Coos Bay,Coos,Federally Qualified Health Center (FQHC),43.36406194,-124.21745334
 106290,OUTSIDE IN,Outside In BH,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.51705842,-122.68510398
 10E00506,NEIGHBORHOOD HEALTH CENTER,NHC Tanasbourne Medical & Dental Clinic,Hillsboro,Washington,Federally Qualified Health Center (FQHC),45.53389079,-122.86983777
 105600,MOSAIC COMMUNITY HEALTH,Bend High School-Based Health Center,Bend,Deschutes,Federally Qualified Health Center (FQHC),44.05281575,-121.29719082
@@ -122,7 +122,7 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 10E00467,ADAPT,Brookings-Harbor School District-Brookings-Harbor High School,Brookings,Curry,Federally Qualified Health Center (FQHC),42.05752737,-124.27996239
 101310,COUNTY OF CLACKAMAS,Adrienne C. Nelson High School SBHC,Clackamas,Clackamas,Federally Qualified Health Center (FQHC),45.41549775,-122.49368663
 101120,Multnomah County,East County Health Center,Gresham,Multnomah,Federally Qualified Health Center (FQHC),45.50265449,-122.42499651
-107920,LANE COUNTY OREGON,Lane County Clinical Financial Services Office,Eugene,Lane,Federally Qualified Health Center (FQHC),44.06000729,-123.06759135
+107920,LANE COUNTY OREGON,Lane County Clinical Financial Services,Eugene,Lane,Federally Qualified Health Center (FQHC),44.06000729,-123.06759135
 103100,"UMPQUA COMMUNITY HEALTH CENTER, INC.",Mobile Unit 24,Roseburg,Douglas,Federally Qualified Health Center (FQHC),43.26245915,-123.35030783
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,La Clinica School-Based Health Center at Phoenix High School,Phoenix,Jackson,Federally Qualified Health Center (FQHC),42.27643155,-122.82314831
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,West Medford Health Center--La Clinica,Medford,Jackson,Federally Qualified Health Center (FQHC),42.32347364,-122.88689009
@@ -131,7 +131,7 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 101120,Multnomah County,David Douglas High School Student Health Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.51573814,-122.52841562
 107660,CENTRAL CITY CONCERN,LETTY OWINGS CENTER,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52608019,-122.63949142
 105600,MOSAIC COMMUNITY HEALTH,Mosaic Pharmacy - Redmond,Redmond,Deschutes,Federally Qualified Health Center (FQHC),44.26484839,-121.1793535
-1010810,BENTON COUNTY,Boys and Girls Club of Corvallis,Corvallis,Benton,Federally Qualified Health Center (FQHC),44.58785614,-123.26473882
+1010810,BENTON COUNTY,Boys and Girls Club of Corvallis,Corvallis,Benton,Federally Qualified Health Center (FQHC),44.58786687,-123.26476757
 107660,CENTRAL CITY CONCERN,16 x Burnside Recovery Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52276402,-122.64924209
 107880,"THE NATIVE AMERICAN REHABILITATION ASSOCIATION OF THE NORTHWEST, INCORPORATED",NARA Dental Clinic,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.51770324,-122.53272283
 1014200,COUNTY OF LINCOLN,Coastal Healthcare - Newport,Newport,Lincoln,Federally Qualified Health Center (FQHC),44.63603117,-124.05582905
@@ -322,10 +322,10 @@ bhcmis_id,organization,site_name,city,county,type,latitude,longitude
 106290,OUTSIDE IN,OUTSIDE IN,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.51758283,-122.68656268
 107880,"THE NATIVE AMERICAN REHABILITATION ASSOCIATION OF THE NORTHWEST, INCORPORATED",Oyate Behavioral Health,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.5184149,-122.69196197
 102910,"KLAMATH HEALTH PARTNERSHIP, INC.",Klamath Open Door Family Practice,Klamath Falls,Klamath,Federally Qualified Health Center (FQHC),42.2155581,-121.76602335
-107660,CENTRAL CITY CONCERN,Old Town Recovery Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52342942,-122.67779664
+107660,CENTRAL CITY CONCERN,Old Town Recovery Center,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52342954,-122.67779647
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,La Clinica School-Based Health Center at Hanby Middle School,Gold Hill,Jackson,Federally Qualified Health Center (FQHC),42.43463234,-123.05521186
 107920,LANE COUNTY OREGON,Lane County Treatment Center,Eugene,Lane,Federally Qualified Health Center (FQHC),44.04741353,-123.09942565
-107880,"THE NATIVE AMERICAN REHABILITATION ASSOCIATION OF THE NORTHWEST, INCORPORATED",RiverHouse,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.50621068,-122.66407932
+107880,"THE NATIVE AMERICAN REHABILITATION ASSOCIATION OF THE NORTHWEST, INCORPORATED",RiverHouse,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.50621148,-122.66407881
 1014200,COUNTY OF LINCOLN,Coastal Healthcare - Waldport,Waldport,Lincoln,Federally Qualified Health Center (FQHC),44.42928599,-124.06185815
 107660,CENTRAL CITY CONCERN,CENTRAL CITY CONCERN,Portland,Multnomah,Federally Qualified Health Center (FQHC),45.52551152,-122.67197071
 100790,LA CLINCA DEL VALLE FAMILY HEALTH CENTER INC,La Clinica School Based Health Center at Armadillo Community Charter School,Phoenix,Jackson,Federally Qualified Health Center (FQHC),42.27252801,-122.81780862
