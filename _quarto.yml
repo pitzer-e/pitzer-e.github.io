@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "E. Pitzer | Data Analyst"
+  title: "Ethan Pitzer"
   navbar:
     left:
       - href: index.qmd
@@ -14,8 +14,10 @@ website:
         text: Dashboards    # <--- Explicit and clear
     right:
       - icon: github
+        aria-label: GitHub
         href: https://github.com/pitzer-e
       - icon: linkedin
+        aria-label: LinkedIn
         href: https://www.linkedin.com/in/pitzer-e/
       - icon: journal-code # Using a generic icon for Kaggle if the specific brand icon isn't loaded yet
         href: https://www.kaggle.com/epitzer

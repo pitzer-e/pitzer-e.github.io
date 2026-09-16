@@ -2,25 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="E. Pitzer">
-<meta name="dcterms.date" content="2026-09-14">
+<meta name="dcterms.date" content="2026-09-15">
 
-<title>Technical Architecture – E. Pitzer | Data Analyst</title>
+<title>Technical Architecture – Ethan Pitzer</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -40,14 +34,15 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-3e9b1289f5f353c49b617ce48ad2bc38.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -91,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">E. Pitzer | Data Analyst</span>
+    <span class="navbar-title">Ethan Pitzer</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -115,12 +110,12 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/pitzer-e"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/pitzer-e"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/pitzer-e/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/pitzer-e/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -179,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 14, 2026</p>
+      <p class="date">September 15, 2026</p>
     </div>
   </div>
   
@@ -193,14 +188,15 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This project represents a strategic shift from manual, GUI-based reporting (Tableau) to Code-First Analytics Engineering.</p>
-<p>The goal was to build a self-healing, automated data product that tracks Health Center Service Delivery Sites in Oregon without requiring manual intervention.</p>
+<p>This project combines public healthcare source data in a repeatable Python pipeline and publishes an explicitly dated annual analytical snapshot with Quarto.</p>
+<p>The workflow can refresh the Oregon site footprint on its scheduled cadence while keeping the analytical cohort fixed at 2024 UDS for this release. Site and UDS dates remain separate: neither source is a live operational census. Hard integrity failures stop replacement; known source-scope gaps produce warnings, and material analytical-population loss withholds the model for review.</p>
 </section>
 <section id="advanced-analytics-qa" class="level2">
 <h2 class="anchored" data-anchor-id="advanced-analytics-qa">Advanced Analytics &amp; QA</h2>
-<p><strong>Data Enrichment</strong>: Successfully ingested 2024 UDS Grantee Data via direct FOIA endpoint, implementing a robust pandas cleaning layer to handle mixed numeric/text columns in government Excel files.</p>
-<p><strong>Relational Joining</strong>: Engineered a deterministic join between HRSA geospatial data and UDS patient demographics using BHCMISID keys, achieving a 97% match rate (318/328 sites).</p>
-<p><strong>Automated Quality Assurance</strong>: Integrated pytest into the CI/CD pipeline. The system now enforces data integrity checks (e.g., Uninsured &lt; Total Patients, Lat/Lon within Oregon bounds) before every deployment, preventing “silent failures” in production.</p>
+<p><strong>Data Enrichment</strong>: Successfully ingested 2024 UDS Grantee Data via direct FOIA endpoint, preserving missing and suppressed counts while validating numeric fields in government Excel files.</p>
+<p><strong>Relational Joining</strong>: A many-to-one join links registered sites to UDS organization records using BHCMIS identifiers. Site IDs and addresses remain intact; duplicate keys and unexpected row multiplication fail validation. Current counts and coverage are calculated on the <a href="../../projects/oregon-fqhc/index.html">case-study page</a>.</p>
+<p><strong>Organization-level modeling</strong>: The analytical table has one row per BHCMIS organization and gives each eligible organization equal weight. The primary model relates Medicaid share to <code>log10(total_patients)</code>, representing scale proportionally while retaining legitimate large organizations. The relationship is exploratory and explains only part of the between-organization variation.</p>
+<p><strong>Automated Quality Assurance</strong>: The scheduled workflow runs tests before rendering. Hard checks cover identifiers, unexpected join loss, payer arithmetic, source dates, and artifact integrity. Coverage and freshness thresholds are operational warning/review triggers rather than universal validity cutoffs. See the <a href="README.md">data contract and run instructions</a> for exact definitions and limitations.</p>
 </section>
 <section id="the-pipeline" class="level2">
 <h2 class="anchored" data-anchor-id="the-pipeline">The Pipeline</h2>
@@ -212,17 +208,22 @@ ul.task-list li input[type="checkbox"] {
 <div>
 <pre class="mermaid mermaid-js">%%{init: {'theme': 'base'}}%%
 flowchart LR
-    A[HRSA Data Warehouse] --&gt;|HTTPS Request| B(Ingest Script)
-    B --&gt;|Raw .xlsx| C{Clean &amp; Transform}
-    C --&gt;|Pandas| D[Oregon Subset .csv]
-    D --&gt;|Quarto| E[Static HTML Site]
-    E --&gt;|Deploy| F[GitHub Pages]
-    
+    A[HRSA site workbook] --&gt; B[Stage sources]
+    U[2024 UDS workbook] --&gt; B
+    B --&gt; C[Validate and standardize]
+    C --&gt; D[Many-to-one join by organization ID]
+    D --&gt; Q[Integrity and reconciliation checks]
+    Q --&gt; R[Coverage and analytical-fitness review]
+    R --&gt; M[CSV artifacts, model summary and manifest]
+    M --&gt; T[Tests and unfrozen Quarto execution]
+    T --&gt; E[Static HTML site]
+    E --&gt; F[Commit generated output for GitHub Pages]
+
     style B fill:#e3f2fd
     style C fill:#e3f2fd
     style D fill:#e3f2fd
     style E fill:#e3f2fd
-    
+
     classDef runner fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     class B,C,D,E runner
 </pre>

@@ -2,23 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Healthcare analytics, analytics engineering, and data products by Ethan Pitzer. Explore reproducible case studies and interactive dashboards.">
 
-<title>Ethan Pitzer – E. Pitzer | Data Analyst</title>
+<title>Ethan Pitzer | Healthcare Analytics &amp; Data Products – Ethan Pitzer</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -38,13 +33,15 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3e9b1289f5f353c49b617ce48ad2bc38.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -77,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed portfolio-home quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -85,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">E. Pitzer | Data Analyst</span>
+    <span class="navbar-title">Ethan Pitzer</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -109,12 +106,12 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/pitzer-e"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/pitzer-e"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/pitzer-e/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/pitzer-e/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -131,109 +128,147 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-  <ul>
-  <li><a href="#data-analyst-opca" id="toc-data-analyst-opca" class="nav-link active" data-scroll-target="#data-analyst-opca">Data Analyst | OPCA</a>
-  <ul class="collapse">
-  <li><a href="#technical-toolkit" id="toc-technical-toolkit" class="nav-link" data-scroll-target="#technical-toolkit">Technical Toolkit</a></li>
-  </ul></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<div class="quarto-about-jolla">
-  <img src="profile.jpeg" class="about-image
-  round " style="height: 15em; width: 15em;">
- <header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Ethan Pitzer</h1>
-</div>
-<div class="quarto-title-meta">
-  </div>
-</header><main class="content" id="quarto-document-content">
-
-<section id="data-analyst-opca" class="level2">
-<h2 data-anchor-id="data-analyst-opca">Data Analyst | OPCA</h2>
-<p>I am a Data Analyst based in Oregon, currently driving strategic objectives for the <strong>Oregon Primary Care Association (OPCA)</strong>. My work focuses on leveraging analytics software—including Arcadia, Tableau, and SQL—to provide actionable intelligence that supports community health centers across the state.</p>
-<p>My background sits at the intersection of technical engineering and business strategy. Before pivoting to data analytics, I spent several years as a <strong>Technical Support Engineer at Salesforce</strong>, where I specialized in troubleshooting complex custom code and integrations for commercial and government clients.</p>
-<p>I hold an <strong>MBA</strong> from Quantic School of Business and Technology and a <strong>B.S. in Computer Science</strong> from Eastern Oregon University.</p>
-<section id="technical-toolkit" class="level3">
-<h3 data-anchor-id="technical-toolkit">Technical Toolkit</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;"><strong>Core Data Stack</strong></th>
-<th style="text-align: left;"><strong>Visualization</strong></th>
-<th style="text-align: left;"><strong>Certifications</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Python (Pandas/Numpy/SciPy/scikit-learn)</td>
-<td style="text-align: left;">Matplotlib/Plotly</td>
-<td style="text-align: left;">Google Data Analytics Professional</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Arcadia (Reports/Lists)</td>
-<td style="text-align: left;">Vista Authoring</td>
-<td style="text-align: left;">Arcadia Certified Professional</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SQL</td>
-<td style="text-align: left;">Tableau</td>
-<td style="text-align: left;">Tableau Business Intelligence Analyst</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Excel</td>
-<td style="text-align: left;">Splunk</td>
-<td style="text-align: left;">ISC² CC Certified</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Current Focus
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>I am currently managing the ingestion and analysis of Electronic Health Record (EHR) and CCLF claims data within the <strong>Arcadia Data Analytics Platform</strong> to uncover actionable healthcare patterns across Oregon FQHCs.</p>
-<p>Simultaneously, I am expanding my technical toolkit—with a focus on Python programming, probabilistic modeling, and advanced visualization—in pursuit of the <strong>University of Michigan Master of Applied Data Science (MADS)</strong> program.</p>
-</div>
-</div>
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
-</section>
-</section>
-</main> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://www.linkedin.com/in/pitzer-e/" class="about-link" rel="" target="">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/pitzer-e" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
+
+
+<div class="home-hero">
+<div class="home-intro">
+<p class="eyebrow">
+Healthcare Analytics · Analytics Engineering · Data Products
+</p>
+<h1 class="hero-title">
+Ethan Pitzer
+</h1>
+<p class="hero-statement">
+I build healthcare data products and reporting systems that turn clinical, claims, and operational data into decisions.
+</p>
+<p>Based in Oregon, I combine healthcare domain knowledge with code, analysis, and clear communication to support community health centers.</p>
+<div class="home-actions">
+<p><a href="./projects.html" class="btn btn-primary">View Case Studies</a> <a href="./dashboards.html" class="btn btn-outline-primary">View Dashboards</a> <a href="https://github.com/pitzer-e" class="text-link">View GitHub ↗</a></p>
 </div>
 </div>
- <!-- /main -->
+<div class="home-portrait">
+<p><img src="profile.jpeg" alt="Ethan Pitzer" width="200" height="200"></p>
+</div>
+</div>
+<div class="home-section">
+<p class="eyebrow">
+Selected projects
+</p>
+<h2 class="anchored">
+Featured work
+</h2>
+<p>Healthcare data, translated into useful tools and decisions.</p>
+<div class="featured-grid">
+<div class="work-card">
+<p class="card-kicker">
+01 / Analytics engineering
+</p>
+<h3 class="anchored">
+Oregon FQHC Landscape
+</h3>
+<p>A reproducible 2024 HRSA snapshot that joins Oregon’s site footprint to organization-level UDS measures, with explicit provenance, reconciliation, and analytical-fitness checks.</p>
+<p class="card-tools">
+Python · Data contracts · pytest · Plotly
+</p>
+<p><a href="./projects/oregon-fqhc/index.html" class="card-link">View the FQHC case study →</a></p>
+</div>
+<div class="work-card">
+<p class="card-kicker">
+02 / Forecasting
+</p>
+<h3 class="anchored">
+Clinic Service Volume Forecasting
+</h3>
+<p>A time-series analysis of synthetic clinic visits, exploring seasonality and future demand to inform staffing and capacity planning.</p>
+<p class="card-tools">
+Python · Statsmodels · Synthetic data
+</p>
+<p><a href="./projects/clinic-forecasting/index.html" class="card-link">View the forecasting case study →</a></p>
+</div>
+<div class="work-card">
+<p class="card-kicker">
+03 / Visual analytics
+</p>
+<h3 class="anchored">
+Oregon Health Center Landscape
+</h3>
+<p>An interactive Tableau map of health center service delivery sites, helping visitors explore locations and the distribution of access points across Oregon.</p>
+<p class="card-tools">
+Tableau · Healthcare · Geospatial analysis
+</p>
+<p><a href="./dashboards/health-landscape/index.html" class="card-link">View the Tableau dashboard →</a></p>
+</div>
+</div>
+</div>
+<div class="home-section">
+<p class="eyebrow">
+How I work
+</p>
+<h2 class="anchored">
+Connecting the data to the decision
+</h2>
+<div class="capability-grid">
+<div class="capability">
+<h3 class="anchored">
+Healthcare analytics
+</h3>
+<p>Bring context to clinical, claims, and operational data, with a focus on community health centers and the questions behind the report.</p>
+</div>
+<div class="capability">
+<h3 class="anchored">
+Analytics engineering
+</h3>
+<p>Use Python and SQL to prepare data, automate repeatable work, and build validation into the path from source to analysis.</p>
+</div>
+<div class="capability">
+<h3 class="anchored">
+Reporting &amp; visualization
+</h3>
+<p>Make findings easier to explore and act on through Arcadia reporting, Tableau dashboards, and reproducible Quarto analysis.</p>
+</div>
+</div>
+</div>
+<div class="home-section home-background">
+<div>
+<p class="eyebrow">
+Background
+</p>
+<h2 class="anchored">
+Technical depth. Clinical context. Business perspective.
+</h2>
+<p>I work in data analytics at the <strong>Oregon Primary Care Association (OPCA)</strong>, where I help turn healthcare data into reporting systems and analytical products for community health centers. Previously, I worked as a Technical Support Engineer at Salesforce, troubleshooting custom code and integrations for commercial and government clients.</p>
+<p>My path into healthcare analytics spans technology, business, and clinical practice. I hold a B.S. in Computer Science and an MBA, and my earlier experience in paramedicine gives me firsthand context for the clinical workflows behind healthcare data.</p>
+</div>
+<div class="contact-panel">
+<h3 class="anchored">
+Get in touch
+</h3>
+<p>Connect with me about healthcare analytics, reporting, and data products.</p>
+<p><a href="https://www.linkedin.com/in/pitzer-e/" class="text-link">Connect on LinkedIn ↗</a></p>
+<p><a href="https://github.com/pitzer-e" class="text-link">View GitHub ↗</a></p>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

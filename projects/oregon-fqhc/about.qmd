@@ -11,17 +11,19 @@ format:
 
 ## Overview
 
-This project represents a strategic shift from manual, GUI-based reporting (Tableau) to Code-First Analytics Engineering. 
+This project combines public healthcare source data in a repeatable Python pipeline and publishes an explicitly dated annual analytical snapshot with Quarto.
 
-The goal was to build a self-healing, automated data product that tracks Health Center Service Delivery Sites in Oregon without requiring manual intervention.
+The workflow can refresh the Oregon site footprint on its scheduled cadence while keeping the analytical cohort fixed at 2024 UDS for this release. Site and UDS dates remain separate: neither source is a live operational census. Hard integrity failures stop replacement; known source-scope gaps produce warnings, and material analytical-population loss withholds the model for review.
 
 ## Advanced Analytics & QA
 
-**Data Enrichment**: Successfully ingested 2024 UDS Grantee Data via direct FOIA endpoint, implementing a robust pandas cleaning layer to handle mixed numeric/text columns in government Excel files.
+**Data Enrichment**: Successfully ingested 2024 UDS Grantee Data via direct FOIA endpoint, preserving missing and suppressed counts while validating numeric fields in government Excel files.
 
-**Relational Joining**: Engineered a deterministic join between HRSA geospatial data and UDS patient demographics using BHCMISID keys, achieving a 97% match rate (318/328 sites).
+**Relational Joining**: A many-to-one join links registered sites to UDS organization records using BHCMIS identifiers. Site IDs and addresses remain intact; duplicate keys and unexpected row multiplication fail validation. Current counts and coverage are calculated on the [case-study page](index.qmd).
 
-**Automated Quality Assurance**: Integrated pytest into the CI/CD pipeline. The system now enforces data integrity checks (e.g., Uninsured < Total Patients, Lat/Lon within Oregon bounds) before every deployment, preventing "silent failures" in production.
+**Organization-level modeling**: The analytical table has one row per BHCMIS organization and gives each eligible organization equal weight. The primary model relates Medicaid share to `log10(total_patients)`, representing scale proportionally while retaining legitimate large organizations. The relationship is exploratory and explains only part of the between-organization variation.
+
+**Automated Quality Assurance**: The scheduled workflow runs tests before rendering. Hard checks cover identifiers, unexpected join loss, payer arithmetic, source dates, and artifact integrity. Coverage and freshness thresholds are operational warning/review triggers rather than universal validity cutoffs. See the [data contract and run instructions](README.md) for exact definitions and limitations.
 
 ## The Pipeline
 
@@ -30,17 +32,22 @@ The system is architected as a serverless ETL pipeline running on **GitHub Actio
 %%| fig-cap: "Automated Data Pipeline Architecture"
 %%{init: {'theme': 'base'}}%%
 flowchart LR
-    A[HRSA Data Warehouse] -->|HTTPS Request| B(Ingest Script)
-    B -->|Raw .xlsx| C{Clean & Transform}
-    C -->|Pandas| D[Oregon Subset .csv]
-    D -->|Quarto| E[Static HTML Site]
-    E -->|Deploy| F[GitHub Pages]
-    
+    A[HRSA site workbook] --> B[Stage sources]
+    U[2024 UDS workbook] --> B
+    B --> C[Validate and standardize]
+    C --> D[Many-to-one join by organization ID]
+    D --> Q[Integrity and reconciliation checks]
+    Q --> R[Coverage and analytical-fitness review]
+    R --> M[CSV artifacts, model summary and manifest]
+    M --> T[Tests and unfrozen Quarto execution]
+    T --> E[Static HTML site]
+    E --> F[Commit generated output for GitHub Pages]
+
     style B fill:#e3f2fd
     style C fill:#e3f2fd
     style D fill:#e3f2fd
     style E fill:#e3f2fd
-    
+
     classDef runner fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     class B,C,D,E runner
 ```

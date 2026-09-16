@@ -10,5 +10,6 @@ ipykernel
 itables
 pytest
 statsmodels
+scipy
 tabulate
 scikit-learn

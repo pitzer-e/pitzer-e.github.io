@@ -1,6 +1,6 @@
 ---
-title: "Oregon FQHC Landscape"
-description: "Automated analysis of Health Center Service Delivery Sites"
+title: "Oregon FQHC Landscape: 2024 Snapshot"
+description: "A reproducible HRSA site and organization-level UDS case study"
 author: "E. Pitzer"
 date: last-modified
 image: thumbnail.png
@@ -9,6 +9,10 @@ format:
   html:
     code-fold: true
     toc: true
+freeze: false
+execute:
+  cache: false
+  error: false
 jupyter: python3
 ---
 
@@ -16,7 +20,7 @@ jupyter: python3
 
 :::{.callout-note}
 ## Project Context
-This analysis uses Data sourced from [HRSA Data Warehouse](https://data.hrsa.gov/) and validated via `pytest` before every deployment.  We perform an aggregate analysis on statistics (patient count, health center numbers) pulled from the sample data (Oregon).  To learn more about how the CI/CD pipeline was built and the project is structured, view the **[Technical Architecture](about.qmd)** page.
+This case study is an annual analytical snapshot: it combines an Oregon site-footprint extract from the [HRSA Data Warehouse](https://data.hrsa.gov/) with organization-level **2024 UDS** patient measures. These are published administrative sources—not live EHR counts or a continuously current operational census. The site extract and UDS reporting period are dated separately below. To learn how the validated pipeline works, view the **[Technical Architecture](about.qmd)** page.
 :::
 
 
@@ -25,71 +29,87 @@ This analysis uses Data sourced from [HRSA Data Warehouse](https://data.hrsa.gov
 #| warning: false
 #| echo: false
 
+import sys
+from pathlib import Path
+import numpy as np
 import pandas as pd
 import plotly.express as px
-from itables import show
+import plotly.graph_objects as go
+from itables import show, JavascriptFunction
 
-# Load the NEW Joined Data
-df = pd.read_csv("data/processed/oregon_sites_joined.csv")
+sys.path.insert(0, str(Path("scripts").resolve()))
+from pipeline import load_artifacts, analysis_population
 
-# Fill NaNs for visualization
-df['total_patients'] = df['total_patients'].fillna(0)
-df['pct_medicaid'] = df['pct_medicaid'].fillna(0)
-df['uninsured'] = df['uninsured'].fillna(0)
-df['medicaid'] = df['medicaid'].fillna(0)
+df, df_orgs, summary, provenance = load_artifacts()
 
-# Create formatted columns for the tooltip
-df['Patients (fmt)'] = df['total_patients'].apply(lambda x: f"{x:,.0f}")
-df['Medicaid %'] = df['pct_medicaid'].apply(lambda x: f"{x:.1%}")
+def count_label(value):
+    return "Unavailable" if pd.isna(value) else f"{value:,.0f}"
 
-# Quick metrics
-total_sites = len(df)
-total_patients_served = df.drop_duplicates(subset='bhcmis_id')['total_patients'].sum() # Dedup for accurate total
-unique_orgs = df['organization'].nunique()
+def percent_label(value):
+    return "Unavailable" if pd.isna(value) else f"{value:.1%}"
+
+for frame in (df, df_orgs):
+    frame['Patients (fmt)'] = frame['total_patients'].map(count_label)
+    frame['Medicaid %'] = frame['pct_medicaid'].map(percent_label)
+
+total_sites = summary['site_count']
+unique_orgs = summary['organization_count']
+total_patients_served = summary['reported_organization_patient_total']
+df_trend = analysis_population(df_orgs)
+model_summary = summary['analysis_model']
+quality = summary['quality']
+analysis_publishable = quality['analysis_publishable']
+
 ```
 
 ### At a Glance
 
-We are currently tracking **`{python} total_sites`** service delivery sites operated by **`{python} unique_orgs`** organizations.
+This snapshot contains **`{python} total_sites` active registered sites** in Oregon, identified by distinct BPHC Assigned Numbers, operated by **`{python} unique_orgs` organizations** identified by BHCMIS ID. Site and organization are different analytical grains: distinct registered sites can share a name, building, or coordinates.
 
-Collectively, these organizations serve **`{python} f"{total_patients_served:,.0f}"`** patients (Note: Includes total patient volume for multi-state organizations operating in Oregon).
+**Patient-data coverage:** `{python} quality['site_patient_coverage_numerator']` of `{python} quality['site_patient_coverage_denominator']` sites (**`{python} f"{quality['site_patient_coverage']:.1%}"`**) link to an organization with a reported patient total. `{python} summary['matched_organization_count']` organizations match the configured H80 UDS source; `{python} quality['organization_patient_coverage_numerator']` of `{python} quality['organization_patient_coverage_denominator']` organizations (**`{python} f"{quality['organization_patient_coverage']:.1%}"`**) have reported patient totals. The analytical population contains `{python} quality['organization_analytical_coverage_numerator']` of `{python} quality['organization_analytical_coverage_denominator']` represented organizations (**`{python} f"{quality['organization_analytical_coverage']:.1%}"`**).
 
-### Statewide Payer Mix
+**Reported organization patient total: `{python} f"{total_patients_served:,.0f}"`.** Each matched organization contributes once. This sum includes patients outside Oregon for multi-state organizations and is not a deduplicated count of Oregon residents or site-level patient volume.
 
-Breakdown of the total patient population served by Oregon FQHCs (2024 UDS).
+**Source periods and provenance:** site extract dated `{python} provenance['site_source_date']`; UDS reporting year `{python} provenance['uds_reporting_year']`, UDS source refresh `{python} provenance['uds_source_refresh_date']`. Pipeline build: `{python} provenance['built_at_utc']` (UTC), mode: `{python} provenance['source_mode']`. The dates are shown separately because the site footprint and annual UDS measures are not contemporaneous measurements. A local-snapshot build does not imply a new download.
+
+**Quality state:** `{python} quality['status'].replace('_', ' ').title()`. `{python} ' '.join(item['message'] for item in quality['warnings']) if quality['warnings'] else 'No reconciliation or analytical-review warnings.'` Missing or suppressed patient values remain unavailable rather than being converted to zero.
+
+### Organization Payer Mix {#statewide-payer-mix}
+
+This chart includes only the **`{python} summary['complete_payer_organization_count']` organizations** with complete total, Medicaid, and uninsured counts, representing **`{python} f"{summary['complete_payer_patient_total']:,.0f}"` reported patients**. Organizations with an unavailable or suppressed component are excluded from all slices, rather than treated as zero. This is not an Oregon-resident payer distribution.
 
 ```{python}
 #| label: fig-payor-mix
-#| fig-cap: "Aggregate Payer Mix (Statewide)"
+#| fig-cap: "Payer mix for organizations with complete reported components"
 #| warning: false
 
-# Calculate Statewide Totals (using deduped organization data to avoid double counting)
-df_orgs = df.drop_duplicates(subset='bhcmis_id')
+# Use a common complete-case denominator for every slice.
+payer_orgs = df_orgs.dropna(subset=['total_patients', 'medicaid', 'uninsured'])
 
-total_pop = df_orgs['total_patients'].sum()
-total_medicaid = df_orgs['medicaid'].sum()
-total_uninsured = df_orgs['uninsured'].sum()
+total_pop = payer_orgs['total_patients'].sum(min_count=1)
+total_medicaid = payer_orgs['medicaid'].sum(min_count=1)
+total_uninsured = payer_orgs['uninsured'].sum(min_count=1)
 total_other = total_pop - (total_medicaid + total_uninsured)
 
 # Create a mini dataframe for the pie chart
 mix_data = pd.DataFrame({
-    'Category': ['Medicaid', 'Uninsured', 'Other (Private/Medicare)'],
+    'Category': ['Medicaid', 'Uninsured', 'Other insurance (including public)'],
     'Patients': [total_medicaid, total_uninsured, total_other]
 })
 
 fig_pie = px.pie(
-    mix_data, 
-    values='Patients', 
+    mix_data,
+    values='Patients',
     names='Category',
     color='Category',
     color_discrete_map={
         'Medicaid': '#2c7bb6',    # Blue
         'Uninsured': '#d7191c',   # Red
-        'Other (Private/Medicare)': '#abd9e9' # Light Blue
+        'Other insurance (including public)': '#abd9e9' # Light Blue
     },
-    hole=0.4, 
+    hole=0.4,
     height=400,
-    title=f"Total Patients (Org Level): {total_pop:,.0f}*"
+    title=f"Reported patients (complete payer data): {total_pop:,.0f}*"
 )
 
 # Add an annotation explaining the asterisk
@@ -110,9 +130,9 @@ fig_pie.show()
 
 ### Interactive Map
 
-- Size: Total Patients Served
-- Color: Percent of Patients on Medicaid
-- *Hover for details*
+- Each marker represents a registered site; co-located markers may overlap.
+- Color represents the **parent organization’s Medicaid share**, not a site-specific rate or geographic density.
+- Gray markers indicate unavailable Medicaid share. Hover for site IDs and addresses; the searchable table includes every site.
 
 ```{python}
 #| label: fig-map
@@ -120,32 +140,42 @@ fig_pie.show()
 #| warning: false
 
 fig = px.scatter_mapbox(
-    df, 
-    lat="latitude", 
-    lon="longitude", 
+    df[df['pct_medicaid'].notna()],
+    lat="latitude",
+    lon="longitude",
     hover_name="site_name",
     hover_data={
         "latitude": False,
         "longitude": False,
-        "total_patients": False, 
+        "total_patients": False,
         "pct_medicaid": False,
         "uninsured": False,
         "medicaid": False,
+        "site_id": True,
+        "address": True,
         "organization": True,
         "city": True,
         "Patients (fmt)": True,
         "Medicaid %": True
     },
-    size="total_patients",
     color="pct_medicaid",
-    color_continuous_scale="Viridis", 
-    size_max=25,
-    zoom=5.5, 
+    color_continuous_scale="Viridis",
+    zoom=5.5,
     center={"lat": 44.0, "lon": -120.5},
     height=600,
-    title="Oregon FQHCs: Patient Volume & Medicaid Density"
+    title="Oregon sites: parent organization Medicaid share"
 )
 
+fig.update_traces(marker_size=9)
+unavailable = df[df['pct_medicaid'].isna()]
+fig.add_trace(go.Scattermapbox(
+    lat=unavailable['latitude'], lon=unavailable['longitude'],
+    mode='markers', marker=dict(size=9, color='#777777'),
+    name='Medicaid share unavailable',
+    text=unavailable['site_name'],
+    customdata=unavailable[['site_id', 'address', 'organization']].to_numpy(),
+    hovertemplate='%{text}<br>%{customdata[0]}<br>%{customdata[1]}<br>%{customdata[2]}<br>Medicaid share unavailable<extra></extra>'
+))
 fig.update_layout(
     mapbox_style="carto-positron",
     margin={"r":0,"t":40,"l":0,"b":0},
@@ -161,76 +191,98 @@ fig.update_layout(
 fig.show()
 ```
 
-### Analysis: Scale vs. Safety Net (Organization Level)
+### Analysis: Organization Scale and Medicaid Share
 
-Is there a relationship between the size of a Health Center Organization and its payer mix?
+Is there an organization-level relationship between reported patient population and Medicaid share?
 
-The data reveals a weak positive correlation between organization size and Medicaid volume. Larger organizations tend to serve a slightly higher percentage of Medicaid patients.
+The primary predictor is **log10 reported patient population**. Organizational scale is interpreted proportionally: a change from 5,000 to 10,000 patients is more substantial than a change from 100,000 to 105,000, even though both add 5,000 patients. Logging preserves all eligible organizations, gives each organization equal weight, and reduces geometric domination by the largest organization. Eligibility requires a positive reported patient total and an available Medicaid share; there is no arbitrary minimum-patient filter.
 
-Overall however, the data shows you don't have to be a giant mega-clinic to be a safety net provider. Small clinics in Oregon are doing just as much heavy lifting relative to their size.
+Among **`{python} summary['analysis_organization_count']` distinct organizations**, the log-scale Pearson correlation is **`{python} f"{model_summary['pearson_r']:.3f}" if analysis_publishable else 'withheld pending analytical review'`** and R² is **`{python} f"{model_summary['r_squared']:.3f}" if analysis_publishable else 'withheld'`**. A doubling in reported organization size corresponds to an estimated **`{python} f"{model_summary['doubling_effect'] * 100:.1f} percentage points" if analysis_publishable else 'withheld'`** difference in Medicaid share (95% CI **`{python} f"{model_summary['doubling_effect_ci95'][0] * 100:.1f} to {model_summary['doubling_effect_ci95'][1] * 100:.1f} percentage points" if analysis_publishable else 'withheld'`**). Spearman’s rank correlation is **`{python} f"{model_summary['spearman_rho']:.3f}" if analysis_publishable else 'withheld'`**, a secondary check on the monotonic pattern.
 
-* **10th Percentile:** 43% Medicaid
-* **Median Site:** 62% Medicaid
-* **90th Percentile:** 76% Medicaid
+This is an exploratory association between organizations, not evidence that growth causes Medicaid share to change and not an individual patient-level relationship. Organization size explains only part of the observed variation; substantial payer-mix heterogeneity remains. Large organizations—including Yakima Valley Farm Workers Clinic—remain in the analysis rather than being removed for influence.
+
+Each organization contributes once to the regression and the following Medicaid-share percentiles:
+
+* **10th percentile:** `{python} percent_label(summary['medicaid_percentiles']['0.1'])`
+* **Median organization:** `{python} percent_label(summary['medicaid_percentiles']['0.5'])`
+* **90th percentile:** `{python} percent_label(summary['medicaid_percentiles']['0.9'])`
 
 ```{python}
 #| label: fig-correlation
-#| fig-cap: "Correlation: Org Patient Volume vs. Medicaid %"
+#| fig-cap: "Organization-level relationship using log10 reported patient population"
 #| warning: false
 
-# Filter to unique organizations for valid regression
-df_trend = df.drop_duplicates(subset='bhcmis_id')
-df_trend = df_trend[df_trend['total_patients'] > 100]
+# df_trend is one row per eligible organization. Every point has equal weight.
 
 fig_corr = px.scatter(
-    df_trend, 
-    x="total_patients", 
+    df_trend,
+    x="log10_total_patients",
     y="pct_medicaid",
     hover_name="organization", # Changed to Org Name
     # Update tooltips to be explicit about "Organization" scope
     hover_data={
-        "total_patients": False, 
-        "pct_medicaid": False, 
-        "Patients (fmt)": True, 
+        "log10_total_patients": False,
+        "pct_medicaid": False,
+        "Patients (fmt)": True,
         "Medicaid %": True
     },
     trendline="ols",
-    labels={"total_patients": "Total Org Patients", "pct_medicaid": "Org Medicaid %"}, # Explicit Axis Labels
-    title="Organization Size vs. Medicaid %",
+    labels={"log10_total_patients": "Reported organization patients (log scale)", "pct_medicaid": "Organization Medicaid share"},
+    title="Organization size and Medicaid share (equal organization weight)",
     height=500
 )
 
-fig_corr.update_layout(yaxis_tickformat='.0%')
-fig_corr.show()
+patient_ticks = [1_500, 3_000, 5_000, 10_000, 20_000, 50_000, 100_000, 200_000]
+fig_corr.update_layout(
+    yaxis_tickformat='.0%',
+    xaxis=dict(
+        tickmode='array',
+        tickvals=[np.log10(value) for value in patient_ticks],
+        ticktext=[f"{value / 1000:g}k" for value in patient_ticks]
+    )
+)
+if analysis_publishable:
+    fig_corr.show()
+else:
+    print("Organization-level model withheld: analytical coverage requires human review.")
 ```
 
 ### Search & Explore Data
 
-Sort by Uninsured or Medicaid to find high-need areas.
+Explore site locations and parent-organization payer characteristics. These measures do not establish local unmet need. “Unavailable” means the source is unmatched, missing, or suppressed—not zero.
 ```{python}
 #| label: tbl-interactive
 #| warning: false
 
-display_cols = ['organization', 'site_name', 'city', 'total_patients', 'pct_medicaid', 'pct_uninsured']
+display_cols = ['site_id', 'organization', 'site_name', 'address', 'city', 'total_patients', 'pct_medicaid', 'pct_uninsured']
 df_display = df[display_cols].copy()
-df_display.columns = ['Organization', 'Site', 'City', 'Org Total Patients', '% Medicaid', '% Uninsured']
+df_display.columns = ['Site ID', 'Organization', 'Site', 'Address', 'City', 'Org Total Patients', '% Medicaid', '% Uninsured']
 
-df_display['% Medicaid'] = df_display['% Medicaid'].apply(lambda x: f"{x:.1%}")
-df_display['% Uninsured'] = df_display['% Uninsured'].apply(lambda x: f"{x:.1%}")
+# Keep numeric data numeric for sorting; format only the displayed value.
+numeric_display = JavascriptFunction("""function(data, type, row, meta) {
+    const value = Number(data);
+    const missing = data === null || data === "" || !Number.isFinite(value);
+    if (type === "sort" || type === "type") return missing ? null : value;
+    if (missing) return "Unavailable";
+    return meta.col === 5
+        ? value.toLocaleString("en-US", {maximumFractionDigits: 0})
+        : (value * 100).toFixed(1) + "%";
+}""")
+show(df_display, classes="display nowrap compact", paging=True, searching=True,
+     scrollX=True, columnDefs=[{"targets": [5, 6, 7], "render": numeric_display}])
 
-show(df_display, classes="display nowrap compact", paging=True, searching=True)
 ```
 
 ### Data Preview
 
-Below is a sample of the raw data feeding this report.
+Below are the first five processed site records, sorted by site ID.
 
 ```{python}
 #| label: tbl-preview
-#| tbl-cap: "Recent Site Data Entry"
+#| tbl-cap: "Processed site records, ordered by site ID"
 
 # Display a clean table of just a few relevant columns
 # USING CORRECTED COLUMN NAME
-display_cols = ['site_name', 'city', 'county', 'type']
-df[display_cols].sample(5)
+display_cols = ['site_id', 'site_name', 'address', 'city', 'county', 'type']
+df.sort_values('site_id')[display_cols].head(5)
 ```

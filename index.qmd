@@ -1,37 +1,124 @@
 ---
-title: "Ethan Pitzer"
+pagetitle: "Ethan Pitzer | Healthcare Analytics & Data Products"
+description: "Healthcare analytics, analytics engineering, and data products by Ethan Pitzer. Explore reproducible case studies and interactive dashboards."
 image: profile.jpeg
-about:
-  template: jolla
-  links:
-    - icon: linkedin
-      text: LinkedIn
-      href: https://www.linkedin.com/in/pitzer-e/
-    - icon: github
-      text: Github
-      href: https://github.com/pitzer-e
+toc: false
+page-layout: full
+body-classes: portfolio-home
 ---
 
-## Data Analyst | OPCA
+::: {.home-hero}
+::: {.home-intro}
+<p class="eyebrow">Healthcare Analytics · Analytics Engineering · Data Products</p>
 
-I am a Data Analyst based in Oregon, currently driving strategic objectives for the **Oregon Primary Care Association (OPCA)**. My work focuses on leveraging analytics software—including Arcadia, Tableau, and SQL—to provide actionable intelligence that supports community health centers across the state.
+<h1 class="hero-title">Ethan Pitzer</h1>
 
-My background sits at the intersection of technical engineering and business strategy. Before pivoting to data analytics, I spent several years as a **Technical Support Engineer at Salesforce**, where I specialized in troubleshooting complex custom code and integrations for commercial and government clients.
+<p class="hero-statement">I build healthcare data products and reporting systems that turn clinical, claims, and operational data into decisions.</p>
 
-I hold an **MBA** from Quantic School of Business and Technology and a **B.S. in Computer Science** from Eastern Oregon University.
+Based in Oregon, I combine healthcare domain knowledge with code, analysis, and clear communication to support community health centers.
 
-### Technical Toolkit
+::: {.home-actions}
+[View Case Studies](projects.qmd){.btn .btn-primary}
+[View Dashboards](dashboards.qmd){.btn .btn-outline-primary}
+[View GitHub ↗](https://github.com/pitzer-e){.text-link}
+:::
+:::
 
-| **Core Data Stack** | **Visualization** | **Certifications** |
-| :--- | :--- | :--- |
-| Python (Pandas/Numpy/SciPy/scikit-learn) | Matplotlib/Plotly | Google Data Analytics Professional |
-| Arcadia (Reports/Lists) | Vista Authoring | Arcadia Certified Professional | 
-| SQL | Tableau | Tableau Business Intelligence Analyst |
-| Excel | Splunk | ISC² CC Certified |
+::: {.home-portrait}
+<img src="profile.jpeg" alt="Ethan Pitzer" width="200" height="200">
+:::
+:::
 
-::: {.callout-note appearance="simple"}
-## Current Focus
-I am currently managing the ingestion and analysis of Electronic Health Record (EHR) and CCLF claims data within the **Arcadia Data Analytics Platform** to uncover actionable healthcare patterns across Oregon FQHCs.
+::: {.home-section}
+<p class="eyebrow">Selected projects</p>
 
-Simultaneously, I am expanding my technical toolkit—with a focus on Python programming, probabilistic modeling, and advanced visualization—in pursuit of the **University of Michigan Master of Applied Data Science (MADS)** program.
+<h2>Featured work</h2>
+
+Healthcare data, translated into useful tools and decisions.
+
+::: {.featured-grid}
+::: {.work-card}
+<p class="card-kicker">01 / Analytics engineering</p>
+
+<h3>Oregon FQHC Landscape</h3>
+
+A reproducible 2024 HRSA snapshot that joins Oregon's site footprint to organization-level UDS measures, with explicit provenance, reconciliation, and analytical-fitness checks.
+
+<p class="card-tools">Python · Data contracts · pytest · Plotly</p>
+
+[View the FQHC case study →](projects/oregon-fqhc/index.qmd){.card-link}
+:::
+
+::: {.work-card}
+<p class="card-kicker">02 / Forecasting</p>
+
+<h3>Clinic Service Volume Forecasting</h3>
+
+A time-series analysis of synthetic clinic visits, exploring seasonality and future demand to inform staffing and capacity planning.
+
+<p class="card-tools">Python · Statsmodels · Synthetic data</p>
+
+[View the forecasting case study →](projects/clinic-forecasting/index.qmd){.card-link}
+:::
+
+::: {.work-card}
+<p class="card-kicker">03 / Visual analytics</p>
+
+<h3>Oregon Health Center Landscape</h3>
+
+An interactive Tableau map of health center service delivery sites, helping visitors explore locations and the distribution of access points across Oregon.
+
+<p class="card-tools">Tableau · Healthcare · Geospatial analysis</p>
+
+[View the Tableau dashboard →](dashboards/health-landscape/index.qmd){.card-link}
+:::
+:::
+:::
+
+::: {.home-section}
+<p class="eyebrow">How I work</p>
+
+<h2>Connecting the data to the decision</h2>
+
+::: {.capability-grid}
+::: {.capability}
+<h3>Healthcare analytics</h3>
+
+Bring context to clinical, claims, and operational data, with a focus on community health centers and the questions behind the report.
+:::
+
+::: {.capability}
+<h3>Analytics engineering</h3>
+
+Use Python and SQL to prepare data, automate repeatable work, and build validation into the path from source to analysis.
+:::
+
+::: {.capability}
+<h3>Reporting & visualization</h3>
+
+Make findings easier to explore and act on through Arcadia reporting, Tableau dashboards, and reproducible Quarto analysis.
+:::
+:::
+:::
+
+::: {.home-section .home-background}
+::: {}
+<p class="eyebrow">Background</p>
+
+<h2>Technical depth. Clinical context. Business perspective.</h2>
+
+I work in data analytics at the **Oregon Primary Care Association (OPCA)**, where I help turn healthcare data into reporting systems and analytical products for community health centers. Previously, I worked as a Technical Support Engineer at Salesforce, troubleshooting custom code and integrations for commercial and government clients.
+
+My path into healthcare analytics spans technology, business, and clinical practice. I hold a B.S. in Computer Science and an MBA, and my earlier experience in paramedicine gives me firsthand context for the clinical workflows behind healthcare data.
+:::
+
+::: {.contact-panel}
+<h3>Get in touch</h3>
+
+Connect with me about healthcare analytics, reporting, and data products.
+
+[Connect on LinkedIn ↗](https://www.linkedin.com/in/pitzer-e/){.text-link}
+
+[View GitHub ↗](https://github.com/pitzer-e){.text-link}
+:::
 :::

@@ -16,21 +16,21 @@ This site is architected to separate deep-dive engineering work from visual anal
 
 * **`projects/` (Case Studies):** Full-stack data engineering projects with Python pipelines, automated testing, and written analysis.
 * **`dashboards/` (Visualizations):** Hosted Tableau/PowerBI embeds and interactive Plotly apps.
-* **`tests/`:** Automated `pytest` suites ensuring data integrity before deployment.
+* **`projects/oregon-fqhc/tests/`:** Automated `pytest` suites ensuring data integrity before deployment.
 
 ---
 
 ## Featured Case Study: Oregon FQHC Landscape
 
-A serverless, automated data product tracking Health Center Service Delivery Sites in Oregon. It replaces legacy manual workflows with a **Code-First approach**.
+A reproducible annual snapshot of Oregon's HRSA-reported health-center landscape. It combines a dated site-footprint extract with organization-level 2024 UDS measures, identifier-based joins, validation, and transparent analytical reporting.
 
 ### The Architecture
-This project demonstrates a production-grade ETL pipeline running entirely on GitHub Actions:
+This project demonstrates a scheduled ETL pipeline with explicit validation gates running entirely on GitHub Actions:
 
-1.  **Ingest:** Python scripts fetch live data from the [HRSA Data Warehouse](https://data.hrsa.gov/) and FOIA reading rooms (UDS 2024 Patient Demographics).
-2.  **Transform:** `pandas` performs cleaning, geospatial standardization, and deterministic joins (Match Rate: 97%).
-3.  **Validate:** `pytest` acts as a quality gate, failing the build if data integrity checks (e.g., coordinate bounds, negative counts) are violated.
-4.  **Publish:** Quarto renders the static site with interactive Plotly maps and statistical regression analysis.
+1.  **Ingest:** Python scripts retrieve authoritative, separately dated source snapshots from the [HRSA Data Warehouse](https://data.hrsa.gov/) and FOIA reading rooms (2024 UDS patient measures). These are not live EHR counts.
+2.  **Transform:** `pandas` performs cleaning, geospatial field standardization, and validated many-to-one joins. Current coverage and precise counting definitions are documented in the [project data contract](projects/oregon-fqhc/README.md).
+3.  **Validate:** `pytest` separates hard integrity failures from visible reconciliation warnings and analytical-review triggers.
+4.  **Analyze and publish:** One equally weighted row per organization supports an exploratory log-scale size/Medicaid-share model, and Quarto renders the static case study only from validated artifacts.
 
 [**View the Full Case Study**](https://pitzer-e.github.io/projects/oregon-fqhc/)
 

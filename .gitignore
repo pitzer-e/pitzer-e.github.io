@@ -1,4 +1,6 @@
 /.quarto/
+__pycache__/
+*.py[cod]
 
 **/*.quarto_ipynb
 .DS_Store

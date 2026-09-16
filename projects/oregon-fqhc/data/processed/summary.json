@@ -1,0 +1,100 @@
+{
+  "site_count": 330,
+  "organization_count": 33,
+  "matched_organization_count": 31,
+  "patient_data_organization_count": 31,
+  "patient_data_site_count": 320,
+  "site_patient_coverage": 0.9696969696969697,
+  "organization_patient_coverage": 0.9393939393939394,
+  "reported_organization_patient_total": 646289.0,
+  "complete_payer_organization_count": 30,
+  "complete_payer_patient_total": 644865.0,
+  "analysis_organization_count": 31,
+  "analysis_model": {
+    "predictor": "log10_total_patients",
+    "response": "pct_medicaid",
+    "observational_unit": "bhcmis_organization",
+    "weighting": "equal_organization",
+    "pearson_r": 0.5305686273990929,
+    "pearson_p_value": 0.0021370680608189404,
+    "pearson_ci95": [
+      0.21703064968487096,
+      0.7448715850032013
+    ],
+    "r_squared": 0.2815030683801574,
+    "intercept": -0.13325453299392748,
+    "slope_per_tenfold_increase": 0.1685293466333341,
+    "slope_ci95": [
+      0.06627317974860758,
+      0.2707855135180606
+    ],
+    "slope_p_value": 0.0021370680608189404,
+    "hc3_slope_ci95": [
+      0.06856870245425674,
+      0.2684899908124115
+    ],
+    "hc3_slope_p_value": 0.0017464188758877528,
+    "doubling_effect": 0.05073238848628615,
+    "doubling_effect_ci95": [
+      0.019950215012361588,
+      0.08151456196021072
+    ],
+    "spearman_rho": 0.4633064516129032,
+    "spearman_p_value": 0.008668278566133069,
+    "raw_pearson_r": 0.29900945241803917,
+    "raw_pearson_p_value": 0.10225260099073782,
+    "raw_r_squared": 0.08940665263533554,
+    "yakima_influence": {
+      "bhcmis_id": "101030",
+      "organization": "YAKIMA VALLEY FARM WORKERS CLINIC",
+      "raw_leverage": 0.8806533559910602,
+      "log10_leverage": 0.2876054977930126,
+      "raw_cooks_distance": 18.210866438830134,
+      "log10_cooks_distance": 0.1894261941169221
+    }
+  },
+  "medicaid_percentiles": {
+    "0.1": 0.38314929662683406,
+    "0.5": 0.5505816197144274,
+    "0.9": 0.7494628519733122
+  },
+  "quality": {
+    "status": "VALID_WITH_WARNING",
+    "analysis_publishable": true,
+    "warnings": [
+      {
+        "code": "known_source_scope_gap",
+        "message": "2 Look-Alike organizations are outside the configured H80 UDS source scope."
+      }
+    ],
+    "reconciled_unmatched_organizations": [
+      {
+        "bhcmis_id": "10E01385",
+        "organization": "CASCADE AIDS PROJECT",
+        "site_count": 3,
+        "site_types": [
+          "Federally Qualified Health Center (FQHC) Look-Alike"
+        ],
+        "reconciliation": "outside_configured_h80_uds_scope"
+      },
+      {
+        "bhcmis_id": "10E01418",
+        "organization": "CASCADIA HEALTH",
+        "site_count": 7,
+        "site_types": [
+          "Federally Qualified Health Center (FQHC) Look-Alike"
+        ],
+        "reconciliation": "outside_configured_h80_uds_scope"
+      }
+    ],
+    "site_patient_coverage_numerator": 320,
+    "site_patient_coverage_denominator": 330,
+    "site_patient_coverage": 0.9696969696969697,
+    "organization_patient_coverage_numerator": 31,
+    "organization_patient_coverage_denominator": 33,
+    "organization_patient_coverage": 0.9393939393939394,
+    "organization_analytical_coverage_numerator": 31,
+    "organization_analytical_coverage_denominator": 33,
+    "organization_analytical_coverage": 0.9393939393939394
+  }
+}
