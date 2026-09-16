@@ -43,6 +43,15 @@ def test_persisted_snapshot_is_valid(snapshot):
     assert manifest['uds_reporting_year'] == 2024
 
 
+def test_site_map_uses_keyless_maplibre_basemap():
+    source = (SCRIPTS.parent / 'index.qmd').read_text()
+    assert 'px.scatter_map(' in source
+    assert 'go.Scattermap(' in source
+    assert 'map_style="open-street-map"' in source
+    for known_bad in ('scatter_mapbox', 'Scattermapbox', 'carto-positron'):
+        assert known_bad not in source
+
+
 def test_colocated_registered_sites_are_not_duplicates():
     # Stable regression fixture: future source closures should not break this test.
     rows = []
