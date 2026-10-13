@@ -3,6 +3,7 @@ from datetime import date, datetime, timezone
 from hashlib import sha256
 from pathlib import Path
 import json
+import math
 import re
 
 import numpy as np
@@ -364,6 +365,35 @@ def source_metadata(raw_dir, today=None):
     }
 
 
+# Observed cross-environment model drift is <= 1e-14 relative. Allow tenfold
+# headroom, with a 1e-15 absolute floor for near-zero statistics (~5 float64 eps).
+MODEL_REL_TOL = 1e-13
+MODEL_ABS_TOL = 1e-15
+
+
+def validate_summary(saved, calculated):
+    """Keep summary structure exact; tolerate only finite model float roundoff."""
+    def compare(a, b, path, model=False):
+        require(type(a) is type(b), f'Summary disagrees at {path}: type mismatch')
+        if isinstance(a, dict):
+            require(a.keys() == b.keys(), f'Summary disagrees at {path}: keys mismatch')
+            for key in a:
+                compare(a[key], b[key], f'{path}.{key}',
+                        model or (path == 'summary' and key == 'analysis_model'))
+        elif isinstance(a, list):
+            require(len(a) == len(b), f'Summary disagrees at {path}: length mismatch')
+            for i, (left, right) in enumerate(zip(a, b)):
+                compare(left, right, f'{path}[{i}]', model)
+        elif isinstance(a, float):
+            require(math.isfinite(a) and math.isfinite(b),
+                    f'Summary disagrees at {path}: nonfinite value')
+            matches = math.isclose(a, b, rel_tol=MODEL_REL_TOL, abs_tol=MODEL_ABS_TOL) if model else a == b
+            require(matches, f'Summary disagrees at {path}: {a!r} != {b!r}')
+        else:
+            require(a == b, f'Summary disagrees at {path}: {a!r} != {b!r}')
+    compare(saved, calculated, 'summary')
+
+
 def load_artifacts(root=ROOT, today=None):
     root = Path(root)
     output = root / 'data' / 'processed'
@@ -384,7 +414,7 @@ def load_artifacts(root=ROOT, today=None):
     joined = pd.read_csv(output / 'oregon_sites_joined.csv', dtype=dtype, float_precision='round_trip')
     validate_joined(sites, joined)
     expected = summarize(joined)
-    require(json.loads((output / 'summary.json').read_text()) == expected, 'Summary disagrees with data')
+    validate_summary(json.loads((output / 'summary.json').read_text()), expected)
     saved_orgs = pd.read_csv(output / 'organizations.csv', dtype={'bhcmis_id': 'string'}, float_precision='round_trip')
     pd.testing.assert_frame_equal(saved_orgs, organization_frame(joined), check_dtype=False)
     return joined, saved_orgs, expected, manifest
