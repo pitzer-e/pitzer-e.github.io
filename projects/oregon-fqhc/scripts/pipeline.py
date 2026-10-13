@@ -13,7 +13,7 @@ from scipy import stats
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = {
     'hrsa_sites.xlsx': 'https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx',
-    'uds_2024.xlsx': 'https://www.hrsa.gov/sites/default/files/hrsa/foia/h80-2024.xlsx',
+    'uds_2024.xlsx': 'https://data.hrsa.gov/DataDownload/StaticDocuments/H80-2024.xlsx',
 }
 UDS_YEAR = 2024
 SITE_FRESHNESS_WARNING_DAYS = 14
