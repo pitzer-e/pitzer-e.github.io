@@ -342,3 +342,88 @@ def test_transformation_failure_preserves_old_outputs(tmp_path, monkeypatch, sit
     with pytest.raises(ValueError, match='transformation failure'):
         runner.build(tmp_path, local=True)
     assert sentinel.read_text() == 'previous generation'
+
+
+@pytest.mark.parametrize('saved,calculated', [
+    (1.0, np.nextafter(1.0, 2.0)),
+    (1.0, 1.0 + 0.5e-13),
+    (0.0, 1e-15),
+    (0.0, -1e-15),
+])
+def test_model_float_roundoff_is_accepted(saved, calculated):
+    p.validate_summary({'analysis_model': {'ci': [float(saved)]}},
+                       {'analysis_model': {'ci': [float(calculated)]}})
+
+
+@pytest.mark.parametrize('saved,calculated', [
+    (1.0, 1.0 + 2e-13),
+    (0.0, np.nextafter(1e-15, np.inf)),
+    (0.0, np.nextafter(-1e-15, -np.inf)),
+    (0.5, 0.500001),
+])
+def test_model_float_differences_are_rejected(saved, calculated):
+    with pytest.raises(ValueError, match=r'summary.analysis_model.ci\[0\]'):
+        p.validate_summary({'analysis_model': {'ci': [float(saved)]}},
+                           {'analysis_model': {'ci': [float(calculated)]}})
+
+
+@pytest.mark.parametrize('bad', [float('nan'), float('inf'), -float('inf')])
+@pytest.mark.parametrize('key', ['analysis_model', 'other'])
+@pytest.mark.parametrize('bad_side', ['saved', 'calculated'])
+def test_summary_rejects_nonfinite_values(bad, key, bad_side):
+    a = {key: {'stat': 1.0}}
+    b = {key: {'stat': 1.0}}
+    (a if bad_side == 'saved' else b)[key]['stat'] = bad
+    with pytest.raises(ValueError, match=f'summary.{key}.stat: nonfinite'):
+        p.validate_summary(a, b)
+
+
+@pytest.mark.parametrize('saved,calculated', [
+    ({'id': '00123'}, {'id': '123'}),
+    ({'count': 31}, {'count': 32}),
+    ({'count': 1}, {'count': True}),
+    ({'stat': 1.0}, {'stat': 1}),
+    ({'enabled': True}, {'enabled': False}),
+    ({'stat': None}, {'stat': 0.0}),
+    ({'stat': [0.1, 0.2]}, {'stat': [0.2, 0.1]}),
+    ({'stat': [0.1]}, {'stat': [0.1, 0.2]}),
+    ({'stat': [0.1]}, {'stat': (0.1,)}),
+    ({'stat': 0.1}, {'different': 0.1}),
+])
+def test_model_structure_and_discrete_values_stay_exact(saved, calculated):
+    with pytest.raises(ValueError, match='summary.analysis_model'):
+        p.validate_summary({'analysis_model': saved}, {'analysis_model': calculated})
+
+
+def test_non_model_float_remains_exact():
+    with pytest.raises(ValueError, match='summary.reported_organization_patient_total'):
+        p.validate_summary({'reported_organization_patient_total': 646289.0},
+                           {'reported_organization_patient_total': float(np.nextafter(646289.0, np.inf))})
+
+
+@pytest.mark.parametrize('key', ['site_count', 'analysis_model'])
+def test_summary_root_keys_remain_exact(key):
+    with pytest.raises(ValueError, match='summary: keys mismatch'):
+        p.validate_summary({'site_count': 331, 'analysis_model': None}, {key: None})
+
+
+def test_saved_production_summary_validates_without_rebuild(snapshot):
+    import json
+    saved = json.loads((p.ROOT / 'data/processed/summary.json').read_text())
+    p.validate_summary(saved, p.summarize(snapshot[0]))
+
+
+def test_model_mismatch_fails_even_with_updated_hash(tmp_path):
+    import json
+    shutil.copytree(p.ROOT / 'data', tmp_path / 'data')
+    output = tmp_path / 'data/processed'
+    summary_path = output / 'summary.json'
+    summary = json.loads(summary_path.read_text())
+    summary['analysis_model']['slope_per_tenfold_increase'] += 0.001
+    summary_path.write_text(json.dumps(summary))
+    manifest_path = output / 'manifest.json'
+    manifest = json.loads(manifest_path.read_text())
+    manifest['outputs']['summary.json'] = p.digest(summary_path)
+    manifest_path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match='summary.analysis_model.slope_per_tenfold_increase'):
+        p.load_artifacts(tmp_path)
