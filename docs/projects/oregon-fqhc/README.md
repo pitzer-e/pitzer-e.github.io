@@ -25,7 +25,7 @@ Patient totals use `T4_L12_Ca + T4_L12_Cb` (insurance-section total across age g
 ## Run from repository root
 
 ```sh
-# Safe offline build from existing workbooks (freshness checks still apply).
+# Safe offline build from existing workbooks (freshness assessment still applies).
 python projects/oregon-fqhc/scripts/run_pipeline.py --local
 
 # Fetch both sources, validate and build a new complete snapshot.
@@ -38,7 +38,7 @@ quarto render projects/oregon-fqhc/index.qmd
 
 Use the repository virtual environment locally. Run dependencies are in the root requirements file. Dependencies remain unpinned; cross-version reproducibility is not guaranteed.
 
-`1_ingest_data.py` is retained as a compatibility entry point to the full live pipeline (or `--local`). `2_clean_data.py` and `3_join_data.py` now rebuild the complete local snapshot; they no longer publish partially processed stages. Prefer the single runner. `4_analyze_correlations.py` is retained and used by CI: it validates the saved artifacts and prints the shared summary, rather than independently computing site-weighted statistics.
+`1_ingest_data.py` is retained as a compatibility entry point to the downloaded-source pipeline (or `--local`). `2_clean_data.py` and `3_join_data.py` now rebuild the complete local snapshot; they no longer publish partially processed stages. Prefer the single runner. `4_analyze_correlations.py` is retained and used by CI: it validates the saved artifacts and prints the shared summary, rather than independently computing site-weighted statistics.
 
 ## Artifacts and failure behavior
 
