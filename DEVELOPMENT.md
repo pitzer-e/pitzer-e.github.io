@@ -131,13 +131,14 @@ a new retrieval. Plotly runtime, generated chart IDs, CSS fingerprints, dates,
 and listing metadata may differ; structural checks do not replace browser review.
 No tolerances or analytical behavior are changed by this migration.
 
-Activation requires a passing Linux x86-64 rebuild rehearsal, all 73 tests,
+The completed saved-input activation gates require a passing Linux x86-64 rebuild
+rehearsal, all 73 tests,
 saved-artifact validation, exactly ten rendered pages, engineering-document
 exclusion from output/search, intact navigation/listings and the linked FQHC data
 contract, unchanged protected inputs/sources, allowlisted publishing differences,
 and browser review of interactive plots. Live downloads and actual publishing
-require separate authorization. The Linux rebuild and browser presentation gates
-must have recorded evidence before activation.
+require separate authorization. Linux rebuild and limited browser evidence are recorded below. The presentation
+caveat and untested live/publishing/deployment paths remain operational review items.
 
 Repository publication and website deployment are distinct. This workflow commits
 and pushes allowlisted generated artifacts. Pages serves `main:/docs`; a push using
@@ -152,11 +153,31 @@ known-good generation through a separately approved change. Do not restore isola
 files from mixed generations, force-push, or loosen numerical tolerances. Returning
 to unpinned provisioning is an emergency fallback rather than a reproducible setup.
 
-Current migration evidence: static workflow checks pass, and the preserved macOS
-saved-input candidate was inspected in a browser. Payer/scatter charts and map
-rendering were present; map controls responded and table filtering returned the
-expected single Tigard record. This is a limited local presentation review, not
-Linux render evidence or exhaustive visual equivalence. The implementation host
-has no available Linux executor/container tooling. A disposable Linux x86-64
-regeneration rehearsal and presentation review of its output remain activation
-blockers; no production workflow has been triggered.
+Completed Linux saved-input rehearsal evidence (Floor 5C):
+
+- Ubuntu 24.04 x64; Python 3.13.16, uv 0.13.0, and Quarto 1.10.19.
+- 73 tests passed before and after the saved-input rebuild.
+- Baseline and regenerated-artifact validation passed.
+- All three regenerated CSVs were byte-identical to the saved baseline.
+- Three model-derived values differed by approximately 1.11e-16, within the
+  unchanged existing tolerances.
+- Full ten-page rendering and all existing website-output assertions passed.
+- Nine staging records were inspected, all within the existing publishing allowlist.
+- Original-checkout, copied-source, raw-input, and post-render data integrity passed.
+
+Evidence is recorded in the successful temporary rehearsal run:
+<https://github.com/pitzer-e/pitzer-e.github.io/actions/runs/38516252464>.
+The temporary workflow has been removed from the final migration change.
+
+Limited browser review of the downloaded Linux output passed for chart rendering,
+map interaction, and table filtering. Narrow-viewport chart-title clipping remains
+a known presentation caveat. This does not claim exhaustive visual equivalence.
+No live HRSA downloads, authenticated publishing, or deployment were tested.
+
+Merge readiness means that the implementation review and permanent three-platform
+PR checks pass with only the production workflow and this documentation changed.
+It does not authorize production activation. The saved-input rehearsal provides
+regeneration evidence; the first live refresh, authenticated publication, and any
+deployment verification require a separately approved operational plan. Merging
+changes the scheduled workflow used by future runs, so merge approval must account
+for its existing Monday schedule even if no manual dispatch is requested.
