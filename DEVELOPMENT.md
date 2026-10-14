@@ -1,14 +1,25 @@
 # Reproducible development environment
 
 Development uses Python **3.13.16**, uv **0.13.0**, and Quarto CLI
-**1.10.19** on macOS ARM64 and Linux x86-64. PR validation uses Ubuntu
-24.04, macOS 15 ARM64, and Windows Server 2025 x64. Production retains its independent requirements and workflow.
+**1.10.19**. PR validation uses Ubuntu 24.04 x86-64, macOS 15 ARM64, and
+Windows Server 2025 x64. Production retains its independent requirements and workflow.
 
 Platform verification status:
 
-- macOS ARM64: Fresh local environment validated; hosted matrix validation pending.
-- Linux x86-64: GitHub Actions validation passed.
-- Windows x64: Not yet validated; hosted matrix validation pending.
+- Linux x86-64 (`ubuntu-24.04`): Complete hosted validation passed.
+- macOS ARM64 (`macos-15`): Complete hosted validation passed; fresh local
+  environment also validated.
+- Windows x64 (`windows-2025`): Complete hosted validation passed.
+
+All three hosted platforms passed 73 tests, saved-snapshot validation, full
+isolated rendering, output assertions, and copied-data/original-checkout integrity
+checks. Output assertions verify exactly ten HTML pages, engineering documentation
+exclusion from output and search metadata, navigation and case-study links, and
+the linked FQHC data contract matching its source bytes.
+
+This evidence applies to the listed runner OS/architecture combinations with the
+pinned tools and lockfile. Other OS versions and hardware architectures have not
+been validated.
 
 Install uv 0.13.0 using your preferred isolated tool installer (for example,
 `pipx install uv==0.13.0`). Install the matching Quarto CLI release from
@@ -67,9 +78,8 @@ credentials, and runs the same complete validation on three independent platform
 jobs for pull requests targeting main. Matrix failures do not cancel other jobs. It installs the pinned tools
 and locked environment in separate steps so installation failures cannot be
 hidden by a later successful native command on Windows. It uses the same isolated validation command. It neither
-publishes output nor invokes the production pipeline. Linux validation passed
-in GitHub Actions independently of the fresh local macOS validation. Hosted
-macOS and Windows status remains pending until their matrix jobs pass.
+publishes output nor invokes the production pipeline. All three hosted matrix
+jobs passed independently of the fresh local macOS validation.
 
 CI verifies runner OS/architecture and the 64-bit interpreter architecture. It
 uses uv-managed Python 3.13.16, verifies Quarto 1.10.19, and passes the exact
