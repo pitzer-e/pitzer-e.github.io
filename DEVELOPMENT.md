@@ -4,6 +4,12 @@ Development uses Python **3.13.16**, uv **0.13.0**, and Quarto CLI
 **1.10.19** on macOS ARM64 and Linux x86-64. PR validation uses Ubuntu
 24.04 only. Production retains its independent requirements and workflow.
 
+Platform verification status:
+
+- macOS ARM64: Fresh local environment validated.
+- Linux x86-64: GitHub Actions validation passed.
+- Windows x64: Not yet validated.
+
 Install uv 0.13.0 using your preferred isolated tool installer (for example,
 `pipx install uv==0.13.0`). Install the matching Quarto CLI release from
 <https://github.com/quarto-dev/quarto-cli/releases/tag/v1.10.19> and put its
@@ -51,8 +57,8 @@ uv run --locked python projects/oregon-fqhc/scripts/4_analyze_correlations.py
 The PR workflow has read-only repository permissions, does not retain Git
 credentials, and runs only on Linux pull requests. It installs the pinned tools
 and locked environment and uses the same isolated validation command. It neither
-publishes output nor invokes the production pipeline. Linux execution must still
-be confirmed by an approved PR run; local macOS validation is not Linux evidence.
+publishes output nor invokes the production pipeline. Linux validation passed
+in GitHub Actions independently of the fresh local macOS validation.
 
 Dependency changes require a separate compatibility review and rerunning these
 gates. Do not loosen numerical tolerances to accommodate a failing environment.
