@@ -10,6 +10,11 @@
 
 ---
 
+## Developer setup
+
+See [DEVELOPMENT.md](DEVELOPMENT.md) for the pinned Python, uv, and Quarto
+environment and isolated validation command.
+
 ## Repository Structure
 
 This site is architected to separate deep-dive engineering work from visual analytics:
