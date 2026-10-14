@@ -9,11 +9,34 @@ permissions:
 
 jobs:
   validate:
-    runs-on: ubuntu-24.04
+    name: validate (${{ matrix.runner }})
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            os: Linux
+            arch: X64
+          - runner: macos-15
+            os: macOS
+            arch: ARM64
+          - runner: windows-2025
+            os: Windows
+            arch: X64
     env:
       PYTHONDONTWRITEBYTECODE: "1"
+      UV_PYTHON_PREFERENCE: only-managed
+      EXPECTED_RUNNER_OS: ${{ matrix.os }}
+      EXPECTED_RUNNER_ARCH: ${{ matrix.arch }}
     steps:
+      - name: Verify runner and preserve checkout bytes
+        shell: bash
+        run: |
+          test "$RUNNER_OS" = "$EXPECTED_RUNNER_OS"
+          test "$RUNNER_ARCH" = "$EXPECTED_RUNNER_ARCH"
+          git config --global core.autocrlf false
       - uses: actions/checkout@v5
         with:
           persist-credentials: false
@@ -21,7 +44,9 @@ jobs:
         with:
           version: "0.13.0"
           enable-cache: false
-      - name: Install locked environment
+      - name: Install pinned Python
+        run: uv python install 3.13.16
+      - name: Synchronize locked environment
         run: uv sync --locked
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
