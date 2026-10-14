@@ -93,3 +93,91 @@ Dependency changes require a separate compatibility review and rerunning these
 gates. Do not loosen numerical tolerances to accommodate a failing environment.
 Keep `requirements.txt` and `.github/workflows/daily_update.yml` independent until
 a production migration is explicitly approved.
+
+## Production environment migration
+
+The proposed production workflow uses Ubuntu 24.04 x86-64, uv 0.13.0,
+uv-managed Python 3.13.16, and Quarto CLI 1.10.19. It synchronizes with
+`uv sync --locked`, runs Python through `uv run --locked`, and explicitly passes
+the project interpreter to Quarto. Production retains the Monday 14:00 UTC
+schedule, manual dispatch, authenticated checkout, `contents: write`, and the
+existing publishing allowlist. A production-specific concurrency group prevents
+overlapping runs; an active run is not cancelled. GitHub may replace an older
+pending run with a newer pending run, so this is not a queue guaranteeing every
+request executes.
+
+Before activation, rehearse on disposable Ubuntu 24.04 x86-64 infrastructure:
+
+1. Copy the tracked repository and saved workbooks outside the original checkout.
+   Record original hashes. Provide no publishing credentials or usable remote.
+2. Install the pinned tools and synchronize the unchanged lock. Verify interpreter
+   and runner architecture and explicitly select that interpreter for Quarto.
+3. Run the 73 tests and saved-artifact validator against the copied baseline.
+4. Run `uv run --locked python projects/oregon-fqhc/scripts/run_pipeline.py --local`
+   only in the copy. This rebuilds from saved workbooks without HRSA downloads.
+5. Rerun the tests and saved-artifact validator. Render the complete site using
+   `uv run --locked quarto render` and apply `verify_website()` to the output.
+6. Compare generated CSVs and summary against the saved baseline using exact
+   identifiers, counts, non-model values, and the existing model tolerances.
+7. Inspect the production allowlist in a disposable Git index without committing
+   or pushing. Verify all original files, the checkpoint, and prior environment
+   remain unchanged. Review the rendered website in a browser.
+
+The completed macOS ARM64 saved-input rehearsal produced byte-identical CSVs.
+Fourteen model values differed within existing tolerances (relative 1e-13,
+absolute 1e-15). Local-build timestamps, source age, summary fingerprints, and
+`local_snapshot` provenance differ intentionally. Local mode does not represent
+a new retrieval. Plotly runtime, generated chart IDs, CSS fingerprints, dates,
+and listing metadata may differ; structural checks do not replace browser review.
+No tolerances or analytical behavior are changed by this migration.
+
+The completed saved-input activation gates require a passing Linux x86-64 rebuild
+rehearsal, all 73 tests,
+saved-artifact validation, exactly ten rendered pages, engineering-document
+exclusion from output/search, intact navigation/listings and the linked FQHC data
+contract, unchanged protected inputs/sources, allowlisted publishing differences,
+and browser review of interactive plots. Live downloads and actual publishing
+require separate authorization. Linux rebuild and limited browser evidence are recorded below. The presentation
+caveat and untested live/publishing/deployment paths remain operational review items.
+
+Repository publication and website deployment are distinct. This workflow commits
+and pushes allowlisted generated artifacts. Pages serves `main:/docs`; a push using
+`GITHUB_TOKEN` does not itself trigger a Pages build. Deployment behavior is not
+redesigned here. A successful push must not be described as deployment evidence.
+
+If the candidate workflow fails before pushing, stop and preserve diagnostics;
+the remote snapshot remains unchanged. Roll back the workflow provisioning through
+a reviewed revert if necessary. If incorrect artifacts were already published,
+restore the coherent raw/processed snapshot, manifest, and matching website from a
+known-good generation through a separately approved change. Do not restore isolated
+files from mixed generations, force-push, or loosen numerical tolerances. Returning
+to unpinned provisioning is an emergency fallback rather than a reproducible setup.
+
+Completed Linux saved-input rehearsal evidence (Floor 5C):
+
+- Ubuntu 24.04 x64; Python 3.13.16, uv 0.13.0, and Quarto 1.10.19.
+- 73 tests passed before and after the saved-input rebuild.
+- Baseline and regenerated-artifact validation passed.
+- All three regenerated CSVs were byte-identical to the saved baseline.
+- Three model-derived values differed by approximately 1.11e-16, within the
+  unchanged existing tolerances.
+- Full ten-page rendering and all existing website-output assertions passed.
+- Nine staging records were inspected, all within the existing publishing allowlist.
+- Original-checkout, copied-source, raw-input, and post-render data integrity passed.
+
+Evidence is recorded in the successful temporary rehearsal run:
+<https://github.com/pitzer-e/pitzer-e.github.io/actions/runs/38516252464>.
+The temporary workflow has been removed from the final migration change.
+
+Limited browser review of the downloaded Linux output passed for chart rendering,
+map interaction, and table filtering. Narrow-viewport chart-title clipping remains
+a known presentation caveat. This does not claim exhaustive visual equivalence.
+No live HRSA downloads, authenticated publishing, or deployment were tested.
+
+Merge readiness means that the implementation review and permanent three-platform
+PR checks pass with only the production workflow and this documentation changed.
+It does not authorize production activation. The saved-input rehearsal provides
+regeneration evidence; the first live refresh, authenticated publication, and any
+deployment verification require a separately approved operational plan. Merging
+changes the scheduled workflow used by future runs, so merge approval must account
+for its existing Monday schedule even if no manual dispatch is requested.
