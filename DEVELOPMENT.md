@@ -1,14 +1,25 @@
 # Reproducible development environment
 
 Development uses Python **3.13.16**, uv **0.13.0**, and Quarto CLI
-**1.10.19** on macOS ARM64 and Linux x86-64. PR validation uses Ubuntu
-24.04 only. Production retains its independent requirements and workflow.
+**1.10.19**. PR validation uses Ubuntu 24.04 x86-64, macOS 15 ARM64, and
+Windows Server 2025 x64. Production retains its independent requirements and workflow.
 
 Platform verification status:
 
-- macOS ARM64: Fresh local environment validated.
-- Linux x86-64: GitHub Actions validation passed.
-- Windows x64: Not yet validated.
+- Linux x86-64 (`ubuntu-24.04`): Complete hosted validation passed.
+- macOS ARM64 (`macos-15`): Complete hosted validation passed; fresh local
+  environment also validated.
+- Windows x64 (`windows-2025`): Complete hosted validation passed.
+
+All three hosted platforms passed 73 tests, saved-snapshot validation, full
+isolated rendering, output assertions, and copied-data/original-checkout integrity
+checks. Output assertions verify exactly ten HTML pages, engineering documentation
+exclusion from output and search metadata, navigation and case-study links, and
+the linked FQHC data contract matching its source bytes.
+
+This evidence applies to the listed runner OS/architecture combinations with the
+pinned tools and lockfile. Other OS versions and hardware architectures have not
+been validated.
 
 Install uv 0.13.0 using your preferred isolated tool installer (for example,
 `pipx install uv==0.13.0`). Install the matching Quarto CLI release from
@@ -42,8 +53,16 @@ must install the pinned interpreter locally; virtual environments are not portab
 
 The validation command checks exact Python and Quarto versions, runs the existing
 73 tests, validates the saved FQHC snapshot, and renders the whole website in a
-temporary copy of tracked files. It checks saved-data hashes after rendering and
-all tracked checkout hashes before returning. Generated output is discarded.
+temporary copy of tracked files outside the checkout. It captures copied-data
+hashes before tests and checks them after validation, including on failure.
+Original tracked checkout hashes are captured before platform/tool verification and
+checked on every exit, including early verification failures. If validation and
+integrity both fail, the original exception is retained and the integrity violation
+is reported as an additional error. Generated output is discarded.
+
+The website explicitly renders only `**/*.qmd`: its ten intended pages.
+Developer and engineering Markdown are not render targets. The README and FQHC
+data-contract Markdown remain repository documentation, not additional website pages.
 It does not fetch source data or rebuild the snapshot. Newly added site source
 files must be tracked before this command includes them in its temporary copy.
 
@@ -55,10 +74,20 @@ uv run --locked python projects/oregon-fqhc/scripts/4_analyze_correlations.py
 ```
 
 The PR workflow has read-only repository permissions, does not retain Git
-credentials, and runs only on Linux pull requests. It installs the pinned tools
-and locked environment and uses the same isolated validation command. It neither
-publishes output nor invokes the production pipeline. Linux validation passed
-in GitHub Actions independently of the fresh local macOS validation.
+credentials, and runs the same complete validation on three independent platform
+jobs for pull requests targeting main. Matrix failures do not cancel other jobs. It installs the pinned tools
+and locked environment in separate steps so installation failures cannot be
+hidden by a later successful native command on Windows. It uses the same isolated validation command. It neither
+publishes output nor invokes the production pipeline. All three hosted matrix
+jobs passed independently of the fresh local macOS validation.
+
+CI verifies runner OS/architecture and the 64-bit interpreter architecture. It
+uses uv-managed Python 3.13.16, verifies Quarto 1.10.19, and passes the exact
+project interpreter path to Quarto. Git newline conversion is disabled before
+checkout to preserve saved artifact fingerprints on Windows. Python subprocesses
+use `sys.executable`, avoiding platform-specific virtual-environment paths.
+Existing freeze settings remain: FQHC executes fresh; other reports may use
+frozen outputs. Full-site rendering does not mean every report executes fresh.
 
 Dependency changes require a separate compatibility review and rerunning these
 gates. Do not loosen numerical tolerances to accommodate a failing environment.
