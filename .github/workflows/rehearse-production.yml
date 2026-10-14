@@ -49,7 +49,7 @@ jobs:
           import subprocess
           import sys
           import tempfile
-          
+
           root = Path.cwd()
           files = [p for p in subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0') if p]
           def hashes(base, names):
