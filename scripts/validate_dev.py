@@ -1,6 +1,9 @@
 """Validate saved artifacts and render a disposable tracked-file copy."""
 from contextlib import contextmanager
 import hashlib
+from html.parser import HTMLParser
+import json
+import posixpath
 import os
 import platform
 import struct
@@ -9,6 +12,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -66,6 +70,87 @@ def verify_platform():
     print(f"Interpreter: {sys.executable}; {platform.python_version()}; {os_name}/{arch}; 64-bit", flush=True)
 
 
+EXPECTED_PAGES = {
+    "index.html", "projects.html", "dashboards.html",
+    "dashboards/health-landscape/index.html",
+    "projects/clinic-forecasting/index.html",
+    "projects/clinic-forecasting/about.html",
+    "projects/oregon-fqhc/index.html", "projects/oregon-fqhc/about.html",
+    "projects/penguins/index.html", "projects/welcome/index.html",
+}
+
+
+class WebsiteLinks(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.hrefs = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "a":
+            self.hrefs.extend(value for key, value in attrs
+                              if key == "href" and value is not None)
+
+
+def local_target(page, href):
+    url = urlsplit(href)
+    if url.scheme or url.netloc:
+        return None
+    path = unquote(url.path)
+    if path.startswith("/"):
+        return posixpath.normpath(path.lstrip("/"))
+    return posixpath.normpath(posixpath.join(posixpath.dirname(page), path))
+
+
+def verify_website(work):
+    output = work / "docs"
+    actual = {p.relative_to(output).as_posix() for p in output.rglob("*.html")}
+    if actual != EXPECTED_PAGES:
+        raise RuntimeError(f"Website page mismatch: missing={sorted(EXPECTED_PAGES - actual)}, "
+                           f"unexpected={sorted(actual - EXPECTED_PAGES)}")
+    forbidden = [p.relative_to(output).as_posix() for p in output.rglob("*")
+                 if p.is_file() and (p.stem.lower() == "development"
+                                     or "notes" in p.relative_to(output).parts
+                                     or p.name.startswith("engineering-checkpoint"))]
+    if forbidden:
+        raise RuntimeError(f"Engineering documentation published: {forbidden}")
+    search = json.loads((output / "search.json").read_text(encoding="utf-8"))
+    if not isinstance(search, list) or not search:
+        raise RuntimeError("Website search metadata is missing or malformed.")
+    for entry in search:
+        if not isinstance(entry, dict) or not isinstance(entry.get("href"), str):
+            raise RuntimeError("Malformed website search entry.")
+        if local_target("index.html", entry["href"]) not in EXPECTED_PAGES:
+            raise RuntimeError(f"Unexpected search target: {entry['href']}")
+    search_text = json.dumps(search).lower()
+    if any(marker in search_text for marker in
+           ("development.md", "development.html", "engineering-checkpoint",
+            "reproducible development environment", "platform verification status")):
+        raise RuntimeError("Engineering documentation appeared in website search.")
+
+    def require_links(page, expected):
+        parser = WebsiteLinks()
+        parser.feed((output / page).read_text(encoding="utf-8"))
+        targets = {local_target(page, href) for href in parser.hrefs}
+        missing = expected - targets
+        if missing:
+            raise RuntimeError(f"Missing links in {page}: {sorted(missing)}")
+
+    navigation = {"index.html", "projects.html", "dashboards.html"}
+    for page in EXPECTED_PAGES:
+        require_links(page, navigation)
+    require_links("projects.html", {
+        f"projects/{case}/index.html" for case in
+        ("oregon-fqhc", "clinic-forecasting", "penguins", "welcome")
+    })
+    contract = "projects/oregon-fqhc/README.md"
+    require_links("projects/oregon-fqhc/about.html", {contract})
+    if (output / contract).read_bytes() != (work / contract).read_bytes():
+        raise RuntimeError("Published FQHC data contract differs from its source.")
+    print("Rendering acceptance verified: exactly ten HTML pages; engineering documentation "
+          "excluded from output/search; navigation and case-study links intact; "
+          "linked FQHC data contract byte-identical.", flush=True)
+
+
 def main():
     files = subprocess.check_output(
         ["git", "ls-files", "-z"], cwd=ROOT
@@ -109,6 +194,7 @@ def main():
                 run(sys.executable, "projects/oregon-fqhc/scripts/4_analyze_correlations.py",
                     cwd=work, env=env)
                 run(quarto, "render", cwd=work, env=env)
+                verify_website(work)
     print("Tests, saved snapshot, isolated render, and unchanged hashes verified.")
 
 

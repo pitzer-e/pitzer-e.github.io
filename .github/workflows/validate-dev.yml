@@ -27,6 +27,7 @@ jobs:
             arch: X64
     env:
       PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUTF8: "1"
       UV_PYTHON_PREFERENCE: only-managed
       EXPECTED_RUNNER_OS: ${{ matrix.os }}
       EXPECTED_RUNNER_ARCH: ${{ matrix.arch }}
