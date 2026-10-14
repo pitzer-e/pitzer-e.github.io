@@ -4,3 +4,6 @@ __pycache__/
 
 **/*.quarto_ipynb
 .DS_Store
+
+.venv/
+.venv.pre-milestone-002/
