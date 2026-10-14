@@ -93,3 +93,70 @@ Dependency changes require a separate compatibility review and rerunning these
 gates. Do not loosen numerical tolerances to accommodate a failing environment.
 Keep `requirements.txt` and `.github/workflows/daily_update.yml` independent until
 a production migration is explicitly approved.
+
+## Production environment migration
+
+The proposed production workflow uses Ubuntu 24.04 x86-64, uv 0.13.0,
+uv-managed Python 3.13.16, and Quarto CLI 1.10.19. It synchronizes with
+`uv sync --locked`, runs Python through `uv run --locked`, and explicitly passes
+the project interpreter to Quarto. Production retains the Monday 14:00 UTC
+schedule, manual dispatch, authenticated checkout, `contents: write`, and the
+existing publishing allowlist. A production-specific concurrency group prevents
+overlapping runs; an active run is not cancelled. GitHub may replace an older
+pending run with a newer pending run, so this is not a queue guaranteeing every
+request executes.
+
+Before activation, rehearse on disposable Ubuntu 24.04 x86-64 infrastructure:
+
+1. Copy the tracked repository and saved workbooks outside the original checkout.
+   Record original hashes. Provide no publishing credentials or usable remote.
+2. Install the pinned tools and synchronize the unchanged lock. Verify interpreter
+   and runner architecture and explicitly select that interpreter for Quarto.
+3. Run the 73 tests and saved-artifact validator against the copied baseline.
+4. Run `uv run --locked python projects/oregon-fqhc/scripts/run_pipeline.py --local`
+   only in the copy. This rebuilds from saved workbooks without HRSA downloads.
+5. Rerun the tests and saved-artifact validator. Render the complete site using
+   `uv run --locked quarto render` and apply `verify_website()` to the output.
+6. Compare generated CSVs and summary against the saved baseline using exact
+   identifiers, counts, non-model values, and the existing model tolerances.
+7. Inspect the production allowlist in a disposable Git index without committing
+   or pushing. Verify all original files, the checkpoint, and prior environment
+   remain unchanged. Review the rendered website in a browser.
+
+The completed macOS ARM64 saved-input rehearsal produced byte-identical CSVs.
+Fourteen model values differed within existing tolerances (relative 1e-13,
+absolute 1e-15). Local-build timestamps, source age, summary fingerprints, and
+`local_snapshot` provenance differ intentionally. Local mode does not represent
+a new retrieval. Plotly runtime, generated chart IDs, CSS fingerprints, dates,
+and listing metadata may differ; structural checks do not replace browser review.
+No tolerances or analytical behavior are changed by this migration.
+
+Activation requires a passing Linux x86-64 rebuild rehearsal, all 73 tests,
+saved-artifact validation, exactly ten rendered pages, engineering-document
+exclusion from output/search, intact navigation/listings and the linked FQHC data
+contract, unchanged protected inputs/sources, allowlisted publishing differences,
+and browser review of interactive plots. Live downloads and actual publishing
+require separate authorization. The Linux rebuild and browser presentation gates
+must have recorded evidence before activation.
+
+Repository publication and website deployment are distinct. This workflow commits
+and pushes allowlisted generated artifacts. Pages serves `main:/docs`; a push using
+`GITHUB_TOKEN` does not itself trigger a Pages build. Deployment behavior is not
+redesigned here. A successful push must not be described as deployment evidence.
+
+If the candidate workflow fails before pushing, stop and preserve diagnostics;
+the remote snapshot remains unchanged. Roll back the workflow provisioning through
+a reviewed revert if necessary. If incorrect artifacts were already published,
+restore the coherent raw/processed snapshot, manifest, and matching website from a
+known-good generation through a separately approved change. Do not restore isolated
+files from mixed generations, force-push, or loosen numerical tolerances. Returning
+to unpinned provisioning is an emergency fallback rather than a reproducible setup.
+
+Current migration evidence: static workflow checks pass, and the preserved macOS
+saved-input candidate was inspected in a browser. Payer/scatter charts and map
+rendering were present; map controls responded and table filtering returned the
+expected single Tigard record. This is a limited local presentation review, not
+Linux render evidence or exhaustive visual equivalence. The implementation host
+has no available Linux executor/container tooling. A disposable Linux x86-64
+regeneration rehearsal and presentation review of its output remain activation
+blockers; no production workflow has been triggered.

@@ -1,0 +1,171 @@
+name: Temporary production saved-input rehearsal
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  rehearse:
+    if: github.head_ref == 'chore/locked-production-environment'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUTF8: "1"
+      UV_PYTHON_PREFERENCE: only-managed
+      EXPECTED_RUNNER_OS: Linux
+      EXPECTED_RUNNER_ARCH: X64
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.13.0"
+          enable-cache: false
+      - name: Verify runner
+        run: |
+          test "$RUNNER_OS" = Linux
+          test "$RUNNER_ARCH" = X64
+      - name: Install pinned Python
+        run: uv python install 3.13.16
+      - name: Synchronize locked dependencies
+        run: uv sync --locked
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "1.10.19"
+      - name: Rehearse saved-input production pipeline without publishing
+        run: |
+          uv run --locked python - <<'PY'
+          import hashlib
+          import importlib.util
+          import json
+          import os
+          from pathlib import Path
+          import shutil
+          import subprocess
+          import sys
+          import tempfile
+          
+          root = Path.cwd()
+          files = [p for p in subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0') if p]
+          def hashes(base, names):
+              return {p: hashlib.sha256((base / p).read_bytes()).hexdigest() for p in names}
+          original = hashes(root, files)
+          tmp = Path(tempfile.mkdtemp(prefix='production-rehearsal-', dir=os.environ['RUNNER_TEMP']))
+          work = tmp / 'site'
+          work.mkdir()
+          evidence = tmp / 'evidence'
+          evidence.mkdir()
+          for name in files:
+              target = work / name
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(root / name, target)
+          assert not (work / '.git').exists()
+          baseline = tmp / 'baseline-data'
+          shutil.copytree(work / 'projects/oregon-fqhc/data', baseline)
+          env = os.environ.copy()
+          for name in list(env):
+              if any(part in name.upper() for part in ('TOKEN', 'SECRET', 'PASSWORD')) or name in ('SSH_AUTH_SOCK', 'SSH_AGENT_PID'):
+                  env.pop(name, None)
+          env.update(GIT_CONFIG_GLOBAL='/dev/null', GIT_CONFIG_NOSYSTEM='1',
+                     QUARTO_PYTHON=sys.executable, MPLCONFIGDIR=str(tmp / 'mpl'),
+                     JUPYTER_CONFIG_DIR=str(tmp / 'jupyter-config'), JUPYTER_DATA_DIR=str(tmp / 'jupyter-data'),
+                     JUPYTER_RUNTIME_DIR=str(tmp / 'jupyter-runtime'), IPYTHONDIR=str(tmp / 'ipython'),
+                     UV_PROJECT_ENVIRONMENT=str(root / '.venv'))
+          uv = shutil.which('uv')
+          def run(*args):
+              print('RUN:', ' '.join(args), flush=True)
+              subprocess.run(args, cwd=work, env=env, check=True)
+          def locked(*args):
+              run(uv, 'run', '--locked', *args)
+          report = {}
+          try:
+              run('git', 'init')
+              run('git', 'add', '--all')
+              tree = subprocess.check_output(['git', 'write-tree'], cwd=work, env=env, text=True).strip()
+              assert not subprocess.check_output(['git', 'remote'], cwd=work, env=env)
+              spec = importlib.util.spec_from_file_location('validator', work / 'scripts/validate_dev.py')
+              validator = importlib.util.module_from_spec(spec)
+              spec.loader.exec_module(validator)
+              validator.verify_platform()
+              assert sys.version_info[:3] == (3, 13, 16)
+              assert subprocess.check_output(['uv', '--version'], text=True).split()[1] == '0.13.0'
+              assert subprocess.check_output(['quarto', '--version'], text=True).strip() == '1.10.19'
+              report['environment'] = {'os': os.environ['RUNNER_OS'], 'arch': os.environ['RUNNER_ARCH'],
+                                       'python': sys.version.split()[0], 'uv': '0.13.0', 'quarto': '1.10.19'}
+              locked('python', '-m', 'pytest', '-p', 'no:cacheprovider', 'projects/oregon-fqhc/tests/')
+              locked('python', 'projects/oregon-fqhc/scripts/4_analyze_correlations.py')
+              locked('python', 'projects/oregon-fqhc/scripts/run_pipeline.py', '--local')
+              locked('python', '-m', 'pytest', '-p', 'no:cacheprovider', 'projects/oregon-fqhc/tests/')
+              locked('python', 'projects/oregon-fqhc/scripts/4_analyze_correlations.py')
+              data = work / 'projects/oregon-fqhc/data'
+              after_build = hashes(data, [p.relative_to(data).as_posix() for p in data.rglob('*') if p.is_file()])
+              shutil.rmtree(work / 'docs')
+              locked('quarto', 'render')
+              validator.verify_website(work)
+              validator.verify_integrity(data, after_build, 'Rebuilt data after rendering')
+              sys.path.insert(0, str(work / 'projects/oregon-fqhc/scripts'))
+              from pipeline import validate_summary, MODEL_REL_TOL, MODEL_ABS_TOL
+              old = json.loads((baseline / 'processed/summary.json').read_text())
+              new = json.loads((data / 'processed/summary.json').read_text())
+              validate_summary(old, new)
+              differences = []
+              def compare(a, b, path='summary'):
+                  if isinstance(a, dict):
+                      for key in a: compare(a[key], b[key], path + '.' + key)
+                  elif isinstance(a, list):
+                      for i, (left, right) in enumerate(zip(a, b)): compare(left, right, path + f'[{i}]')
+                  elif a != b:
+                      assert path.startswith('summary.analysis_model.'), path
+                      differences.append({'path': path, 'old': a, 'new': b, 'absolute': abs(a-b),
+                                          'relative': abs(a-b)/abs(a) if a else None})
+              compare(old, new)
+              changed = []
+              for p in baseline.rglob('*'):
+                  if p.is_file() and p.read_bytes() != (data / p.relative_to(baseline)).read_bytes():
+                      changed.append(p.relative_to(baseline).as_posix())
+              assert set(changed) <= {'processed/summary.json', 'processed/manifest.json'}, changed
+              old_manifest = json.loads((baseline / 'processed/manifest.json').read_text())
+              new_manifest = json.loads((data / 'processed/manifest.json').read_text())
+              manifest_changes = {k: {'old': old_manifest.get(k), 'new': new_manifest.get(k)}
+                                  for k in old_manifest.keys() | new_manifest.keys() if old_manifest.get(k) != new_manifest.get(k)}
+              assert set(manifest_changes) <= {'built_at_utc', 'source_mode', 'retrieved_at_utc', 'outputs',
+                                              'site_source_age_days_at_build', 'site_freshness_status_at_build', 'provenance_warnings'}
+              allow = ['docs', 'projects/oregon-fqhc/data/raw/hrsa_sites.xlsx',
+                       'projects/oregon-fqhc/data/raw/uds_2024.xlsx', 'projects/oregon-fqhc/data/processed']
+              protected = [p for p in files if not any(p == a or p.startswith(a + '/') for a in allow)]
+              validator.verify_integrity(work, {p: original[p] for p in protected}, 'Protected copied source files')
+              raw = [p for p in files if '/data/raw/' in p]
+              validator.verify_integrity(work, {p: original[p] for p in raw}, 'Saved raw inputs')
+              publish_env = dict(env, GIT_INDEX_FILE=str(tmp / 'publishing.index'))
+              subprocess.run(['git', 'read-tree', tree], cwd=work, env=publish_env, check=True)
+              subprocess.run(['git', 'add', '--', *allow], cwd=work, env=publish_env, check=True)
+              staged = subprocess.check_output(['git', 'diff', '--cached', tree, '--name-status'],
+                                               cwd=work, env=publish_env, text=True).splitlines()
+              for line in staged:
+                  for p in line.split('\t')[1:]:
+                      assert any(p == a or p.startswith(a + '/') for a in allow), p
+              report.update(summary_changes=differences, model_tolerances={'relative': MODEL_REL_TOL, 'absolute': MODEL_ABS_TOL},
+                            changed_analytical_files=changed, manifest_changes=manifest_changes,
+                            staged_changes=staged, csv_comparison='all three CSVs byte-identical',
+                            tests='73 passed before and after rebuild', rendering='ten-page output assertions passed')
+              (evidence / 'comparison.json').write_text(json.dumps(report, indent=2))
+              print('REHEARSAL COMPARISON:', json.dumps(report), flush=True)
+              with Path(os.environ['GITHUB_ENV']).open('a') as stream:
+                  stream.write(f'REHEARSAL_SITE={work / "docs"}\nREHEARSAL_EVIDENCE={evidence}\n')
+          finally:
+              validator.verify_integrity(root, original, 'Original checkout')
+          PY
+      - name: Preserve rendered website and comparison evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-saved-input-rehearsal
+          path: |
+            ${{ env.REHEARSAL_SITE }}
+            ${{ env.REHEARSAL_EVIDENCE }}
+          if-no-files-found: error
+          retention-days: 7

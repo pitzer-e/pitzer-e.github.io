@@ -7,46 +7,80 @@ on:
   # Allow manual trigger from the Actions tab for testing
   workflow_dispatch:
 
+concurrency:
+  group: production-fqhc-snapshot
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     
     env:
       PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUTF8: "1"
+      UV_PYTHON_PREFERENCE: only-managed
+      EXPECTED_RUNNER_OS: Linux
+      EXPECTED_RUNNER_ARCH: X64
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          cache: 'pip' # Caching makes future runs faster
-
-      - name: Install Python Dependencies
+      - name: Verify production runner
         run: |
-          pip install -r requirements.txt
+          test "$RUNNER_OS" = "$EXPECTED_RUNNER_OS"
+          test "$RUNNER_ARCH" = "$EXPECTED_RUNNER_ARCH"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.13.0"
+          enable-cache: false
+
+      - name: Install pinned Python
+        run: uv python install 3.13.16
+
+      - name: Synchronize locked environment
+        run: uv sync --locked
+
+      - name: Verify interpreter and select Quarto Python
+        run: |
+          uv run --locked python - <<'PY'
+          import os
+          from pathlib import Path
+          import sys
+          from scripts.validate_dev import verify_platform
+          verify_platform()
+          assert sys.version_info[:3] == (3, 13, 16), "Unexpected Python version"
+          with Path(os.environ["GITHUB_ENV"]).open("a", encoding="utf-8") as stream:
+              stream.write(f"QUARTO_PYTHON={sys.executable}\n")
+          PY
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "1.10.19"
+
+      - name: Verify Quarto version
+        run: test "$(quarto --version)" = "$(cat .quarto-version)"
 
       - name: Build validated 2024 analytical snapshot
         run: |
-          python projects/oregon-fqhc/scripts/run_pipeline.py
+          uv run --locked python projects/oregon-fqhc/scripts/run_pipeline.py
 
       # --- NEW STEP: QUALITY GATE ---
       - name: Run Quality Assurance Tests
         run: |
-          python -m pytest -p no:cacheprovider projects/oregon-fqhc/tests/
-          python projects/oregon-fqhc/scripts/4_analyze_correlations.py
+          uv run --locked python -m pytest -p no:cacheprovider projects/oregon-fqhc/tests/
+          uv run --locked python projects/oregon-fqhc/scripts/4_analyze_correlations.py
       # ------------------------------
 
       - name: Render Quarto Site
         run: |
-          quarto render
+          uv run --locked quarto render
+          uv run --locked python -c 'from pathlib import Path; from scripts.validate_dev import verify_website; verify_website(Path.cwd())'
 
       - name: Commit and Push Changes
         run: |
