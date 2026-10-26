@@ -1,5 +1,5 @@
 {
-  "site_source_date": "2026-10-19",
+  "site_source_date": "2026-10-26",
   "site_source_age_days_at_build": 0,
   "site_freshness_status_at_build": "normal",
   "provenance_warnings": [],
@@ -8,20 +8,20 @@
   "sources": {
     "hrsa_sites.xlsx": {
       "url": "https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.xlsx",
-      "sha256": "f7f8a308af746e0b7c72d531cf1218adb3a2149e60a34bfe03c7781f2fc32480"
+      "sha256": "ff4eb015d17f0028cf417b0892d3c17704c706352f479e3038c44569f5cb7bc9"
     },
     "uds_2024.xlsx": {
       "url": "https://data.hrsa.gov/DataDownload/StaticDocuments/H80-2024.xlsx",
       "sha256": "b33988f1b3368aeb9838b119562240ef391f1fb82938750b319ea19e79384437"
     }
   },
-  "built_at_utc": "2026-10-19T19:36:57.241575+00:00",
+  "built_at_utc": "2026-10-26T19:42:16.129260+00:00",
   "source_mode": "downloaded_this_run",
-  "retrieved_at_utc": "2026-10-19T19:36:57.241587+00:00",
+  "retrieved_at_utc": "2026-10-26T19:42:16.129280+00:00",
   "outputs": {
-    "oregon_sites.csv": "ac439adb75ebee0c60d973dce3b214624475f4f39ea61a51553ad7efb37b8c2c",
-    "oregon_sites_joined.csv": "8894e96abf770458a2c98e77f70bf158d89288105a2c939215115f4cd92f7fba",
+    "oregon_sites.csv": "7ca6aa561da0f070eab6f87b13c8601fe2379d8f82fe7045dffdb24e343fdb48",
+    "oregon_sites_joined.csv": "bc95fbe5ab345f604417fa4581b1dc8003a9ecbd209c1a0a16cba035f26231db",
     "organizations.csv": "8a8ee6f065648fa08336d0f382a0e7ed61b594910b3cd7b4797fa273644cb142",
-    "summary.json": "5dbcef061e50a75a88cdde09a0ef6c82de0b5cb56c64ba2d024bb2b8fb8afdd1"
+    "summary.json": "c3cf9bdee77583d3a0bd19e4a125bae9ade70755dd27e271b4da829010750ba0"
   }
 }
