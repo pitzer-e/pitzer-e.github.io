@@ -1,10 +1,10 @@
 {
-  "site_count": 332,
+  "site_count": 322,
   "organization_count": 33,
   "matched_organization_count": 31,
   "patient_data_organization_count": 31,
-  "patient_data_site_count": 322,
-  "site_patient_coverage": 0.9698795180722891,
+  "patient_data_site_count": 314,
+  "site_patient_coverage": 0.9751552795031055,
   "organization_patient_coverage": 0.9393939393939394,
   "reported_organization_patient_total": 646289.0,
   "complete_payer_organization_count": 30,
@@ -80,16 +80,16 @@
       {
         "bhcmis_id": "10E01418",
         "organization": "CASCADIA HEALTH",
-        "site_count": 7,
+        "site_count": 5,
         "site_types": [
           "Federally Qualified Health Center (FQHC) Look-Alike"
         ],
         "reconciliation": "outside_configured_h80_uds_scope"
       }
     ],
-    "site_patient_coverage_numerator": 322,
-    "site_patient_coverage_denominator": 332,
-    "site_patient_coverage": 0.9698795180722891,
+    "site_patient_coverage_numerator": 314,
+    "site_patient_coverage_denominator": 322,
+    "site_patient_coverage": 0.9751552795031055,
     "organization_patient_coverage_numerator": 31,
     "organization_patient_coverage_denominator": 33,
     "organization_patient_coverage": 0.9393939393939394,
